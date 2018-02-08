@@ -8,6 +8,7 @@ name = "pypi"
 [packages]
 
 django = ">=2.0"
+django-environ = "*"
 
 
 [dev-packages]
