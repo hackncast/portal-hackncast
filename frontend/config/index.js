@@ -3,6 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const dotEnv = require('../config/dotenv')
 
 module.exports = {
   dev: {
@@ -10,7 +11,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: JSON.parse(dotEnv.definitions['process.env.BACKEND']),
+        changeOrigin: true
+      },
+      '/static': {
+        target: JSON.parse(dotEnv.definitions['process.env.BACKEND']),
+        changeOrigin: true
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
