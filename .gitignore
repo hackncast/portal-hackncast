@@ -99,6 +99,14 @@ ENV/
 # mypy
 .mypy_cache/
 
-# NPM
+# Frontend
 package-lock.json
 frontend/node_modules/
+frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+frontend/test/unit/coverage/
+
+# Others
+db.sqlite3
