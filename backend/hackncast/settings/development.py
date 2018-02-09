@@ -6,6 +6,7 @@ MESSAGE_LEVEL = 0
 TEMPLATE_DEBUG = False
 
 THIRD_PARTY_APPS += (
+    'django_extensions',
 )
 
 ALLOWED_HOSTS = ['*']
