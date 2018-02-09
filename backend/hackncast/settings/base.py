@@ -75,6 +75,11 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
+    'rest_framework',
+    'allauth',
+    'allauth.account',
+    'rest_auth',
+    'rest_auth.registration',
 )
 
 LOCAL_APPS = (
