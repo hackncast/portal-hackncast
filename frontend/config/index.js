@@ -14,11 +14,11 @@ module.exports = {
     proxyTable: {
       '/api': {
         target: JSON.parse(dotEnv.definitions['process.env.BACKEND']),
-        changeOrigin: true
+        // changeOrigin: true
       },
       '/static': {
         target: JSON.parse(dotEnv.definitions['process.env.BACKEND']),
-        changeOrigin: true
+        // changeOrigin: true
       }
     },
 
