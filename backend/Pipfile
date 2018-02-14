@@ -12,6 +12,7 @@ django-environ = "*"
 djangorestframework = "*"
 django-allauth = "*"
 django-rest-auth = "*"
+"psycopg2" = "*"
 
 
 [dev-packages]

@@ -43,9 +43,13 @@ APPEND_SLASH = True
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(str(ROOT_DIR), 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+    },
 }
 # ----------------------------- Security Setup ------------------------------ #
 SECRET_KEY = env('DJANGO_SECRET_KEY', default='')
