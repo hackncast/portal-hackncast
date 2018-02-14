@@ -16,11 +16,17 @@ Including another URLconf
 from django.conf.urls import include, url
 # from django.contrib import admin
 # from django.urls import path
-# from django.views.generic import TemplateView
+from django.views.generic import TemplateView
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     url(r'^api/auth/', include('rest_auth.urls')),
     url(r'^api/auth/registration/', include('rest_auth.registration.urls')),
-    # url(r'^admin/', TemplateView.as_view(template_name="core/admin.html"))
+
+    # This url is used by django-allauth and empty TemplateView is defined just
+    # to allow reverse() call inside app
+    url(
+        r'^api/auth/registration/account-email-verification-sent/$',
+        TemplateView.as_view(), name='account_email_verification_sent'
+    ),
 ]
