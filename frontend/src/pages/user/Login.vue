@@ -15,10 +15,10 @@
             <v-flex sm12 text-xs-center class="avatar-container">
               <transition name="flipY" mode="out-in">
               <v-avatar v-if="step === 1" key="icon" size="100px" class="primary mb-3">
-                  <v-icon dark style="font-size: 5em;">person</v-icon>
+                <v-icon dark style="font-size: 5em;">person</v-icon>
               </v-avatar>
               <v-avatar v-else key="avatar" size="100px" class="primary mb-3">
-                  <img :src="avatar" :alt="`Avatar of ${email}`" :title="`Avatar of ${email}`">
+                <img :src="avatar" :alt="`Avatar of ${email}`" :title="`Avatar of ${email}`">
               </v-avatar>
               </transition>
             </v-flex>
@@ -26,9 +26,9 @@
                 <transition-group name="customSlide" mode="out-in">
                   <section v-show="step === 1" key="email" class="transitioned" style="position: absolute; width: 100%">
                     <v-layout row justify-center>
-                      <v-btn icon><v-icon>fa-github</v-icon></v-btn>
-                      <v-btn icon><v-icon>fa-google</v-icon></v-btn>
-                      <v-btn icon><v-icon>fa-twitter</v-icon></v-btn>
+                      <v-btn icon><v-icon class="social-login-icon">fa-github</v-icon></v-btn>
+                      <v-btn icon><v-icon class="social-login-icon">fa-google</v-icon></v-btn>
+                      <v-btn icon><v-icon class="social-login-icon">fa-twitter</v-icon></v-btn>
                     </v-layout>
                     <v-text-field autofocus label="Email" name="email" ref="email" type="email" required
                                   prepend-icon="person"
@@ -51,30 +51,14 @@
                                   v-model="password">
                     </v-text-field>
 
-                    <v-checkbox label="Remember-me" name="remember" v-model="remember" type="checkbox">
-                    </v-checkbox>
+                    <v-checkbox disabled label="Remember-me" name="remember" v-model="remember" type="checkbox"/>
 
                     <v-btn block color="primary" type="submit" class="white--text">Login</v-btn>
-
                   </section>
                 </transition-group>
               </v-form>
 
-              <v-bottom-sheet inset persistent :value="nonFieldErrors.length > 0">
-                <v-card>
-                  <v-card-title>
-                  <div>
-                    <v-btn small absolute dark fab top right color="red darken-2" @click="nonFieldErrors.splice(0, nonFieldErrors.length)">
-                      <v-icon>close</v-icon>
-                    </v-btn>
-                    <v-subheader style="line-height: 1.5em;">Os seguintes erros ocorreram ao subemter o formulário:</v-subheader>
-                    <ul style="padding-left: 3em; color: hsla(0,0%,100%,.7)">
-                      <li v-for="erro in nonFieldErrors">{{ erro }}</li>
-                    </ul>
-                  </div>
-                  </v-card-title>
-                </v-card>
-              </v-bottom-sheet>
+              <error-bottom-sheet :non-field-errors="nonFieldErrors" @clear-errors="clearNonFieldErrors()"/>
 
               <v-layout row justify-space-between>
                 <v-btn flat small class="ml-0" :to="{ name: 'user:registration' }">Register</v-btn>
@@ -91,8 +75,8 @@
 </template>
 
 <script>
-// import md5 from 'md5/md5'
 import _ from 'lodash'
+import md5 from 'md5/md5'
 import { FormMixin } from '@/mixins/FormMixin'
 import { mapActions } from 'vuex'
 
@@ -119,8 +103,7 @@ export default {
       email: '',
       password: '',
       remember: false,
-      avatar: null,
-      showErrors: false
+      avatar: null
     }
   },
 
@@ -129,11 +112,7 @@ export default {
       if (this.email.search('@') <= 0) {
         return
       }
-      // this.avatar = `https://www.gravatar.com/avatar/${md5(this.email)}?s=100&d=retro`
-      this.avatar = `https://www.gravatar.com/avatar/123456?s=100&d=retro`
-      // setTimeout(function () {
-      //   this.avatar = 'OK'
-      // }.bind(this), 2000)
+      this.avatar = `https://www.gravatar.com/avatar/${md5(this.email)}?s=100&d=retro`
     }, 500)
   },
 
@@ -193,7 +172,6 @@ export default {
 
 <style scoped>
 #app {
-  // background-image: url('https://cdn.stocksnap.io/img-thumbs/960w/BKWZJHXR57.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -207,14 +185,6 @@ export default {
   left: 0;
   top: 0;
   content: "";
-}
-
-#toolbar-login {
-  height: 45vh
-}
-
-.card--flex-toolbar {
-  margin-top: -64px;
 }
 
 @media screen and (max-width: 600px) {
@@ -237,15 +207,9 @@ export default {
   transition: transform ease .250s;
 }
 
-.fa.icon {
-  font-size: 20px;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .250s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
+.social-login-icon {
+  font-size: 1.8em;
+  margin-bottom: 2px;
 }
 
 .flipY-enter-active, .flipY-leave-active {
