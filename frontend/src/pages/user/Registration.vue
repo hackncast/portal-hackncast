@@ -6,31 +6,31 @@
           <img src="@/assets/hnc-logo-noframe-inverted.svg" alt="Logo">
         </v-avatar>
       </v-toolbar-side-icon>
-      <v-toolbar-title id="hnc-brand">Hack 'n' Cast</v-toolbar-title>
+      <v-toolbar-title>Hack 'n' Cast</v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container fluid fill-height pt-1>
         <v-layout align-center justify-center style="z-index: 2">
           <v-flex xs12 sm6 md4>
-            <v-card color="white" class="elevation-3" id="register-card" style="overflow: hidden">
+            <v-card color="white" class="elevation-3" style="overflow: hidden">
               <v-card-title primary-title class="text-xs-center blue white--text" id="register-card-title">
-                <transition name="card-title-slide" mode="out-in">
-                <div key="registration" v-if="!registered" style="width: 100%">
-                  <h1 class="headline">Registration</h1>
-                  <v-layout row justify-space-around>
-                    <v-btn flat icon color="white"><v-icon>fa-github</v-icon></v-btn>
-                    <v-btn flat icon color="white"><v-icon>fa-google</v-icon></v-btn>
-                    <v-btn flat icon color="white"><v-icon>fa-twitter</v-icon></v-btn>
-                  </v-layout>
-                </div>
-                <div key="success" v-else style="width: 100%">
-                  <h1 class="headline">Thank you!</h1>
-                  <v-btn outline color="white" :to="{ name: 'user:login' }">Please Login</v-btn>
-                </div>
+                <transition name="delayed-fade" mode="out-in">
+                  <div key="registration" v-if="!registered" style="width: 100%">
+                    <h1 class="headline">Registration</h1>
+                    <v-layout row justify-space-around>
+                      <v-btn flat icon color="white"><v-icon class="social-login-icon">fa-github</v-icon></v-btn>
+                      <v-btn flat icon color="white"><v-icon class="social-login-icon">fa-google</v-icon></v-btn>
+                      <v-btn flat icon color="white"><v-icon class="social-login-icon">fa-twitter</v-icon></v-btn>
+                    </v-layout>
+                  </div>
+                  <div key="success" v-else style="width: 100%">
+                    <h1 class="headline">Thank you!</h1>
+                    <v-btn outline color="white" :to="{ name: 'user:login' }">Please Login</v-btn>
+                  </div>
                 </transition>
               </v-card-title>
-              <transition name="shrink" duration="500">
-                <v-card-text v-show="!registered" id="register-card-text" style="height: 100%" v-model="valid">
+              <transition name="shrink">
+                <v-card-text v-show="!registered" style="height: 100%" v-model="valid">
                   <v-form @submit.prevent="submit" ref="form">
                     <v-text-field light autofocus label="Email" name="email" ref="email" type="email" required autofocus
                                   v-validate="'required|email'"
@@ -71,22 +71,7 @@
             </v-card>
             <v-btn flat block class="white--text mt-3" :to="{ name: 'user:login' }">Already registered?</v-btn>
 
-            <v-bottom-sheet inset persistent :value="nonFieldErrors.length > 0">
-              <v-card color="">
-                <v-card-title>
-                <div>
-                  <v-btn small absolute fab top right color="red darken-2" @click="nonFieldErrors.splice(0, nonFieldErrors.length)">
-                    <v-icon>close</v-icon>
-                  </v-btn>
-                  <v-subheader style="line-height: 1.5em;">Os seguintes erros ocorreram ao subemter o formulário:</v-subheader>
-                  <ul style="padding-left: 3em; color: hsla(0,0%,100%,.7)">
-                    <li v-for="erro in nonFieldErrors">{{ erro }}</li>
-                  </ul>
-                </div>
-                </v-card-title>
-              </v-card>
-            </v-bottom-sheet>
-
+            <error-bottom-sheet :non-field-errors="nonFieldErrors" @clear-errors="clearNonFieldErrors()"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -191,11 +176,16 @@ export default {
   border-top-right-radius: 2px !important;
 }
 
-.card-title-slide-enter-active, .card-title-slide-leave-active {
+.social-login-icon {
+  font-size: 1.8em;
+  margin-bottom: 2px;
+}
+
+.delayed-fade-enter-active, .delayed-fade-leave-active {
   transition: opacity .2s;
   transition-delay: .4s;
 }
-.card-title-slide-enter, .card-title-slide-leave-to {
+.delayed-fade-enter, .delayed-fade-leave-to {
   opacity: 0;
 }
 
@@ -212,5 +202,4 @@ export default {
     50%  {opacity: .0; padding: 16px}
     100% {height: 0px; padding: 0px; opacity: 0;}
 }
-
 </style>
