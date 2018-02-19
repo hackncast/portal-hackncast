@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { store } from '@/store/store'
 
+import Inside from '@/pages/layouts/Inside'
 import UserRoutes from '@/router/user'
 import HelloWorld from '@/components/HelloWorld'
 
@@ -15,9 +16,11 @@ let router = new Router({
     [
       {
         path: '/',
-        name: 'home',
-        component: HelloWorld,
-        meta: { requiresAuth: true }
+        component: Inside,
+        meta: { requiresAuth: true },
+        children: [
+          {path: '', name: 'home', component: HelloWorld}
+        ]
       }
     ],
     UserRoutes
