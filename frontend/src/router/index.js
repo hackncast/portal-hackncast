@@ -4,6 +4,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Registration from '@/pages/user/Registration'
+import Login from '@/pages/user/Login'
 
 Vue.use(Router)
 
@@ -19,6 +20,11 @@ let router = new Router({
       path: '/user/registration',
       name: 'user:registration',
       component: Registration
+    },
+    {
+      path: '/user/login',
+      name: 'user:login',
+      component: Login
     }
   ]
 })
