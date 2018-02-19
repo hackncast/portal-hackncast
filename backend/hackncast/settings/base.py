@@ -68,6 +68,12 @@ AUTH_PASSWORD_VALIDATORS = [
      'NumericPasswordValidator'},
 ]
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
 # ---------------------------------- Apps ----------------------------------- #
 DJANGO_APPS = (
     'django.contrib.sites',
@@ -121,13 +127,10 @@ TEMPLATES = [
 # ALLAUTH SETTINGS
 # Use email for login
 ACCOUNT_AUTHENTICATION_METHOD = "email"
-# Unverified email can't login
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
 # User must inform email
+ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
 # User must inform username during singup
 ACCOUNT_USERNAME_REQUIRED = False
-
 # -------------------------- Custom Site Settings --------------------------- #
