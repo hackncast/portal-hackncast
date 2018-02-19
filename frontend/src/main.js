@@ -6,9 +6,11 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+import VueCookies from '@/plugins/VueCookies'
 import { store } from '@/store/store'
 
 Vue.use(Vuetify)
+Vue.use(VueCookies)
 
 Vue.config.productionTip = false
 
