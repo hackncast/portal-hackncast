@@ -1,32 +1,27 @@
-import { store } from '@/store/store'
-
 import Vue from 'vue'
 import Router from 'vue-router'
+import { store } from '@/store/store'
+
+import UserRoutes from '@/router/user'
 import HelloWorld from '@/components/HelloWorld'
-import Registration from '@/pages/user/Registration'
-import Login from '@/pages/user/Login'
 
 Vue.use(Router)
 
 let router = new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HelloWorld,
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/user/registration',
-      name: 'user:registration',
-      component: Registration
-    },
-    {
-      path: '/user/login',
-      name: 'user:login',
-      component: Login
-    }
-  ]
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  },
+  routes: Array.concat(
+    [
+      {
+        path: '/',
+        name: 'home',
+        component: HelloWorld,
+        meta: { requiresAuth: true }
+      }
+    ],
+    UserRoutes
+  )
 })
 
 router.beforeEach((to, from, next) => {
