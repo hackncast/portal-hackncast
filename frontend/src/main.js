@@ -9,6 +9,7 @@ import VeeValidate from 'vee-validate'
 
 // Styling
 import 'vuetify/dist/vuetify.min.css'
+import 'font-awesome/css/font-awesome.css'
 
 // My plugins and modules
 import App from '@/App'
