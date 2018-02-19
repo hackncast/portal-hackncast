@@ -1,4 +1,8 @@
+import ErrorBottomSheet from '@/components/ErrorBottomSheet'
+
 export const FormMixin = {
+  components: {ErrorBottomSheet},
+
   data () {
     return {
       defaultErrorMessage: 'Sorry, your form still have errors!',
@@ -6,6 +10,7 @@ export const FormMixin = {
       nonFieldErrors: []
     }
   },
+
   methods: {
     isNotValidated () {
       return Object.values(this.fields).filter(i => i.required).some(i => !i.validated)
@@ -44,6 +49,9 @@ export const FormMixin = {
       } else {
         this.nonFieldErrors.push(this.defaultErrorMessage)
       }
+    },
+    clearNonFieldErrors () {
+      this.nonFieldErrors.splice(0, this.nonFieldErrors.length)
     }
   }
 }
