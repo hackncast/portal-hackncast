@@ -1,8 +1,15 @@
 <template>
   <v-app id="inspire">
+    <v-toolbar color="blue-grey darken-4" dark app :clipped-left="$vuetify.breakpoint.mdAndUp" fixed>
+      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <span class="text-md-left text-sm-center">Administration</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-toolbar>
+
     <v-navigation-drawer dark class="blue-grey darken-2" fixed :clipped="$vuetify.breakpoint.mdAndUp" app :mini-variant.sync="mini"  value="true" v-model="drawer">
-      <v-toolbar flat class="blue-grey darken-3" style="height: 65px">
-        <v-list class="pa-0">
+        <v-list class="pa-0 blue-grey darken-3">
           <v-list-tile avatar>
             <v-list-tile-avatar>
               <img :src="currentUser.avatar" >
@@ -17,7 +24,6 @@
             </v-list-tile-action>
           </v-list-tile>
         </v-list>
-      </v-toolbar>
 
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
@@ -29,16 +35,21 @@
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+
+        <li>
+          <v-bottom-nav absolute :value="true" color="blue-grey darken-2" style="box-shadow: unset;">
+            <v-btn v-show="!mini">
+              <span>Settings</span>
+              <v-icon>settings</v-icon>
+            </v-btn>
+            <v-btn @click.native.stop="logout">
+              <span>Logout</span>
+              <v-icon>exit_to_app</v-icon>
+            </v-btn>
+          </v-bottom-nav>
+        </li>
       </v-list>
     </v-navigation-drawer>
-
-    <v-toolbar color="blue-grey darken-3" dark app :clipped-left="$vuetify.breakpoint.mdAndUp" fixed>
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span class="text-md-left text-sm-center">Administration</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
 
     <v-content>
       <v-container fluid fill-height>
@@ -71,6 +82,12 @@ export default {
 
   props: {
     source: String
+  },
+
+  methods: {
+    logout () {
+      console.log('logout')
+    }
   }
 }
 </script>
