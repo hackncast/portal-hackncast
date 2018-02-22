@@ -15,11 +15,11 @@
             </div>
             <div key="success" v-else style="width: 100%">
               <h1 class="headline">Thank you!</h1>
-              <v-btn outline color="white" :to="{ name: 'user:login' }">Please Login</v-btn>
+              <v-progress-linear :indeterminate="true" :active="true" height="2" color="blue darken-3" style="margin-bottom: 0px"/>
             </div>
           </transition>
         </v-card-title>
-        <transition name="shrink">
+        <transition name="shrink" duration="500">
           <v-card-text v-show="!registered" style="height: 100%" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
               <v-text-field light autofocus label="Email" name="email" ref="email" type="email" required autofocus
@@ -59,7 +59,9 @@
           </v-card-text>
         </transition>
       </v-card>
-      <v-btn flat block class="white--text mt-3" :to="{ name: 'user:login' }">Already registered?</v-btn>
+      <transition name="fade">
+        <v-btn v-show="!registered" flat block class="white--text mt-3" :to="{ name: 'user:login' }">Already registered?</v-btn>
+      </transition>
 
       <error-bottom-sheet :non-field-errors="nonFieldErrors" @clear-errors="clearNonFieldErrors()"/>
     </v-flex>
@@ -97,7 +99,12 @@ export default {
 
         this.$http.post('/api/auth/registration/', data)
           .then(data => { data.json(); console.log(data) })
-          .then(obj => { this.registered = true; console.log('obj', obj) })
+          .then(obj => {
+            this.registered = true
+            setTimeout(() => {
+              this.$router.push({ name: 'home' })
+            }, 3500)
+          })
           .catch(err => this.processErrors(err))
           .finally(() => { this.working = false })
       }
@@ -120,7 +127,7 @@ export default {
 
 .delayed-fade-enter-active, .delayed-fade-leave-active {
   transition: opacity .2s;
-  transition-delay: .4s;
+  transition-delay: .5s;
 }
 .delayed-fade-enter, .delayed-fade-leave-to {
   opacity: 0;
