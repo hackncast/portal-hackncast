@@ -43,7 +43,7 @@
 
               <v-checkbox disabled label="Remember-me" name="remember" v-model="remember" type="checkbox"/>
 
-              <v-btn block color="primary" type="submit" class="white--text">Login</v-btn>
+              <v-btn block color="primary" type="submit" class="white--text" :loading="working">Login</v-btn>
             </section>
           </transition-group>
         </v-form>
@@ -72,6 +72,7 @@ export default {
 
   data () {
     return {
+      working: false,
       step: 1,
       showPassord: false,
       valid: false,
@@ -110,28 +111,28 @@ export default {
           this.$nextTick(() => this.$refs.password.focus())
         }
       } else {
-        this.$validator.validateAll().then(res => {
-          if (res) {
-            const data = {
-              email: this.email,
-              password: this.password
-            }
-
-            this.login(data)
-              .then(user => {
-                if (this.$route.query.next) {
-                  this.$router.push(this.$route.query.next)
-                } else {
-                  this.$router.push({name: 'home'})
-                }
-              })
-              .catch(err => {
-                this.processErrors(err)
-              })
-          } else {
-            this.nonFieldErrors.push(this.defaultErrorMessage)
+        if (this.$validator.validateAll()) {
+          this.working = true
+          const data = {
+            email: this.email,
+            password: this.password
           }
-        })
+
+          this.login(data)
+            .then(user => {
+              if (this.$route.query.next) {
+                this.$router.push(this.$route.query.next)
+              } else {
+                this.$router.push({name: 'home'})
+              }
+            })
+            .catch(err => {
+              this.processErrors(err)
+            })
+            .finally(() => { this.working = false })
+        } else {
+          this.nonFieldErrors.push(this.defaultErrorMessage)
+        }
       }
     }
   }
