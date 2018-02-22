@@ -42,5 +42,19 @@ export default {
           reject(err)
         })
     })
+  },
+
+  logout ({ commit }) {
+    return new Promise((resolve, reject) => {
+      Vue.http.post('/api/auth/logout/')
+        .then(data => data.json())
+        .then(data => {
+          commit(USER.LOGOUT)
+          resolve(data)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
   }
 }
