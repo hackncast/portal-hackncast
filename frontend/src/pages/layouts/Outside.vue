@@ -78,11 +78,4 @@ export default {
     margin-right: 8%;
   }
 }
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity ease .25s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
 </style>

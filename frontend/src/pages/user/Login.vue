@@ -149,21 +149,4 @@ export default {
   font-size: 1.8em;
   margin-bottom: 2px;
 }
-
-.flipY-enter-active, .flipY-leave-active {
-  transition: all .150s;
-}
-.flipY-enter, .flipY-leave-to {
-  transform: rotateY(90deg);
-}
-
-.customSlide-enter-active, .customSlide-leave-active {
-  transition: transform ease .250s;
-}
-.customSlide-enter {
-  transform: translateX(-100vw);
-}
-.customSlide-leave-to {
-  transform: translateX(100vw);
-}
 </style>

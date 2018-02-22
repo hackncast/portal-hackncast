@@ -124,26 +124,4 @@ export default {
   font-size: 1.8em;
   margin-bottom: 2px;
 }
-
-.delayed-fade-enter-active, .delayed-fade-leave-active {
-  transition: opacity .2s;
-  transition-delay: .5s;
-}
-.delayed-fade-enter, .delayed-fade-leave-to {
-  opacity: 0;
-}
-
-.shrink-enter-active, .shrink-leave-active {
-  transition: height 2s;
-}
-.shrink-enter, .shrink-leave-to {
-  animation: mymove .5s;
-}
-
-@keyframes mymove {
-    0%   {height: 302px; opacity: 1;}
-    25%  {opacity: .5;}
-    50%  {opacity: .0; padding: 16px}
-    100% {height: 0px; padding: 0px; opacity: 0;}
-}
 </style>

@@ -8,7 +8,7 @@ import VueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
 
 // Styling
-import 'vuetify/dist/vuetify.min.css'
+import '@/style/base.sass'
 import 'font-awesome/css/font-awesome.css'
 
 // My plugins and modules

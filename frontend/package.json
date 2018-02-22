@@ -16,6 +16,8 @@
     "dotenv-webpack": "^1.5.4",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.5",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
     "vee-validate": "^2.0.3",
     "js-cookie": "^2.2.0",
     "vue": "^2.5.2",
