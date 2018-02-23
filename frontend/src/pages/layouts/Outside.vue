@@ -6,7 +6,7 @@
           <img src="@/assets/hnc-logo-noframe-inverted.svg" alt="Logo">
         </v-avatar>
       </v-toolbar-side-icon>
-      <v-toolbar-title>Hack 'n' Cast</v-toolbar-title>
+      <v-toolbar-title class="hnc-title" style="font-size: 2em; padding-bottom: 5px;">Hack'n'Cast</v-toolbar-title>
     </v-toolbar>
     <v-content>
       <transition name="fade" mode="out-in">

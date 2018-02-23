@@ -1,7 +1,12 @@
 <template>
 <v-toolbar app dark dense fixed clipped-left complex color="blue-grey darken-4">
-  <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-    <v-toolbar-side-icon @click.stop=""></v-toolbar-side-icon>
+  <v-toolbar-side-icon @click.stop="showDrawer()"></v-toolbar-side-icon>
+  <v-avatar>
+    <img src="@/assets/hnc-logo-noframe-inverted.svg" alt="Logo" style="margin-top: -3px">
+  </v-avatar>
+  <v-spacer></v-spacer>
+  <v-toolbar-title class="ml-0 pl-0 hnc-title" style="font-size: 2em; padding-bottom: 5px;">
+    Hack'n'Cast
   </v-toolbar-title>
   <v-spacer></v-spacer>
   <v-menu offset-y :close-on-content-click="false" :nudge-width="200" :nudge-bottom="6" :nudge-left="210" v-model="menu">
