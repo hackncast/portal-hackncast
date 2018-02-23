@@ -1,3 +1,14 @@
+body::before
+  content: " "
+  display: block
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background-color: #263238
+  z-index: -1
+
 // Fade transition
 .fade-enter-active, .fade-leave-active
   transition: opacity ease .25s;
@@ -5,6 +16,7 @@
 .fade-enter, .fade-leave-to
   opacity: 0;
 
+// FlipY (Used for avatar transitions)
 .flipY-enter-active, .flipY-leave-active
   transition: all .150s;
 
@@ -20,7 +32,7 @@
 .customSlide-leave-to
   transform: translateX(100vw);
 
-
+// Delayed fade, used for Registration screen title
 .delayed-fade-enter-active, .delayed-fade-leave-active
   transition: opacity .2s;
   transition-delay: .5s;
@@ -28,14 +40,28 @@
 .delayed-fade-enter, .delayed-fade-leave-to
   opacity: 0;
 
+// Shrink (roll up) transition. Used at registration card body.
 .shrink-enter-active, .shrink-leave-active
   transition: height 2s;
 
 .shrink-enter, .shrink-leave-to
-  animation: mymove .5s;
+  animation: srhink .5s;
 
-@keyframes mymove
+@keyframes srhink
     0%   {height: 302px; opacity: 1;}
     25%  {opacity: .5;}
     50%  {opacity: .0; padding: 16px}
     100% {height: 0px; padding: 0px; opacity: 0;}
+
+// Slide Fade Transition. Used to/from login screen
+.slide-fade-enter-active
+  transition: all .25s ease
+
+.slide-fade-leave-active
+  transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+
+.slide-fade-enter
+  transform: translateY(-100%)
+
+.slide-fade-leave-to
+  opacity: 0
