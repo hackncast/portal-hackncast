@@ -1,3 +1,7 @@
+export const UI = {
+  SIDEBAR_STATUS: 'UI_SIDEBAR_STATUS'
+}
+
 export const USER = {
   FETCH_DATA: 'USER_FETCH_DATA',
   LOGOUT: 'USER_LOGOUT'

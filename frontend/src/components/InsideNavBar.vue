@@ -47,6 +47,10 @@ export default {
   methods: {
     ...mapActions(['logout']),
 
+    showDrawer () {
+      this.$store.state.Ui.sidebarVisible = true
+    },
+
     doLogout () {
       this.working = true
       this.logout()
