@@ -76,6 +76,7 @@ AUTHENTICATION_BACKENDS = (
 )
 # ---------------------------------- Apps ----------------------------------- #
 DJANGO_APPS = (
+    'django.contrib.admin',
     'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -94,6 +95,7 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
+    'apps.user',
 )
 
 # -------------------- Middlewares & Templates Settings --------------------- #

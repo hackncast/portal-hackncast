@@ -22,6 +22,7 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     url(r'^api/auth/', include('rest_auth.urls')),
     url(r'^api/auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^api/user/', include('apps.user.urls')),
 
     # This url is used by django-allauth and empty TemplateView is defined just
     # to allow reverse() call inside app
