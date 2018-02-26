@@ -20,7 +20,7 @@
           </transition>
         </v-card-title>
         <transition name="shrink" duration="500">
-          <v-card-text v-show="!registered" style="height: 100%" v-model="valid">
+          <v-card-text v-show="!registered" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
               <v-text-field light autofocus label="Email" name="email" ref="email" type="email" required autofocus
                             v-validate="'required|email'"
@@ -73,7 +73,7 @@
 import { FormMixin } from '@/mixins/FormMixin'
 
 export default {
-  name: 'Login',
+  name: 'Registration',
   mixins: [FormMixin],
   data () {
     return {

@@ -15,7 +15,7 @@
           </transition>
         </v-card-title>
         <transition name="shrink" duration="500">
-          <v-card-text v-show="!sent" style="height: 100%" v-model="valid">
+          <v-card-text v-show="!sent" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
               <v-text-field light autofocus label="Email" name="email" ref="email" type="email" required
                             v-validate="'required|email'"
@@ -47,7 +47,7 @@ export default {
     return {
       working: false,
       valid: false,
-      email: 'teste@teste.com',
+      email: '',
       sent: false
     }
   },
@@ -78,7 +78,7 @@ export default {
 
 <style scoped>
 #register-card-title {
-  min-height: 90px;
+  min-height: 120px;
   border-top-left-radius: 2px !important;
   border-top-right-radius: 2px !important;
 }

@@ -6,7 +6,7 @@
         <v-card-title primary-title class="text-xs-center blue white--text" id="register-card-title">
           <transition name="delayed-fade" mode="out-in">
             <div key="registration" v-if="!sent" style="width: 100%">
-              <h1 class="headline">Reset Your Password</h1>
+              <h1 class="headline">Change Your Password</h1>
             </div>
             <div key="success" v-else style="width: 100%">
               <h1 class="headline">Thank you!</h1>
@@ -15,7 +15,7 @@
           </transition>
         </v-card-title>
         <transition name="shrink" duration="500">
-          <v-card-text v-show="!sent" style="height: 100%" v-model="valid">
+          <v-card-text v-show="!sent" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
               <v-text-field light label="New Password" name="new_password1" ref="new_password1" required autofocus
                             v-model="new_password1"
@@ -57,7 +57,7 @@
 import { FormMixin } from '@/mixins/FormMixin'
 
 export default {
-  name: 'ResetPassword',
+  name: 'ResetPasswordToken',
   mixins: [FormMixin],
   data () {
     return {
@@ -108,7 +108,7 @@ export default {
 
 <style scoped>
 #register-card-title {
-  min-height: 90px;
+  min-height: 105px;
   border-top-left-radius: 2px !important;
   border-top-right-radius: 2px !important;
 }
