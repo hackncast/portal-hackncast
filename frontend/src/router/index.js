@@ -28,21 +28,21 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name === '404') {
+  if (to.name === '404' || to.meta.mayRequiresAuth) {
     next()
     return
   }
 
   store.dispatch('checkStoredLogin')
     .then(data => {
-      if (to.matched.some(record => record.meta.requiresAuth)) {
+      if (to.matched.some(record => record.meta.requiresAuth === true)) {
         next()
       } else {
         next({ name: 'home' })
       }
     })
     .catch(err => {
-      if (to.matched.some(record => record.meta.requiresAuth)) {
+      if (to.matched.some(record => record.meta.requiresAuth === false)) {
         next({ name: 'user:login', query: {next: to.path} })
       } else {
         next()

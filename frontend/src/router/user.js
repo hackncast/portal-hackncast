@@ -10,7 +10,12 @@ export default [
     path: '/user',
     component: Outside,
     children: [
-      {path: 'email_confirmation', name: 'user:email_confirmation', component: EmailConfirmation},
+      {
+        path: 'email/confirmation/:key/',
+        name: 'user:email_confirmation',
+        component: EmailConfirmation,
+        meta: { mayRequiresAuth: true }
+      },
       {path: 'password/reset/send/', name: 'user:reset_password', component: ResetPassword},
       {path: 'password/reset/token/:uidb64/:token/', name: 'user:reset_password_token', component: ResetPasswordToken},
       {path: 'registration', name: 'user:registration', component: Registration},
