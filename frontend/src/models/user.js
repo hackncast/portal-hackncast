@@ -13,7 +13,7 @@ export default class User {
   }
 
   get displayName () {
-    return this.username
+    return this.username.charAt(0).toUpperCase() + this.username.slice(1)
   }
 
   static fromJson (data) {
