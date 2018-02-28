@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>
         <div>
-          <v-btn small absolute :dark="dark" fab top right color="red darken-2" @click="$emit('clear-errors')"><v-icon>close</v-icon></v-btn>
+          <v-btn ref="errorBottomSheetCloseButton" small absolute :dark="dark" fab top right color="red darken-2" @click="$emit('clear-errors')"><v-icon>close</v-icon></v-btn>
           <v-subheader style="line-height: 1.5em; padding: 0px;">{{ text }}</v-subheader>
           <ul style="padding-left: 2em; color: hsla(0,0%,100%,.7)">
             <li v-for="erro in nonFieldErrors">{{ erro }}</li>
@@ -31,9 +31,18 @@ export default {
       type: Array,
       required: true
     }
+  },
+
+  watch: {
+    nonFieldErrors (val) {
+      if (this.nonFieldErrors.length > 0) {
+        this.$nextTick(() => this.$refs.errorBottomSheetCloseButton.$el.focus())
+      } else {
+        if (document.forms.length > 0) {
+          this.$nextTick(() => document.forms[0].querySelector('[autofocus]').focus())
+        }
+      }
+    }
   }
 }
 </script>
-
-<style scoped>
-</style>
