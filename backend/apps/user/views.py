@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.views.generic.base import RedirectView
 from django.contrib import messages
+from django.views.generic.base import RedirectView
 
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress

@@ -135,4 +135,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
 # User must inform username during singup
 ACCOUNT_USERNAME_REQUIRED = False
+
+# DRF CAPTCHA
+GR_CAPTCHA_SECRET_KEY = env('CAPTCHA_SECRET_KEY')
 # -------------------------- Custom Site Settings --------------------------- #

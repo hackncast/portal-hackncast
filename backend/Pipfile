@@ -13,6 +13,7 @@ djangorestframework = "*"
 django-allauth = "*"
 django-rest-auth = "*"
 "psycopg2" = "*"
+django-rest-recaptcha = "*"
 
 
 [dev-packages]

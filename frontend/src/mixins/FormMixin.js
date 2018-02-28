@@ -39,6 +39,11 @@ export const FormMixin = {
           })
         }
       })
+
+      // Check Invisible Captcha Errors
+      if (data.hasOwnProperty('recaptcha')) {
+        this.nonFieldErrors.push('Recaptcha: ' + data.recaptcha)
+      }
     },
     processErrors (err) {
       if (err.ok === false && err.status === 0) {

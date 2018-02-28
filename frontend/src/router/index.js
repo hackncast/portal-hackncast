@@ -35,14 +35,14 @@ router.beforeEach((to, from, next) => {
 
   store.dispatch('checkStoredLogin')
     .then(data => {
-      if (to.matched.some(record => record.meta.requiresAuth === true)) {
+      if (to.matched.some(record => record.meta.requiresAuth)) {
         next()
       } else {
         next({ name: 'home' })
       }
     })
     .catch(err => {
-      if (to.matched.some(record => record.meta.requiresAuth === false)) {
+      if (to.matched.some(record => record.meta.requiresAuth)) {
         next({ name: 'user:login', query: {next: to.path} })
       } else {
         next()

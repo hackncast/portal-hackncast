@@ -22,7 +22,7 @@
         <transition name="shrink" duration="500">
           <v-card-text v-show="!registered" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
-              <v-text-field light autofocus label="Email" name="email" ref="email" type="email" required autofocus
+              <v-text-field light autofocus label="Email" name="email" ref="email" type="email" tabindex="1" required autofocus
                             v-validate="'required|email'"
                             prepend-icon="mail"
                             data-vv-as="email"
@@ -30,7 +30,7 @@
                             v-model="email">
               </v-text-field>
 
-              <v-text-field light label="Password" name="password1" ref="password1" required
+              <v-text-field light label="Password" name="password1" ref="password1" tabindex="2" required
                             v-model="password1"
                             prepend-icon="lock"
                             v-validate="'required'"
@@ -42,7 +42,7 @@
                             >
               </v-text-field>
 
-              <v-text-field light label="Confirm Password" name="password2" ref="password2" required
+              <v-text-field light label="Confirm Password" name="password2" ref="password2" tabindex="3" required
                             v-model="password2"
                             v-validate="'required|confirmed:password1'"
                             prepend-icon="lock"
@@ -54,7 +54,14 @@
                             >
               </v-text-field>
 
-              <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working">Register</v-btn>
+              <vue-recaptcha ref="invisibleRecaptcha"
+                             @verify="submit"
+                             size="invisible"
+                             :sitekey="sitekey"
+                             tabindex="-1"
+                             >
+                <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working" tabindex="4">Register</v-btn>
+              </vue-recaptcha>
             </v-form>
           </v-card-text>
         </transition>
@@ -70,15 +77,21 @@
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha'
 import { FormMixin } from '@/mixins/FormMixin'
 
 export default {
   name: 'Registration',
+
+  components: {VueRecaptcha},
+
   mixins: [FormMixin],
+
   data () {
     return {
       working: false,
       valid: false,
+      sitekey: process.env.CAPTCHA_PUBLIC_KEY,
       showPassword: false,
       email: '',
       password1: '',
@@ -88,12 +101,13 @@ export default {
   },
 
   methods: {
-    submit () {
-      if (this.$validator.validateAll()) {
+    submit (captchaResponse = '') {
+      if (this.$validator.validateAll() && captchaResponse !== '') {
         const data = {
           email: this.email,
           password1: this.password1,
-          password2: this.password1
+          password2: this.password1,
+          recaptcha: captchaResponse
         }
         this.working = true
 
@@ -105,7 +119,10 @@ export default {
               this.$router.push({ name: 'home' })
             }, 3500)
           })
-          .catch(err => this.processErrors(err))
+          .catch(err => {
+            this.processErrors(err)
+            this.$refs.invisibleRecaptcha.reset()
+          })
           .finally(() => { this.working = false })
       }
     }
