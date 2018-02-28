@@ -5,6 +5,7 @@ from django.urls import path
 
 from . import views
 
+app_name = 'user'
 urlpatterns = [
     path(
         'email/<pk>/send_confirmation',
@@ -15,12 +16,10 @@ urlpatterns = [
     # Redirects
     path(
         'reset/<uidb64>/<token>/',
-        views.RedirectPasswordReset.as_view(),
-        name='password_reset_confirm'
+        views.RedirectPasswordReset.as_view(), name='password_reset_confirm'
     ),
     path(
         'account-confirm-email/<key>/',
-        views.RedirectEmailConfirmation.as_view(),
-        name='account_confirm_email'
+        views.RedirectEmailConfirmation.as_view(), name='account_confirm_email'
     ),
 ]

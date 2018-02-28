@@ -19,9 +19,11 @@ from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
 urlpatterns = [
+    # My apps
     url(r'^api/', include('apps.core.urls')),
     url(r'^api/user/', include('apps.user.urls')),
 
+    # Fixes
     # This url is used by django-allauth and empty TemplateView is defined just
     # to allow reverse() call inside app
     url(

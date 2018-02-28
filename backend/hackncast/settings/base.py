@@ -95,6 +95,7 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
+    'apps.core',
     'apps.user',
 )
 
@@ -139,3 +140,5 @@ ACCOUNT_USERNAME_REQUIRED = False
 # DRF CAPTCHA
 GR_CAPTCHA_SECRET_KEY = env('CAPTCHA_SECRET_KEY')
 # -------------------------- Custom Site Settings --------------------------- #
+FRONTEND_SITE_DOMAIN=env("SITE_DOMAIN", default="localhost:8080")
+FRONTEND_SITE_NAME=env("SITE_NAME", default="Portal Hack 'n' Cast")
