@@ -37,13 +37,12 @@ export const FormMixin = {
           data[name].forEach(text => {
             this.$validator.errors.add(name, text)
           })
+        } else {
+          data[name].forEach(text => {
+            this.nonFieldErrors.push(name + ': ' + data[name])
+          })
         }
       })
-
-      // Check Invisible Captcha Errors
-      if (data.hasOwnProperty('recaptcha')) {
-        this.nonFieldErrors.push('Recaptcha: ' + data.recaptcha)
-      }
     },
     processErrors (err) {
       if (err.ok === false && err.status === 0) {
