@@ -31,7 +31,7 @@
         </transition>
       </v-card>
 
-      <v-btn flat block class="white--text mt-3" :to="{ name: 'user:login' }">I remembered my password!</v-btn>
+      <v-btn small flat block class="white--text mt-3" :to="{ name: 'user:login' }">I remembered my password!</v-btn>
 
       <error-bottom-sheet :non-field-errors="nonFieldErrors" @clear-errors="clearNonFieldErrors()"/>
     </v-flex>

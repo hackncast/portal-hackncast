@@ -52,17 +52,7 @@
 
         <v-layout row justify-space-between>
           <v-btn flat small class="ml-0" :to="{ name: 'user:registration' }">Register</v-btn>
-          <v-menu offset-y>
-            <v-btn flat small slot="activator" class="mr-0">Need Help?</v-btn>
-            <v-list dense>
-              <v-list-tile @click="" :to="{ 'name': 'user:reset_password' }">
-                <v-list-tile-title>Reset Password</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile @click="" :to="{ 'name': 'user:email_confirmation' }">
-                <v-list-tile-title>Email Confirmation</v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+          <v-btn flat small class="mr-0" :to="{ 'name': 'user:reset_password' }">Need Help?</v-btn>
         </v-layout>
     </v-flex>
   </v-layout>
