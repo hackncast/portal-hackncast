@@ -1,17 +1,12 @@
 <template>
-  <v-navigation-drawer
-    temporary
-    v-model="drawer"
-    dark
-    absolute
-    >
+  <v-navigation-drawer temporary v-model="drawer" dark absolute>
     <v-list class="pa-1">
       <v-list-tile avatar tag="div">
         <v-list-tile-avatar>
-          <img src="https://randomuser.me/api/portraits/men/85.jpg" >
+          <img :src="currentUser.avatar" >
         </v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title>John Leider</v-list-tile-title>
+            <v-list-tile-title>{{ currentUser.displayName }}</v-list-tile-title>
           </v-list-tile-content>
           <v-list-tile-action>
               <v-btn icon @click.stop="drawer = !drawer">
@@ -35,8 +30,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   computed: {
+    ...mapGetters(['currentUser']),
+
     drawer: {
       get () { return this.$store.state.Ui.sidebarVisible },
       set (val) { this.$store.state.Ui.sidebarVisible = val }
@@ -46,8 +45,9 @@ export default {
   data () {
     return {
       items: [
-        { title: 'Home', icon: 'dashboard' },
-        { title: 'About', icon: 'question_answer' }
+        { title: 'Vaults', icon: 'https' },
+        { title: 'Users', icon: 'people' },
+        { title: 'Administration', icon: 'settings' }
       ]
     }
   }
