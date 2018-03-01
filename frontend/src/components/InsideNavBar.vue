@@ -1,5 +1,5 @@
 <template>
-<v-toolbar app dark dense fixed clipped-left complex color="blue-grey darken-4">
+<v-toolbar app dark dense scroll-off-screen :scroll-threshold="100" color="blue-grey darken-4">
   <v-toolbar-side-icon @click.stop="showDrawer()"></v-toolbar-side-icon>
   <v-avatar>
     <img src="@/assets/hnc-logo-noframe-inverted.svg" alt="Logo" style="margin-top: -3px">
@@ -9,13 +9,13 @@
     Hack'n'Cast
   </v-toolbar-title>
   <v-spacer></v-spacer>
-  <v-menu offset-y :close-on-content-click="false" :nudge-width="200" :nudge-bottom="6" :nudge-left="210" v-model="menu">
+  <v-menu offset-y :close-on-content-click="false" :nudge-width="200" :nudge-left="210" v-model="menu">
     <v-btn flat dark icon slot="activator">
       <v-icon>account_circle</v-icon>
     </v-btn>
     <v-card>
-      <v-list>
-        <v-list-tile avatar>
+      <v-list two-line class="py-0">
+        <v-list-tile avatar @click="">
           <v-list-tile-avatar>
             <img :src="currentUser.avatar" :alt="currentUser.displayName">
           </v-list-tile-avatar>
