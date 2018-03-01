@@ -6,16 +6,17 @@ const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-// const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const BundleTracker = require('webpack-bundle-tracker')
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 const env = require('../config/dev.env')
 
 const HOST = process.env.HOST || config.dev.host
 const PORT = (process.env.PORT && Number(process.env.PORT)) || config.dev.port
+const PROXY_PROTOCOL = process.env.PROXY_PROTOCOL || 'http'
+const PROXY_HOST = process.env.PROXY_HOST || HOST
+const PROXY_PORT = process.env.PROXY_PORT || 8000
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -97,7 +98,19 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    new BundleTracker({filename: './webpack-stats.json'})
+    new BundleTracker({filename: './webpack-stats.json'}),
+    new BrowserSyncPlugin({
+      // browse to http://localhost:3000/ during development,
+      // ./public directory is being served
+      ghostMode: false,
+      host: HOST,
+      port: PORT,
+      proxy: `${PROXY_PROTOCOL}://${PROXY_HOST}:${PROXY_PORT}`,
+      files: [
+        '../backend/templates/**/*.html',
+        '../backend/apps/*/templates/**/*.html'
+      ]
+    })
   ],
   watch: true,
   watchOptions: {
