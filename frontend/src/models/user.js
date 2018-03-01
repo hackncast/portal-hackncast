@@ -13,7 +13,10 @@ export default class User {
   }
 
   get displayName () {
-    return this.username.charAt(0).toUpperCase() + this.username.slice(1)
+    if (this.username) {
+      return this.username.charAt(0).toUpperCase() + this.username.slice(1)
+    }
+    return ''
   }
 
   static fromJson (data) {
