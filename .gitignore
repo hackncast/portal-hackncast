@@ -107,6 +107,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 frontend/test/unit/coverage/
+webpack-stats.json
 
 # Others
 db.sqlite3

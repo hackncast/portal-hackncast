@@ -30,4 +30,8 @@ urlpatterns = [
         r'^api/auth/registration/account-email-verification-sent/$',
         TemplateView.as_view(), name='account_email_verification_sent'
     ),
+    url(
+        r'^admin/$',
+        TemplateView.as_view(template_name="admin.html"), name='admin'
+    ),
 ]

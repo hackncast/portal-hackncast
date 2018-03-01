@@ -29,7 +29,7 @@ USE_TZ = True
 STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    str(ROOT_DIR.path('../frontend/static')),
+    str(ROOT_DIR.path('../frontend/dist/static/')),
 )
 
 # Media files
@@ -86,6 +86,7 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
+    'webpack_loader',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
@@ -113,7 +114,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ROOT_DIR.path('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,6 +140,20 @@ ACCOUNT_USERNAME_REQUIRED = False
 
 # DRF CAPTCHA
 GR_CAPTCHA_SECRET_KEY = env('CAPTCHA_SECRET_KEY')
+
+# Webpack Loader
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'static/',
+        'STATS_FILE': os.path.join(
+            str(ROOT_DIR.path('../frontend')),  'webpack-stats.json'
+        ),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [],
+    }
+}
 # -------------------------- Custom Site Settings --------------------------- #
 FRONTEND_SITE_DOMAIN=env("SITE_DOMAIN", default="localhost:8080")
 FRONTEND_SITE_NAME=env("SITE_NAME", default="Portal Hack 'n' Cast")

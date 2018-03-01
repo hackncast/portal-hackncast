@@ -19,6 +19,7 @@ django-rest-recaptcha = "*"
 [dev-packages]
 
 django-extensions = "*"
+django-webpack-loader = "*"
 
 
 [requires]
