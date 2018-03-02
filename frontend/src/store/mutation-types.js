@@ -1,4 +1,5 @@
 export const UI = {
+  LIGHT_THEME: 'UI_LIGHT_THEME',
   SIDEBAR_STATUS: 'UI_SIDEBAR_STATUS'
 }
 

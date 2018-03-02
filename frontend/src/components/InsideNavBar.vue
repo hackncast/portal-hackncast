@@ -1,5 +1,5 @@
 <template>
-<v-toolbar app dark dense scroll-off-screen :scroll-threshold="100" color="blue-grey darken-4">
+<v-toolbar app dark dense scroll-off-screen :scroll-threshold="100" :color="darkTheme ? 'blue-grey darken-4' : 'blue'">
   <v-toolbar-side-icon @click.stop="showDrawer()"></v-toolbar-side-icon>
   <v-avatar>
     <img src="@/assets/hnc-logo-noframe-inverted.svg" alt="Logo" style="margin-top: -3px">
@@ -25,7 +25,20 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+
       <v-divider></v-divider>
+
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-switch v-model="darkTheme" color="blue darken-2"></v-switch>
+          </v-list-tile-action>
+          <v-list-tile-title>Dark Theme</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+
+      <v-divider></v-divider>
+
       <v-card-actions>
         <v-btn flat @click="menu = false">Close</v-btn>
         <v-spacer></v-spacer>
@@ -37,7 +50,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { UI } from '@/store/mutation-types'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   data: () => ({
@@ -46,11 +60,22 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(['currentUser'])
+    ...mapGetters(['currentUser']),
+    darkTheme: {
+      get () {
+        return !this.$store.state.Ui.lightTheme
+      },
+      set (val) {
+        this.setLightTheme(!val)
+      }
+    }
   },
 
   methods: {
     ...mapActions(['logout']),
+    ...mapMutations({
+      setLightTheme: UI.LIGHT_THEME
+    }),
 
     showDrawer () {
       this.$store.state.Ui.sidebarVisible = true
