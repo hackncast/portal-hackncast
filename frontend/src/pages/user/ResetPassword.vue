@@ -17,7 +17,7 @@
         <transition name="shrink" duration="500">
           <v-card-text v-show="!sent" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
-              <v-text-field light autofocus label="Email" name="email" ref="email" type="email" required
+              <v-text-field light autofocus label="Email" name="email" ref="email" type="email" required tabindex="1"
                             v-validate="'required|email'"
                             prepend-icon="mail"
                             data-vv-as="email"
@@ -25,7 +25,13 @@
                             v-model="email">
               </v-text-field>
 
-              <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working">Reset Password</v-btn>
+              <vue-recaptcha ref="invisibleRecaptcha"
+                             @verify="submit"
+                             size="invisible"
+                             :sitekey="sitekey"
+                             tabindex="-1">
+                <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working" tabindex="2">Reset Password</v-btn>
+              </vue-recaptcha>
             </v-form>
           </v-card-text>
         </transition>
@@ -40,13 +46,19 @@
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha'
 import { FormMixin } from '@/mixins/FormMixin'
 
 export default {
   name: 'ResetPassword',
+
+  components: {VueRecaptcha},
+
   mixins: [FormMixin],
+
   data () {
     return {
+      sitekey: process.env.CAPTCHA_PUBLIC_KEY,
       working: false,
       valid: false,
       email: '',
@@ -55,10 +67,11 @@ export default {
   },
 
   methods: {
-    submit () {
+    submit (captchaResponse) {
       if (this.$validator.validateAll()) {
         const data = {
-          email: this.email
+          email: this.email,
+          recaptcha: captchaResponse
         }
         this.working = true
 
@@ -70,7 +83,10 @@ export default {
               this.$router.push({ name: 'user:login' })
             }, 3500)
           })
-          .catch(err => this.processErrors(err))
+          .catch(err => {
+            this.processErrors(err)
+            this.$refs.invisibleRecaptcha.reset()
+          })
           .finally(() => { this.working = false })
       }
     }

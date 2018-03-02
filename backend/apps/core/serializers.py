@@ -3,7 +3,12 @@
 
 from recaptcha.fields import ReCaptchaField
 from rest_auth.registration.serializers import RegisterSerializer
+from rest_auth.serializers import PasswordResetSerializer
 
 
 class CaptchaRegisterSerializer(RegisterSerializer):
+    recaptcha = ReCaptchaField(write_only=True)
+
+
+class CaptchaPasswordResetSerializer(PasswordResetSerializer):
     recaptcha = ReCaptchaField(write_only=True)

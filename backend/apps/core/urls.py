@@ -7,7 +7,6 @@ from . import views
 from rest_auth import views as auth_views
 from rest_auth.registration.views import VerifyEmailView
 
-app_name = 'core'
 urlpatterns = [
     # Customized Views
     path('auth/registration/',
@@ -17,7 +16,7 @@ urlpatterns = [
     path('auth/registration/verify-email/',
          VerifyEmailView.as_view(), name='rest_verify_email'),
     path('auth/password/reset/',
-         auth_views.PasswordResetView.as_view(), name='rest_password_reset'),
+         views.CaptchaPasswordResetView.as_view(), name='rest_password_reset'),
     path('auth/password/reset/confirm/',
          auth_views.PasswordResetConfirmView.as_view(),
          name='rest_password_reset_confirm'),

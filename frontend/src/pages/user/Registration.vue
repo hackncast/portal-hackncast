@@ -58,8 +58,7 @@
                              @verify="submit"
                              size="invisible"
                              :sitekey="sitekey"
-                             tabindex="-1"
-                             >
+                             tabindex="-1">
                 <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working" tabindex="4">Register</v-btn>
               </vue-recaptcha>
             </v-form>
