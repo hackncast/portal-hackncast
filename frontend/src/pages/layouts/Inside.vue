@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app">
+  <v-app :dark="darkTheme" id="app">
     <inside-nav-bar/>
     <side-bar/>
     <v-content>
@@ -19,6 +19,12 @@ import InsideNavBar from '@/components/InsideNavBar'
 import SideBar from '@/components/SideBar'
 
 export default {
-  components: {InsideNavBar, SideBar}
+  components: {InsideNavBar, SideBar},
+
+  computed: {
+    darkTheme () {
+      return this.$store.state.Ui.darkTheme
+    }
+  }
 }
 </script>

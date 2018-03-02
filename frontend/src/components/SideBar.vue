@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer temporary v-model="drawer" dark absolute>
+  <v-navigation-drawer temporary v-model="drawer" absolute>
     <v-list class="pa-1">
       <v-list-tile avatar tag="div">
         <v-list-tile-avatar>

@@ -2,7 +2,7 @@
 <v-toolbar app dark dense scroll-off-screen :scroll-threshold="100" :color="darkTheme ? 'blue-grey darken-4' : 'blue'">
   <v-toolbar-side-icon @click.stop="showDrawer()"></v-toolbar-side-icon>
   <v-avatar>
-    <img src="@/assets/hnc-logo-noframe-inverted.svg" alt="Logo" style="margin-top: -3px">
+    <img :src="logo" alt="Logo" style="margin-top: -3px">
   </v-avatar>
   <v-spacer></v-spacer>
   <v-toolbar-title class="ml-0 pl-0 hnc-title" style="font-size: 2em; padding-bottom: 5px;">
@@ -61,12 +61,21 @@ export default {
 
   computed: {
     ...mapGetters(['currentUser']),
+
     darkTheme: {
       get () {
-        return !this.$store.state.Ui.lightTheme
+        return this.$store.state.Ui.darkTheme
       },
       set (val) {
-        this.setLightTheme(!val)
+        this.setDarkTheme(val)
+      }
+    },
+
+    logo () {
+      if (this.$store.state.Ui.darkTheme) {
+        return require('@/assets/hnc-logo-noframe-inverted.svg')
+      } else {
+        return require('@/assets/hnc-logo-noframe.svg')
       }
     }
   },
@@ -74,7 +83,7 @@ export default {
   methods: {
     ...mapActions(['logout']),
     ...mapMutations({
-      setLightTheme: UI.LIGHT_THEME
+      setDarkTheme: UI.DARK_THEME
     }),
 
     showDrawer () {
