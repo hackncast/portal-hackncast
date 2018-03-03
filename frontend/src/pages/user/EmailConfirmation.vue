@@ -17,8 +17,8 @@
         <transition name="shrink" duration="500">
           <v-card-text v-show="!sent" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
-
-              <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working">Reset Password</v-btn>
+              <p class="black--text text-xs-center">Please click in the button bellow to validate your email address.</p>
+              <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working">Confirm!</v-btn>
             </v-form>
           </v-card-text>
         </transition>
