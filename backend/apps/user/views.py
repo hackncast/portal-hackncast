@@ -29,7 +29,7 @@ class ResendEmailConfirmationView(APIView):
             {'email': email}
         )
         email.send_confirmation(request)
-        return Response(status=status.HTTP_200_OK)
+        return Response({}, status=status.HTTP_200_OK)
 
 
 class RedirectPasswordReset(RedirectView):
