@@ -4,6 +4,7 @@ import Vue from 'vue'
 
 // External Plugins
 import Vuetify from 'vuetify'
+import VueHead from 'vue-head'
 import VueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
 
@@ -19,6 +20,7 @@ import VueCookies from '@/plugins/VueCookies'
 import { store } from '@/store/store'
 
 Vue.use(Vuetify)
+Vue.use(VueHead)
 Vue.use(VueLodash)
 Vue.use(VueResource)
 Vue.use(VueCookies)

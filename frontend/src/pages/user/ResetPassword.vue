@@ -56,6 +56,12 @@ export default {
 
   mixins: [FormMixin],
 
+  head: {
+    script: [
+      { type: 'text/javascript', src: 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit', async: true, defer: true }
+    ]
+  },
+
   data () {
     return {
       sitekey: process.env.CAPTCHA_PUBLIC_KEY,
