@@ -33,13 +33,29 @@ export default {
     }
   },
 
+  methods: {
+    refocusForm () {
+      let input = document.forms[0].querySelector('[autofocus]')
+      if (input.offsetLeft) {
+        return input.focus()
+      }
+
+      input = Array.from(
+        document.forms[0].getElementsByTagName('input')
+      ).find(e => e.offsetLeft)
+      if (input) {
+        return input.focus()
+      }
+    }
+  },
+
   watch: {
     nonFieldErrors (val) {
       if (this.nonFieldErrors.length > 0) {
         this.$nextTick(() => this.$refs.errorBottomSheetCloseButton.$el.focus())
       } else {
         if (document.forms.length > 0) {
-          this.$nextTick(() => document.forms[0].querySelector('[autofocus]').focus())
+          this.$nextTick(() => this.refocusForm())
         }
       }
     }

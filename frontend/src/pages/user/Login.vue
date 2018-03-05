@@ -31,7 +31,7 @@
               <v-btn block color="primary" class="white--text" @click="nextLoginPage" :disabled="email.length === 0 || errors.has('email')">Next</v-btn>
             </section>
             <section v-show="step === 2" key="password" style="position: absolute; width: 100%">
-              <v-btn icon class="ma-0" @click="step = 1"><v-icon>arrow_back</v-icon></v-btn>
+              <v-btn icon class="ma-0" @click="back()"><v-icon>arrow_back</v-icon></v-btn>
               <v-text-field label="Password" name="password" ref="password" required
                             :type="showPassord ? 'text' : 'password'"
                             prepend-icon="lock"
@@ -96,6 +96,11 @@ export default {
     ...mapActions([
       'login'
     ]),
+
+    back () {
+      this.step = 1
+      this.password = ''
+    },
 
     nextLoginPage () {
       if (!this.errors.has('email')) {
