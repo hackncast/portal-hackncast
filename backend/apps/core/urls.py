@@ -11,12 +11,12 @@ urlpatterns = [
     # Customized Views
     path('auth/registration/',
          views.CaptchaRegisterView.as_view(), name='rest_register'),
+    path('auth/password/reset/',
+         views.CaptchaPasswordResetView.as_view(), name='rest_password_reset'),
 
     # Django Rest Auth Original Views
     path('auth/registration/verify-email/',
          VerifyEmailView.as_view(), name='rest_verify_email'),
-    path('auth/password/reset/',
-         views.CaptchaPasswordResetView.as_view(), name='rest_password_reset'),
     path('auth/password/reset/confirm/',
          auth_views.PasswordResetConfirmView.as_view(),
          name='rest_password_reset_confirm'),
