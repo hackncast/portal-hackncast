@@ -94,7 +94,11 @@ export default {
       this.resendWorking = true
       setTimeout(() => {
         this.fetchUserData()
-          .then(user => user)
+          .then(user => {
+            if (!user.verifiedEmail) {
+              this.$toasts.open({ text: 'Sorry, this email hasn\'t been confirmed.' })
+            }
+          })
           .catch(err => console.log(err))
           .finally(() => {
             this.resendWorking = false
