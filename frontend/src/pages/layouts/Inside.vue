@@ -1,11 +1,13 @@
 <template>
   <v-app :dark="darkTheme" id="app">
-    <inside-nav-bar/>
+    <inside-nav-bar :color="navBarColor">
+        <router-view name="navbarExtend" :color="navBarColor" :sliderColor="navSliderColor"/>
+    </inside-nav-bar>
 
     <side-bar/>
 
     <v-content>
-      <v-container fluid fill-height>
+      <v-container fluid fill-height :class="backgroundColor">
         <v-layout justify-center align-center>
           <transition name="fade" mode="out-in">
             <router-view />
@@ -55,6 +57,18 @@ export default {
 
     darkTheme () {
       return this.$store.state.Ui.darkTheme
+    },
+
+    navBarColor () {
+      return this.darkTheme ? 'blue-grey darken-4' : 'blue accent-2'
+    },
+
+    navSliderColor () {
+      return this.darkTheme ? 'blue lighten-2' : 'blue lighten-4'
+    },
+
+    backgroundColor () {
+      return this.darkTheme ? 'darkBackground' : 'grey lighten-3'
     }
   },
 
@@ -105,3 +119,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.darkBackground {
+  background-color: #303030 !important;
+}
+</style>

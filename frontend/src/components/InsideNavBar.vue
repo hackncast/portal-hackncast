@@ -1,11 +1,13 @@
 <template>
-<v-toolbar app dark dense scroll-off-screen :scroll-threshold="100" :color="darkTheme ? 'blue-grey darken-4' : 'blue'">
+  <v-toolbar app dark dense scroll-off-screen tabs :scroll-threshold="100" :color="color">
   <v-toolbar-side-icon @click.stop="showDrawer()"></v-toolbar-side-icon>
-  <v-avatar>
-    <img :src="logo" alt="Logo" style="margin-top: -3px">
-  </v-avatar>
   <v-spacer></v-spacer>
-  <v-toolbar-title class="ml-0 pl-0 hnc-title" style="font-size: 2em; padding-bottom: 5px;">
+  <v-btn flat icon :to="{ name: 'home' }" color="transparent">
+    <v-avatar>
+      <img :src="logo" alt="Logo" style="margin-top: -3px; z-index: 1">
+    </v-avatar>
+  </v-btn>
+  <v-toolbar-title class="ml-0 pl-0 hnc-title" style="font-size: 2em; padding-bottom: 5px">
     Hack'n'Cast
   </v-toolbar-title>
   <v-spacer></v-spacer>
@@ -15,7 +17,7 @@
     </v-btn>
     <v-card>
       <v-list two-line class="py-0">
-        <v-list-tile avatar @click="">
+        <v-list-tile avatar @click="$router.push({ name: 'user:profile' }); menu = false">
           <v-list-tile-avatar>
             <img :src="currentUser.avatar" :alt="currentUser.displayName">
           </v-list-tile-avatar>
@@ -46,6 +48,8 @@
       </v-card-actions>
     </v-card>
   </v-menu>
+
+  <slot slot="extension" />
 </v-toolbar>
 </template>
 
@@ -58,6 +62,10 @@ export default {
     menu: false,
     working: false
   }),
+
+  props: {
+    color: { type: String }
+  },
 
   computed: {
     ...mapGetters(['currentUser']),
