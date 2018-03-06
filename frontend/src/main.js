@@ -17,6 +17,7 @@ import App from '@/App'
 import router from '@/router'
 import VueLodash from '@/plugins/VueLodash'
 import VueCookies from '@/plugins/VueCookies'
+import VuetifyToasts from '@/plugins/VuetifyToasts'
 import { store } from '@/store/store'
 
 Vue.use(Vuetify)
@@ -25,6 +26,7 @@ Vue.use(VueLodash)
 Vue.use(VueResource)
 Vue.use(VueCookies)
 Vue.use(VeeValidate)
+Vue.use(VuetifyToasts)
 
 Vue.config.productionTip = false
 
@@ -34,6 +36,20 @@ Vue.http.interceptors.push(function (request, next) {
     request.headers.set('X-CSRFToken', csrftoken)
   }
   next()
+})
+
+Vue.http.interceptors.push(function (request, next) {
+  next((response) => {
+    if (response.body && response.body.django_messages) {
+      for (let message of response.body.django_messages) {
+        Vue.toasts.open({
+          text: message.message,
+          type: message.level_tag
+        })
+      }
+      delete response.body.django_messages
+    }
+  })
 })
 
 /* eslint-disable no-new */
