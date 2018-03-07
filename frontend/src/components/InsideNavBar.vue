@@ -64,11 +64,14 @@ export default {
   }),
 
   props: {
-    color: { type: String }
   },
 
   computed: {
     ...mapGetters(['currentUser']),
+
+    color () {
+      return this.$store.state.Ui.navbarColor
+    },
 
     darkTheme: {
       get () {

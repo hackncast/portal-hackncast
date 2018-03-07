@@ -11,9 +11,13 @@
 export default {
   name: 'UserProfileNavbar',
 
-  props: {
-    color: { type: String },
-    sliderColor: { type: String }
+  computed: {
+    color () {
+      return this.$store.state.Ui.navbarColor
+    },
+    sliderColor () {
+      return this.$store.state.Ui.darkTheme ? 'blue lighten-2' : 'blue lighten-4'
+    }
   }
 }
 </script>
