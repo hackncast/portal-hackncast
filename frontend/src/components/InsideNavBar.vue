@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app dark dense scroll-off-screen tabs :scroll-threshold="100" :color="color">
+  <v-toolbar :flat="flat" app dark dense scroll-off-screen tabs :scroll-threshold="100" :color="color">
   <v-toolbar-side-icon @click.stop="showDrawer()"></v-toolbar-side-icon>
   <v-spacer></v-spacer>
   <v-btn flat icon :to="{ name: 'home' }" color="transparent">
@@ -64,6 +64,7 @@ export default {
   }),
 
   props: {
+    flat: { type: Boolean, default: false }
   },
 
   computed: {
