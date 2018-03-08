@@ -1,5 +1,5 @@
-import Inside from '@/pages/layouts/Inside'
 import Outside from '@/pages/layouts/Outside'
+import Profile from '@/pages/layouts/Profile'
 
 import Login from '@/pages/user/Login'
 import Registration from '@/pages/user/Registration'
@@ -9,7 +9,7 @@ import ResetPasswordToken from '@/pages/user/ResetPasswordToken'
 
 import ProfileEmails from '@/pages/user/profile/Emails'
 import ProfileAccount from '@/pages/user/profile/Account'
-import ProfilePasswords from '@/pages/user/profile/Passwords'
+import ProfileSecurity from '@/pages/user/profile/Security'
 
 import UserProfileNavbar from '@/components/UserProfileNavbar'
 
@@ -29,12 +29,12 @@ export default [
   },
   {
     path: '/user/profile',
-    component: Inside,
+    component: Profile,
     meta: { requiresAuth: true },
     children: [
       { path: '', name: 'user:profile', components: Object.assign({ 'default': ProfileAccount }, UserProfile) },
       { path: 'emails', name: 'user:profile:emails', components: Object.assign({ 'default': ProfileEmails }, UserProfile) },
-      { path: 'passwords', name: 'user:profile:passwords', components: Object.assign({ 'default': ProfilePasswords }, UserProfile) }
+      { path: 'security', name: 'user:profile:security', components: Object.assign({ 'default': ProfileSecurity }, UserProfile) }
     ]
   }
 ]

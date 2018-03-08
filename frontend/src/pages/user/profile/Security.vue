@@ -1,12 +1,12 @@
 <template>
-  <span>Account</span>
+  <span>Security</span>
 </template>
 
 <script>
 import { FormMixin } from '@/mixins/FormMixin'
 
 export default {
-  name: 'UserProfileAccount',
+  name: 'UserProfileSecurity',
 
   mixins: [FormMixin]
 }
