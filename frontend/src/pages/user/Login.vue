@@ -123,6 +123,7 @@ export default {
             password: this.password
           }
 
+          this.$Progress.start()
           this.login(data)
             .then(user => {
               if (this.$route.query.next) {

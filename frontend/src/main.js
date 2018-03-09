@@ -7,6 +7,7 @@ import Vuetify from 'vuetify'
 import VueHead from 'vue-head'
 import VueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
+import VueProgressBar from 'vue-progressbar'
 
 // Styling
 import '@/style/base.sass'
@@ -27,6 +28,17 @@ Vue.use(VueResource)
 Vue.use(VueCookies)
 Vue.use(VeeValidate)
 Vue.use(VuetifyToasts)
+Vue.use(VueProgressBar, {
+  color: '#90CAF9',
+  failedColor: '#F44336',
+  thickness: '3px',
+  autoFinish: false,
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 1000
+  }
+})
 
 Vue.config.productionTip = false
 

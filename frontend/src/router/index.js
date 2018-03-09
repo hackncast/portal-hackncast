@@ -27,7 +27,14 @@ let router = new Router({
   )
 })
 
+Vue.mixin({
+  mounted () {
+    Vue.prototype.$Progress.finish()
+  }
+})
+
 router.beforeEach((to, from, next) => {
+  if (Vue.prototype.$Progress.state.timer === null) Vue.prototype.$Progress.start()
   if (to.name === '404' || to.meta.mayRequiresAuth) {
     next()
     return

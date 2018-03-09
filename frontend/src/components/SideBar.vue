@@ -17,6 +17,14 @@
     </v-list>
     <v-list class="pt-0" dense>
       <v-divider light></v-divider>
+      <v-list-tile @click="push('home')">
+        <v-list-tile-action>
+          <v-icon>home</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Home</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
       <v-list-tile v-for="item in items" :key="item.title" @click="">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
@@ -49,6 +57,13 @@ export default {
         { title: 'Users', icon: 'people' },
         { title: 'Administration', icon: 'settings' }
       ]
+    }
+  },
+
+  methods: {
+    push (name) {
+      this.$router.push({ name })
+      this.drawer = false
     }
   }
 }
