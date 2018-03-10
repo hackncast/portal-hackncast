@@ -10,7 +10,8 @@ export default {
     darkTheme: (localStorage.getItem('UI_DarkTheme') === 'true'),
     navbarColor: (localStorage.getItem('UI_DarkTheme') === 'true') ? NAVBAR_DARK_COLOR : NAVBAR_LIGHT_COLOR,
     backgroundColor: (localStorage.getItem('UI_DarkTheme') === 'true') ? BACKGROUND_DARK_COLOR : BACKGROUND_LIGHT_COLOR,
-    sidebarVisible: false
+    sidebarVisible: false,
+    progressStatus: false
   },
 
   mutations: {
@@ -25,6 +26,21 @@ export default {
     },
     [UI.SIDEBAR_VISIBLE] (state, visible) {
       state.sidebarVisible = visible
+    },
+    [UI.PROGRESS_START] (state) {
+      if (state.progressStatus !== state) {
+        state.progressStatus = 'start'
+      }
+    },
+    [UI.PROGRESS_STOP] (state) {
+      if (state.progressStatus !== state) {
+        state.progressStatus = 'stop'
+      }
+    },
+    [UI.PROGRESS_FAIL] (state) {
+      if (state.progressStatus !== state) {
+        state.progressStatus = 'fail'
+      }
     }
   }
 }

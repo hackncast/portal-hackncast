@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { USER } from '@/store/mutation-types'
+import { USER, UI } from '@/store/mutation-types'
 import User from '@/models/user'
 
 export default {
@@ -15,7 +15,8 @@ export default {
     })
   },
 
-  login ({ dispatch }, credentials) {
+  login ({ dispatch, commit }, credentials) {
+    commit(UI.PROGRESS_START)
     return new Promise((resolve, reject) => {
       Vue.http.post('/api/auth/login/', credentials)
         .then(data => data.json())
@@ -25,6 +26,7 @@ export default {
         })
         .catch(err => {
           reject(err)
+          commit(UI.PROGRESS_FAIL)
         })
     })
   },
@@ -45,6 +47,7 @@ export default {
   },
 
   logout ({ commit }) {
+    commit(UI.PROGRESS_START)
     return new Promise((resolve, reject) => {
       Vue.http.post('/api/auth/logout/')
         .then(data => data.json())
@@ -54,6 +57,7 @@ export default {
         })
         .catch(err => {
           reject(err)
+          commit(UI.PROGRESS_FAIL)
         })
     })
   }

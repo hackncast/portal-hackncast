@@ -24,10 +24,10 @@
     "vee-validate": "^2.0.3",
     "vue": "^2.5.2",
     "vue-head": "^2.0.12",
-    "vue-progressbar": "^0.7.4",
     "vue-recaptcha": "^1.1.0",
     "vue-resource": "^1.3.6",
     "vue-router": "^3.0.1",
+    "vue-top-progress": "^0.7.0",
     "vuetify": "^1.0.0",
     "vuex": "^3.0.1"
   },

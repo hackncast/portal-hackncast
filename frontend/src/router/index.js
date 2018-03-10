@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { store } from '@/store/store'
+import { UI } from '@/store/mutation-types'
 
 import Inside from '@/pages/layouts/Inside'
 import UserRoutes from '@/router/user'
@@ -27,14 +28,14 @@ let router = new Router({
   )
 })
 
-Vue.mixin({
-  mounted () {
-    Vue.prototype.$Progress.finish()
-  }
+router.afterEach((to, from, next) => {
+  setTimeout(() => {
+    store.commit(UI.PROGRESS_STOP)
+  }, 250)
 })
 
 router.beforeEach((to, from, next) => {
-  if (Vue.prototype.$Progress.state.timer === null) Vue.prototype.$Progress.start()
+  store.commit(UI.PROGRESS_START)
   if (to.name === '404' || to.meta.mayRequiresAuth) {
     next()
     return
