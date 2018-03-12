@@ -36,7 +36,7 @@ Vue.config.productionTip = false
 
 Vue.http.interceptors.push(function (request, next) {
   let csrftoken = Vue.cookies.get('csrftoken')
-  if (request.method === 'POST' && csrftoken !== undefined) {
+  if (request.method !== 'GET' && request.method !== 'OPTION' && csrftoken !== undefined) {
     request.headers.set('X-CSRFToken', csrftoken)
   }
   next()
