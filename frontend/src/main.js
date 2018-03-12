@@ -19,6 +19,7 @@ import router from '@/router'
 import VueLodash from '@/plugins/VueLodash'
 import VueCookies from '@/plugins/VueCookies'
 import VuetifyToasts from '@/plugins/VuetifyToasts'
+import Progress from '@/plugins/Progress'
 import { store } from '@/store/store'
 
 Vue.use(Vuetify)
@@ -29,6 +30,7 @@ Vue.use(VueCookies)
 Vue.use(VeeValidate)
 Vue.use(VuetifyToasts)
 Vue.use(vueTopprogress)
+Vue.use(Progress)
 
 Vue.config.productionTip = false
 
