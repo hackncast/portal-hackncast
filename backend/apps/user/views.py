@@ -23,12 +23,12 @@ class EmailList(APIView):
     def get_serializer(self, *args, **kwargs):
         return serializers.EmailSerializer(*args, **kwargs)
 
-    def get(self, request, pk=None):
+    def get(self, request):
         data = self.request.user.emailaddress_set.all().order_by('email')
         serializer = self.get_serializer(data, many=True)
         return Response(serializer.data)
 
-    def post(self, request, pk=None):
+    def post(self, request):
         serializer = self.get_serializer(
             data=request.data, context={'request': request},
         )

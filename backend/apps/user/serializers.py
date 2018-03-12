@@ -14,11 +14,14 @@ class EmailSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         self.request = self.context.get('request')
         self.add_form = AddEmailForm(
-            data=self.initial_data, user=self.request.user
+            data=self.initial_data, user=self.request._request.user
         )
         if not self.add_form.is_valid():
             raise serializers.ValidationError(self.add_form.errors)
         return value
+
+    def save(self):
+        self.add_form.save(self.request)
 
     class Meta:
         model = EmailAddress
