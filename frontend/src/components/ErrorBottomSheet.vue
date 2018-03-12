@@ -1,6 +1,6 @@
 <template>
   <v-bottom-sheet inset persistent :value="nonFieldErrors.length > 0">
-    <v-card>
+    <v-card dark>
       <v-card-title>
         <div>
           <v-btn ref="errorBottomSheetCloseButton" small absolute :dark="dark" fab top right color="red darken-2" @click="$emit('clear-errors')"><v-icon>close</v-icon></v-btn>
@@ -36,15 +36,19 @@ export default {
   methods: {
     refocusForm () {
       let input = document.forms[0].querySelector('[autofocus]')
-      if (input.offsetLeft) {
+      if (input && input.offsetLeft) {
         return input.focus()
       }
 
-      input = Array.from(
-        document.forms[0].getElementsByTagName('input')
-      ).find(e => e.offsetLeft)
+      let allInputs = document.forms[0].getElementsByTagName('input')
+      input = Array.from(allInputs).find(e => e.offsetLeft)
+
       if (input) {
         return input.focus()
+      }
+
+      if (allInputs && allInputs.length > 0) {
+        return allInputs[0].focus()
       }
     }
   },
