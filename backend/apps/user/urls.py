@@ -6,7 +6,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('email/<pk>/send_confirmation',
+    path('email/',
+         views.EmailList.as_view(), name=views.EmailList.name),
+    path('email/<pk>/send_confirmation/',
          views.ResendEmailConfirmationView.as_view(),
          name='resend_email_confirmation'),
 
