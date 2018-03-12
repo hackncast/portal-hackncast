@@ -36,6 +36,9 @@
             <v-switch v-model="darkTheme" color="blue darken-2"></v-switch>
           </v-list-tile-action>
           <v-list-tile-title>Dark Theme</v-list-tile-title>
+          <v-list-tile-action style="margin-right: -30px">
+            <v-btn flat icon color="grey"><v-icon>settings</v-icon></v-btn>
+          </v-list-tile-action>
         </v-list-tile>
       </v-list>
 
@@ -44,7 +47,7 @@
       <v-card-actions>
         <v-btn flat @click="menu = false">Close</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="red darken-2" flat @click="doLogout" :loading="working">Logout <v-icon right>exit_to_app</v-icon></v-btn>
+        <v-btn flat color="red darken-2" @click="doLogout" :loading="working">Logout <v-icon right>exit_to_app</v-icon></v-btn>
       </v-card-actions>
     </v-card>
   </v-menu>
