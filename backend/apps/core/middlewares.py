@@ -16,7 +16,6 @@ class AjaxMessaging(object):
         # One-time configuration and initialization.
 
     def __convert_message(self, message):
-        print('MESSAGE', message.message)
         return {
             'level_tag': message.level_tag,
             'level': message.level,
