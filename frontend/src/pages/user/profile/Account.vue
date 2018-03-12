@@ -1,13 +1,108 @@
 <template>
-  <span>Account</span>
+  <v-layout row wrap>
+    <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
+      <v-card class="mb-3" style="margin-top: -40px">
+        <v-card-title class="title">Personal Info</v-card-title>
+        <v-card-text class="pt-0">
+          <v-form @submit.prevent="submit" ref="form">
+            <v-text-field label="Username" name="username" ref="username" type="text" tabindex="1" required
+                          v-validate="'required|alpha_num'"
+                          data-vv-as="username"
+                          :error-messages="errors.collect('username')"
+                          v-model="username">
+            </v-text-field>
+            <v-text-field label="First Name" name="firstname" ref="firstname" type="text" tabindex="2" required
+                          v-validate="'required'"
+                          data-vv-as="first name"
+                          :error-messages="errors.collect('firstname')"
+                          v-model="firstName">
+            </v-text-field>
+            <v-text-field label="Last Name" name="lastname" ref="lastname" type="text" tabindex="2" required
+                          v-validate=""
+                          data-vv-as="last name"
+                          :error-messages="errors.collect('lastname')"
+                          v-model="lastName">
+            </v-text-field>
+            <v-btn block color="blue" class="white--text" :disabled="errors.any()" type="submit" :loading="working" tabindex="4">Save</v-btn>
+          </v-form>
+        </v-card-text>
+      </v-card>
+
+      <v-card>
+        <v-card-text class="grey--text">
+          Joined at {{ dateJoined }}
+        </v-card-text>
+      </v-card>
+
+      <error-bottom-sheet :non-field-errors="nonFieldErrors" @clear-errors="clearNonFieldErrors()"/>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import { FormMixin } from '@/mixins/FormMixin'
 
 export default {
   name: 'UserProfileAccount',
 
-  mixins: [FormMixin]
+  mixins: [FormMixin],
+
+  data () {
+    return {
+      username: '',
+      firstName: '',
+      lastName: '',
+      working: false
+    }
+  },
+
+  computed: {
+    ...mapGetters(['currentUser']),
+
+    dateJoined () {
+      return this.currentUser.dateJoined.toLocaleString(
+        navigator.language,
+        { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+      )
+    }
+  },
+
+  methods: {
+    ...mapActions(['fetchUserData']),
+
+    loadData () {
+      this.username = this.currentUser.username
+      this.firstName = this.currentUser.firstName
+      this.lastName = this.currentUser.lastName
+    },
+
+    submit () {
+      this.$validator.validateAll().then(valid => {
+        if (valid) {
+          const data = {
+            username: this.username,
+            first_name: this.firstName,
+            last_name: this.lastName
+          }
+          this.working = true
+
+          this.$http.put('/api/auth/user/', data)
+            .then(data => data.json())
+            .then(obj => this.fetchUserData())
+            .then(user => {
+              this.$toasts.open({ text: 'Profile updated successfully!' })
+              this.loadData()
+            })
+            .catch(err => { this.processErrors(err) })
+            .finally(() => { this.working = false })
+        }
+      })
+    }
+  },
+
+  mounted () {
+    this.loadData()
+  }
 }
 </script>

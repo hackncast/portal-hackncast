@@ -1,7 +1,7 @@
 import md5 from 'md5/md5'
 
 export default class User {
-  constructor (pk = null, username = null, email = null, firstName = null, lastName = null, isActive = null, isSuperuser = null, verifiedEmail = null, pkEmail = null) {
+  constructor (pk = null, username = null, email = null, firstName = null, lastName = null, isActive = null, isSuperuser = null, verifiedEmail = null, pkEmail = null, dateJoined = null) {
     this.pk = pk
     this.username = username
     this.email = email
@@ -11,6 +11,7 @@ export default class User {
     this.isSuperuser = isSuperuser
     this.verifiedEmail = verifiedEmail
     this.pkEmail = pkEmail
+    this.dateJoined = new Date(dateJoined)
   }
 
   get avatar () {
@@ -22,7 +23,9 @@ export default class User {
   }
 
   get displayName () {
-    if (this.username) {
+    if (this.firstName) {
+      return this.firstName
+    } else if (this.username) {
       return this.username.charAt(0).toUpperCase() + this.username.slice(1)
     }
     return ''
@@ -47,7 +50,8 @@ export default class User {
       data.is_active,
       data.is_superuser,
       data.verified_email,
-      data.email_pk
+      data.email_pk,
+      data.date_joined
     )
   }
 }

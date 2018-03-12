@@ -16,9 +16,9 @@
           <transition-group name="customSlide" mode="out-in">
             <section v-show="step === 1" key="email" class="transitioned" style="position: absolute; width: 100%">
               <v-layout row justify-center>
-                <v-btn icon><v-icon class="social-login-icon">fa-github</v-icon></v-btn>
-                <v-btn icon><v-icon class="social-login-icon">fa-google</v-icon></v-btn>
-                <v-btn icon><v-icon class="social-login-icon">fa-twitter</v-icon></v-btn>
+                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fa-github</v-icon></v-btn>
+                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fa-google</v-icon></v-btn>
+                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fa-twitter</v-icon></v-btn>
               </v-layout>
               <v-text-field autofocus label="Email" name="email" ref="email" type="email" required
                             prepend-icon="person"
@@ -123,7 +123,6 @@ export default {
             password: this.password
           }
 
-          this.$Progress.start()
           this.login(data)
             .then(user => {
               if (this.$route.query.next) {
@@ -140,6 +139,10 @@ export default {
           this.nonFieldErrors.push(this.defaultErrorMessage)
         }
       }
+    },
+
+    notYet () {
+      this.$toasts.open({text: 'Sorry, not working yet...'})
     }
   }
 }

@@ -35,9 +35,10 @@ class UserDetailsSerializer(UserSerializer):
     class Meta:
         model = UserModel
         fields = (
-            'pk', 'username', 'first_name', 'last_name',
+            'pk', 'username', 'first_name', 'last_name', 'date_joined',
             'email', 'is_active', 'is_superuser', 'verified_email', 'email_pk'
         )
         read_only_fields = (
-            'email', 'is_active', 'is_superuser', 'verified_email', 'email_pk'
+            'pk', 'date_joined', 'email', 'is_active', 'is_superuser',
+            'verified_email', 'email_pk',
         )
