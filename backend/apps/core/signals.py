@@ -3,7 +3,7 @@
 
 
 def password_changed(sender, instance, *args, **kwargs):
-    if instance:
+    if instance and instance.pk:
         new_password = instance.password
         try:
             old_password = sender.objects.get(pk=instance.pk).password

@@ -10,7 +10,7 @@
       <v-card class="mb-3">
         <v-card-text class="grey--text">
           <template v-if="passwords.length === 0">
-            Hey, you still use your first password from {{ dateJoined }}? Consider changing it soon...
+            Hey, you still use your first password from {{ dateJoined }}? Please, consider changing it soon...
           </template>
           <template v-else>
             You have changed your password {{ passwords.length }} time<span v-if="passwords.length > 1">s</span> since {{ lastChanged }}
