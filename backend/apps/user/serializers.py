@@ -7,6 +7,8 @@ from allauth.account.models import EmailAddress
 from rest_framework import serializers
 from allauth.account.forms import AddEmailForm
 
+from . import models
+
 UserModel = get_user_model()
 
 
@@ -27,3 +29,10 @@ class EmailSerializer(serializers.ModelSerializer):
         model = EmailAddress
         fields = ('pk', 'email', 'verified', 'primary')
         read_only_fields = ('pk', 'verified', 'primary')
+
+
+class PasswordChangesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.PasswordChanges
+        fields = ('changed_at',)
+        read_only_fields = ('changed_at',)

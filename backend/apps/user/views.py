@@ -17,6 +17,19 @@ from allauth.account.models import EmailAddress
 from . import serializers
 
 
+class PasswordChangesList(APIView):
+    permission_classes = (IsAuthenticated,)
+    name = 'password-changes-list'
+
+    def get_serializer(self, *args, **kwargs):
+        return serializers.PasswordChangesSerializer(*args, **kwargs)
+
+    def get(self, request):
+        data = self.request.user.password_changes.all().order_by('changed_at')
+        serializer = self.get_serializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class EmailList(APIView):
     permission_classes = (IsAuthenticated,)
     name = 'email-list'

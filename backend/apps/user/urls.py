@@ -6,6 +6,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('password/',
+         views.PasswordChangesList.as_view(),
+         name=views.PasswordChangesList.name),
     path('email/', views.EmailList.as_view(), name=views.EmailList.name),
     path('email/<pk>/',
          views.EmailDetail.as_view(), name=views.EmailDetail.name),
