@@ -18,16 +18,20 @@
           <v-spacer></v-spacer>
           <v-btn flat icon color="grey" @click="newEmailDialog = true"><v-icon>add</v-icon></v-btn>
         </v-card-title>
-        <v-card-text class="pt-0">
+        <v-card-text class="pt-0 pb-1">
           <v-list>
-            <v-list-tile v-for="email in emails" :key="email.pk">
+            <template v-for="(email, index) in emails" >
+            <v-list-tile avatar :key="email.pk">
+              <v-list-tile-avatar>
+                <v-icon :class="email.verified ? 'green--text' : 'red--text'">{{ email.verified ? 'done' : 'schedule' }}</v-icon>
+              </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title>{{ email.email }}</v-list-tile-title>
                 <v-list-tile-sub-title>{{ email.verified ? 'Verified' : 'Not verified yet!'}}</v-list-tile-sub-title>
               </v-list-tile-content>
               <v-list-tile-action>
-                <v-menu bottom left v-if="!email.verified || !email.primary">
-                  <v-btn icon ripple slot="activator"><v-icon color="grey lighten-1">more_vert</v-icon></v-btn>
+                <v-menu bottom left :disabled="email.verified && email.primary">
+                  <v-btn icon ripple slot="activator"><v-icon :color="email.verified && email.primary ? 'grey lighten-2' : 'grey'">more_vert</v-icon></v-btn>
                   <v-list>
                     <v-list-tile @click="resendVerification(email.pk)" :disabled="email.verified">
                       <v-list-tile-title>Resend Verification</v-list-tile-title>
@@ -39,6 +43,8 @@
                 </v-menu>
               </v-list-tile-action>
             </v-list-tile>
+            <v-divider v-if="index + 1 < emails.length" :key="email.key" />
+            </template>
           </v-list>
         </v-card-text>
       </v-card>
@@ -88,8 +94,7 @@ export default {
 
   computed: {
     elegibleForPrimary () {
-      // return this.emails.filter(email => email.verified)
-      return this.emails.map(email => email.email)
+      return this.emails.filter(email => email.verified).map(email => email.email)
     }
   },
 
