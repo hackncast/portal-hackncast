@@ -68,7 +68,7 @@ export default {
     doResend () {
       this.resendWorking = true
       setTimeout(() => {
-        this.$http.post(`/api/user/email/${this.currentUser.pkEmail}/send_confirmation`)
+        this.$http.post(`/api/user/email/${this.currentUser.pkEmail}/send_confirmation/`)
           .then(data => {
             this.checkAgain = true
             this.resendWorking = false
