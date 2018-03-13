@@ -1,5 +1,5 @@
-import Outside from '@/pages/layouts/Outside'
-import Profile from '@/pages/layouts/Profile'
+import OutsideLayout from '@/layouts/Outside'
+import ProfileLayout from '@/layouts/Profile'
 
 import Login from '@/pages/user/Login'
 import Registration from '@/pages/user/Registration'
@@ -18,7 +18,7 @@ let UserProfile = { 'navbarExtend': UserProfileNavbar }
 export default [
   {
     path: '/user',
-    component: Outside,
+    component: OutsideLayout,
     children: [
       { path: 'email/confirmation/:key/', name: 'user:email_confirmation', component: EmailConfirmation, meta: { mayRequiresAuth: true } },
       { path: 'password/reset/send/', name: 'user:reset_password', component: ResetPassword },
@@ -29,7 +29,7 @@ export default [
   },
   {
     path: '/user/profile',
-    component: Profile,
+    component: ProfileLayout,
     meta: { requiresAuth: true },
     children: [
       { path: '', name: 'user:profile', components: Object.assign({ 'default': ProfileAccount }, UserProfile) },

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import { store } from '@/store/store'
 import { UI } from '@/store/mutation-types'
 
-import Inside from '@/pages/layouts/Inside'
+import InsideLayout from '@/layouts/Inside'
 import UserRoutes from '@/router/user'
 import HelloWorld from '@/components/HelloWorld'
 
@@ -17,7 +17,7 @@ let router = new Router({
     [
       {
         path: '/',
-        component: Inside,
+        component: InsideLayout,
         meta: { requiresAuth: true },
         children: [
           {path: '', name: 'home', component: HelloWorld}
