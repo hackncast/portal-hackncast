@@ -8,9 +8,9 @@
             <div key="registration" v-if="!registered" style="width: 100%">
               <h1 class="headline">Registration</h1>
               <v-layout row justify-space-around>
-                <v-btn flat icon color="white"><v-icon class="social-login-icon">fa-github</v-icon></v-btn>
-                <v-btn flat icon color="white"><v-icon class="social-login-icon">fa-google</v-icon></v-btn>
-                <v-btn flat icon color="white"><v-icon class="social-login-icon">fa-twitter</v-icon></v-btn>
+                <v-btn flat icon color="white" @click="notYet"><v-icon class="social-login-icon">fa-github</v-icon></v-btn>
+                <v-btn flat icon color="white" @click="notYet"><v-icon class="social-login-icon">fa-google</v-icon></v-btn>
+                <v-btn flat icon color="white" @click="notYet"><v-icon class="social-login-icon">fa-twitter</v-icon></v-btn>
               </v-layout>
             </div>
             <div key="success" v-else style="width: 100%">
@@ -130,6 +130,10 @@ export default {
           })
           .finally(() => { this.working = false })
       }
+    },
+
+    notYet () {
+      this.$toasts.open({text: 'Sorry, not working yet...'})
     }
   }
 }
