@@ -79,8 +79,8 @@ export default {
       this.showPassword = false
       this.working = false
       this.oldPassword = ''
-      this.password1 = ''
-      this.password2 = ''
+      this.newPassword1 = ''
+      this.newPassword2 = ''
       this.$validator.reset()
     },
 

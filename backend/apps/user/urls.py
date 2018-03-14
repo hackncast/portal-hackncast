@@ -6,6 +6,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('session/',
+         views.SessionList.as_view(),
+         name=views.SessionList.name),
     path('password/',
          views.PasswordChangesList.as_view(),
          name=views.PasswordChangesList.name),

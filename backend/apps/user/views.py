@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import messages
+from django.utils.timezone import now
 from django.views.generic.base import RedirectView
 
 from rest_framework import status
@@ -15,6 +16,21 @@ from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 
 from . import serializers
+
+
+class SessionList(APIView):
+    permission_classes = (IsAuthenticated,)
+    name = 'session-list'
+
+    def get_serializer(self, *args, **kwargs):
+        return serializers.SessionsSerializer(*args, **kwargs)
+
+    def get(self, request):
+        data = self.request.user.session_set.filter(
+            expire_date__gt=now()
+        ).order_by('-last_activity')
+        serializer = self.get_serializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class PasswordChangesList(APIView):

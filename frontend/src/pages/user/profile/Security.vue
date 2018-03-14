@@ -2,13 +2,14 @@
   <v-layout row wrap>
     <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
       <v-card class="mb-3" style="margin-top: -40px">
-        <v-card-text class="grey--text">
+        <v-card-text class="grey--text text--darken-2">
           Last login at {{ lastLogin }}
         </v-card-text>
       </v-card>
 
+      <h2 class="subheading mb-1 grey--text text--darken-3">Password</h2>
       <v-card class="mb-3">
-        <v-card-text class="grey--text">
+        <v-card-text class="grey--text text--darken-4">
           <template v-if="passwords.length === 0">
             Hey, you still use your first password from {{ dateJoined }}? Please, consider changing it soon...
           </template>
@@ -19,6 +20,23 @@
         <v-card-actions>
           <v-btn flat block color="blue" @click="showChangePasswordForm = true">Change Password</v-btn>
         </v-card-actions>
+      </v-card>
+
+      <h2 class="subheading mb-1 grey--text text--darken-3">Sessions</h2>
+      <v-card class="mb-3">
+        <v-card-text class="grey--text text--darken-4">
+          <v-list three-line>
+            <template v-for="(session, index) in sessions" >
+            <v-list-tile avatar :key="index">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ session.ip }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ session.user_agent }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider v-if="index + 1 < sessions.length" :key="'divider-' + index" />
+            </template>
+          </v-list>
+        </v-card-text>
       </v-card>
 
       <change-password-form :show="showChangePasswordForm" @close="showChangePasswordForm = false" />
@@ -42,7 +60,8 @@ export default {
   data () {
     return {
       showChangePasswordForm: false,
-      passwords: []
+      passwords: [],
+      sessions: []
     }
   },
 
@@ -72,7 +91,7 @@ export default {
   },
 
   methods: {
-    fetchPasswords () {
+    fetchData () {
       this.$progress.start()
       this.$http.get('/api/user/password/')
         .then(data => data.json())
@@ -81,6 +100,14 @@ export default {
           for (let password of passwords) {
             this.passwords.push(new Date(password.changed_at))
           }
+          return this.$http.get('/api/user/session/')
+        })
+        .then(data => data.json())
+        .then(sessions => {
+          this.sessions.splice(0, this.sessions.length)
+          for (let session of sessions) {
+            this.sessions.push(session)
+          }
           this.$progress.stop()
         })
         .catch(() => this.$progress.fail())
@@ -88,7 +115,7 @@ export default {
   },
 
   mounted () {
-    this.fetchPasswords()
+    this.fetchData()
   }
 }
 </script>
