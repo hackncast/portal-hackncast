@@ -13,9 +13,12 @@
             Hey, you still use your first password from {{ dateJoined }}? Please, consider changing it soon...
           </template>
           <template v-else>
-            You have changed your password {{ passwords.length }} time<span v-if="passwords.length > 1">s</span> since {{ lastChanged }}
+            You have changed your password {{ passwords.length }} time<span v-if="passwords.length > 1">s</span>. Last time was {{ lastChanged }}.
           </template>
         </v-card-text>
+        <v-card-actions>
+          <v-btn flat block color="blue" @click="showChangePasswordForm = true">Change Password</v-btn>
+        </v-card-actions>
       </v-card>
 
       <change-password-form :show="showChangePasswordForm" @close="showChangePasswordForm = false" />
