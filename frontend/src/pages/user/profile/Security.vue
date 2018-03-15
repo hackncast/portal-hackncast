@@ -23,21 +23,7 @@
       </v-card>
 
       <h2 class="subheading mb-1 grey--text text--darken-3">Sessions</h2>
-      <v-card class="mb-3">
-        <v-card-text class="grey--text text--darken-4">
-          <v-list three-line>
-            <template v-for="(session, index) in sessions" >
-            <v-list-tile avatar :key="index">
-              <v-list-tile-content>
-                <v-list-tile-title>{{ session.ip }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ session.user_agent }}</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-divider v-if="index + 1 < sessions.length" :key="'divider-' + index" />
-            </template>
-          </v-list>
-        </v-card-text>
-      </v-card>
+      <user-sessions :sessions="sessions" />
 
       <change-password-form :show="showChangePasswordForm" @close="showChangePasswordForm = false" />
 
@@ -49,11 +35,12 @@
 import { FormMixin } from '@/mixins/FormMixin'
 import { mapGetters } from 'vuex'
 import ChangePasswordForm from '@/components/forms/user/ChangePassword'
+import UserSessions from '@/components/UserSessions'
 
 export default {
   name: 'UserProfileSecurity',
 
-  components: { ChangePasswordForm },
+  components: { ChangePasswordForm, UserSessions },
 
   mixins: [FormMixin],
 

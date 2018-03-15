@@ -52,5 +52,6 @@ class SessionsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Session
-        fields = ('expire_date', 'user_agent', 'last_activity', 'ip')
-        read_only_fields = ('expire_date', 'user_agent', 'last_activity', 'ip')
+        fields = ('pk', 'expire_date', 'user_agent', 'last_activity', 'ip')
+        read_only_fields = ('pk', 'expire_date', 'user_agent', 'last_activity',
+                            'ip')
