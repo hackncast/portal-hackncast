@@ -5,6 +5,7 @@ import Vue from 'vue'
 // External Plugins
 import Vuetify from 'vuetify'
 import VueHead from 'vue-head'
+import VueMoment from 'vue-moment'
 import VueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
 import vueTopprogress from 'vue-top-progress'
@@ -25,8 +26,9 @@ import { store } from '@/store/store'
 Vue.use(Vuetify)
 Vue.use(VueHead)
 Vue.use(VueLodash)
-Vue.use(VueResource)
+Vue.use(VueMoment)
 Vue.use(VueCookies)
+Vue.use(VueResource)
 Vue.use(VeeValidate)
 Vue.use(VuetifyToasts)
 Vue.use(vueTopprogress)

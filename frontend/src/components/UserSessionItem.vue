@@ -2,14 +2,23 @@
   <v-card class="elevation-0">
     <v-container fluid grid-list-lg class="px-0 py-2">
       <transition name="fade" mode="out-in">
-        <v-layout row v-if="ready" key="map">
-          <v-flex xs4>
-            <img :src="mapUrl" alt="Approximate location of access" border="0" style="width: 100%"/>
+        <v-layout row wrap v-if="ready" key="map">
+          <v-flex xs4 class="pb-0">
+            <img :src="mapUrl" alt="Approximate location of access" border="0" style="width: 100%; border-radius: 3px"/>
           </v-flex>
-          <v-flex xs8>
+          <v-flex xs8 class="pb-0">
             <div class="body-2">{{ header }}</div>
-            <div class="caption grey--text" v-if="!bogon">{{ session.ip }}</div>
-            <div class="caption">{{ ellipsisDescription }}</div>
+            <div class="caption grey--text">{{ session.ip }}</div>
+            <div class="caption">Expires {{ session.expire_date | moment('from') }}</div>
+            <div class="caption">Last activity, {{ session.last_activity | moment('from') }}</div>
+            <div class="caption red--text" v-if="session.current === true">This is your current session.</div>
+            <div class="hidden-xs-only">
+              <div class="caption grey--text"><strong>IP Address:</strong> {{ session.ip }}</div>
+              <div class="caption grey--text"><strong>User Agent: </strong>{{ session.user_agent }}</div>
+            </div>
+          </v-flex>
+          <v-flex xs12 class="hidden-sm-and-up">
+            <div class="caption grey--text"><strong>User Agent: </strong>{{ session.user_agent }}</div>
           </v-flex>
         </v-layout>
         <v-layout row v-else key="loading">
@@ -19,6 +28,11 @@
         </v-layout>
       </transition>
     </v-container>
+    <transition name="fade" mode="out-in">
+      <v-card-actions class="px-0 pt-0" v-if="ready">
+        <v-btn block flat color="red" class="mx-0" :disabled="session.current === true" @click="$emit('end')">End Session</v-btn>
+      </v-card-actions>
+    </transition>
   </v-card>
 </template>
 
@@ -47,23 +61,25 @@ export default {
   },
 
   computed: {
-    ellipsisDescription () {
-      let max = 100
-      if (this.session.user_agent.length > max) {
-        return this.session.user_agent.substring(0, max - 3) + '...'
+    mapSize () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return '150x150'
+        case 'sm': return '200x200'
+        case 'md': return '200x200'
+        case 'lg': return '300x300'
+        case 'xl': return '300x300'
       }
-      return this.session.user_agent
     },
     mapUrl () {
       if (this.bogon) {
-        return 'http://via.placeholder.com/150x150?text=No+Map'
+        return `https://maps.googleapis.com/maps/api/staticmap?center=0,0&zoom=0&size=${this.mapSize}&maptype=roadmap&key=${this.api}`
       } else {
-        return `https://maps.googleapis.com/maps/api/staticmap?center=${this.loc}&zoom=14&size=150x150&maptype=roadmap&markers=color:blue|label:S|${this.loc}&key=${this.api}`
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${this.loc}&zoom=13&size=${this.mapSize}&maptype=roadmap&markers=color:blue|label:S|${this.loc}&key=${this.api}`
       }
     },
     header () {
       if (this.bogon) {
-        return this.session.ip
+        return 'No Location Defined'
       } else {
         return `${this.city}, ${this.region} (${this.country})`
       }

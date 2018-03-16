@@ -29,7 +29,9 @@ class SessionList(APIView):
         data = self.request.user.session_set.filter(
             expire_date__gt=now()
         ).order_by('-last_activity')
-        serializer = self.get_serializer(data, many=True)
+        serializer = self.get_serializer(
+            data, many=True, context={'request': request},
+        )
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

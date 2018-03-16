@@ -41,17 +41,19 @@ class PasswordChangesSerializer(serializers.ModelSerializer):
 
 
 class SessionsSerializer(serializers.ModelSerializer):
-    expire_date = serializers.SerializerMethodField()
-    last_activity = serializers.SerializerMethodField()
+    current = serializers.SerializerMethodField()
 
-    def get_expire_date(self, session):
-        return humanize.naturaltime(session.expire_date)
-
-    def get_last_activity(self, session):
-        return humanize.naturaltime(session.last_activity)
+    def get_current(self, session):
+        print(
+            'SESSION', session.pk,
+            self.context.get('request').session.session_key,
+            session.pk == self.context.get('request').session.session_key
+        )
+        return session.pk == self.context.get('request').session.session_key
 
     class Meta:
         model = Session
-        fields = ('pk', 'expire_date', 'user_agent', 'last_activity', 'ip')
+        fields = ('pk', 'expire_date', 'user_agent', 'last_activity', 'ip',
+                  'current')
         read_only_fields = ('pk', 'expire_date', 'user_agent', 'last_activity',
-                            'ip')
+                            'ip', 'current')
