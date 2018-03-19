@@ -15,6 +15,8 @@ from allauth.account import signals
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 
+from user_sessions.models import Session
+
 from . import serializers
 
 
@@ -33,6 +35,35 @@ class SessionList(APIView):
             data, many=True, context={'request': request},
         )
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SessionDetail(APIView):
+    permission_classes = (IsAuthenticated,)
+    name = 'session-detail'
+
+    def get_serializer(self, *args, **kwargs):
+        return serializers.SessionsSerializer(*args, **kwargs)
+
+    def get(self, request, pk):
+        try:
+            data = request.user.session_set.get(pk=pk)
+        except Session.DoesNotExist:
+            raise NotFound('Session not found!')
+
+        serializer = self.get_serializer(data, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk):
+        try:
+            session = request.user.session_set.get(pk=pk)
+        except Session.DoesNotExist:
+            raise NotFound('Session not found!')
+
+        if session.pk == request.session.session_key:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+        session.delete()
+        return Response({}, status=status.HTTP_200_OK)
 
 
 class PasswordChangesList(APIView):

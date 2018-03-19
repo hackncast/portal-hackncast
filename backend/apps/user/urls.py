@@ -7,8 +7,9 @@ from . import views
 
 urlpatterns = [
     path('session/',
-         views.SessionList.as_view(),
-         name=views.SessionList.name),
+         views.SessionList.as_view(), name=views.SessionList.name),
+    path('session/<pk>/',
+         views.SessionDetail.as_view(), name=views.SessionDetail.name),
     path('password/',
          views.PasswordChangesList.as_view(),
          name=views.PasswordChangesList.name),
