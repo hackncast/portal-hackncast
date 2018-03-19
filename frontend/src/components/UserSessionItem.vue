@@ -4,7 +4,7 @@
       <transition name="fade" mode="out-in">
         <v-layout row wrap v-if="ready" key="map">
           <v-flex xs4 class="pb-0">
-            <img :src="mapUrl" alt="Approximate location of access" border="0" style="width: 100%; border-radius: 3px"/>
+            <img @click="$emit('openDialog', bigMapUrl)" :src="mapUrl" alt="Approximate location of access" border="0" style="width: 100%; border-radius: 3px" :class=" bogon ? 'not-clickable' : 'clickable'"/>
           </v-flex>
           <v-flex xs8 class="pb-0">
             <div class="body-2">{{ header }}</div>
@@ -70,11 +70,21 @@ export default {
         case 'xl': return '300x300'
       }
     },
+    bigMapSize () {
+      return `${innerWidth}x${innerWidth}`
+    },
     mapUrl () {
       if (this.bogon) {
         return `https://maps.googleapis.com/maps/api/staticmap?center=0,0&zoom=0&size=${this.mapSize}&maptype=roadmap&key=${this.api}`
       } else {
         return `https://maps.googleapis.com/maps/api/staticmap?center=${this.loc}&zoom=13&size=${this.mapSize}&maptype=roadmap&markers=color:blue|label:S|${this.loc}&key=${this.api}`
+      }
+    },
+    bigMapUrl () {
+      if (this.bogon) {
+        return `https://maps.googleapis.com/maps/api/staticmap?center=0,0&zoom=0&size=${this.bigMapSize}&maptype=roadmap&key=${this.api}`
+      } else {
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${this.loc}&zoom=15&size=${this.bigMapSize}&maptype=roadmap&markers=color:blue|label:S|${this.loc}&key=${this.api}`
       }
     },
     header () {
@@ -85,6 +95,7 @@ export default {
       }
     }
   },
+
   mounted () {
     this.$http.get(`http://ipinfo.io/${this.session.ip}`)
       .then(data => data.json())
@@ -97,8 +108,18 @@ export default {
         if (data.loc) this.loc = data.loc
         if (data.hostname) this.hostname = data.hostname
       })
-      .catch(err => console.log(err))
       .finally(() => { this.ready = true })
   }
 }
 </script>
+
+<style lang="sass">
+img.clickable
+  cursor: pointer
+  opacity: 1
+  transition: opacity .5s ease
+
+  &:hover
+    background: blue
+    opacity: .5
+</style>

@@ -8,6 +8,7 @@ import VueHead from 'vue-head'
 import VueMoment from 'vue-moment'
 import VueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
+import Transitions from 'vue2-transitions'
 import vueTopprogress from 'vue-top-progress'
 
 // Styling
@@ -30,6 +31,7 @@ Vue.use(VueMoment)
 Vue.use(VueCookies)
 Vue.use(VueResource)
 Vue.use(VeeValidate)
+Vue.use(Transitions)
 Vue.use(VuetifyToasts)
 Vue.use(vueTopprogress)
 Vue.use(Progress)
