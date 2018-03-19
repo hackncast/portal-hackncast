@@ -14,7 +14,8 @@ module.exports = {
     proxyTable: [
       {
         context: ['/api/**', '/static/**'],
-        target: JSON.parse(dotEnv.definitions['process.env.BACKEND'])
+        target: JSON.parse(dotEnv.definitions['process.env.BACKEND']),
+        xfwd: true
       }
     ],
     // Various Dev Server settings

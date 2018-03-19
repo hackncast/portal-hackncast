@@ -44,11 +44,6 @@ class SessionsSerializer(serializers.ModelSerializer):
     current = serializers.SerializerMethodField()
 
     def get_current(self, session):
-        print(
-            'SESSION', session.pk,
-            self.context.get('request').session.session_key,
-            session.pk == self.context.get('request').session.session_key
-        )
         return session.pk == self.context.get('request').session.session_key
 
     class Meta:

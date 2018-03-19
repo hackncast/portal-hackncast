@@ -1,5 +1,6 @@
 import json
 from django.contrib import messages
+from django.utils.deprecation import MiddlewareMixin
 
 CONTENT_TYPES = ["application/javascript", "application/json"]
 
@@ -40,3 +41,10 @@ class AjaxMessaging(object):
                 ]
                 response.content = json.dumps(content)
         return response
+
+
+class XForwardedForMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        ip = request.META['HTTP_X_FORWARDED_FOR']
+        if ip:
+            request.META['REMOTE_ADDR'] = ip.split(',')[0].strip()

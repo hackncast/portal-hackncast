@@ -106,6 +106,7 @@ LOCAL_APPS = (
 # -------------------- Middlewares & Templates Settings --------------------- #
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'apps.core.middlewares.XForwardedForMiddleware',
     # 'django.contrib.sessions.middleware.SessionMiddleware',
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
