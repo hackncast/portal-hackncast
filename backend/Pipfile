@@ -24,6 +24,7 @@ django-qsessions = "*"
 
 django-extensions = "*"
 django-webpack-loader = "*"
+django-silk = "*"
 
 
 [requires]

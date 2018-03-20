@@ -2,11 +2,13 @@ from .base import *
 
 DEBUG = True
 MESSAGE_LEVEL = 0
+MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
 
 TEMPLATE_DEBUG = False
 
 THIRD_PARTY_APPS += (
     'django_extensions',
+    'silk',
 )
 
 ALLOWED_HOSTS = ['*']

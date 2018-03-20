@@ -13,9 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from django.conf import settings
 from django.conf.urls import include, url
-# from django.contrib import admin
-# from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -35,3 +35,6 @@ urlpatterns = [
         TemplateView.as_view(template_name="admin.html"), name='admin'
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [url(r'^api/silk/', include('silk.urls', namespace='silk'))]
