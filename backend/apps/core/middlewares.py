@@ -45,6 +45,6 @@ class AjaxMessaging(object):
 
 class XForwardedForMiddleware(MiddlewareMixin):
     def process_request(self, request):
-        ip = request.META['HTTP_X_FORWARDED_FOR']
+        ip = request.META.get('HTTP_X_FORWARDED_FOR')
         if ip:
             request.META['REMOTE_ADDR'] = ip.split(',')[0].strip()
