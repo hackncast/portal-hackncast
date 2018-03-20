@@ -22,7 +22,7 @@
           </v-text-field>
           <v-text-field light label="Confirm New Password" name="new_password2" ref="newPassword2" tabindex="3" required
                         v-model="newPassword2"
-                        v-validate="'required|confirmed:new_password1'"
+                        v-validate="'required|confirmed:$newPassword1'"
                         data-vv-as="confirm password"
                         :error-messages="errors.collect('new_password2')"
                         :append-icon="showPassword ? 'visibility_off' : 'visibility'"
