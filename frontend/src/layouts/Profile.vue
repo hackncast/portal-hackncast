@@ -27,9 +27,9 @@
           </v-layout>
         </v-flex>
         <v-tabs fixed-tabs icons-and-text show-arrows color="transparent" dark slider-color="yellow" class="pt-2" style="padding-bottom: 2.8em">
-          <v-tab ripple :to="{ name: 'user:profile' }">Account <v-icon>account_box</v-icon></v-tab>
-          <v-tab ripple :to="{ name: 'user:profile:emails' }">Emails <v-icon>email</v-icon></v-tab>
-          <v-tab ripple :to="{ name: 'user:profile:security' }">Security <v-icon>security</v-icon></v-tab>
+          <v-tab exact ripple :to="{ name: 'user:profile' }">Account <v-icon>account_box</v-icon></v-tab>
+          <v-tab exact ripple :to="{ name: 'user:profile:emails' }">Emails <v-icon>email</v-icon></v-tab>
+          <v-tab exact ripple :to="{ name: 'user:profile:security' }">Security <v-icon>security</v-icon></v-tab>
         </v-tabs>
       </v-container>
       <v-container fluid>

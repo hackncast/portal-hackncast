@@ -2,8 +2,14 @@
   <v-layout row wrap>
     <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
       <v-card class="mb-3" style="margin-top: -40px">
-        <v-card-title class="title">Personal Info</v-card-title>
-        <v-card-text class="pt-0">
+        <v-card-text class="grey--text">
+          Joined at {{ dateJoined }}
+        </v-card-text>
+      </v-card>
+
+      <h2 class="subheading mb-1 grey--text text--darken-3">Personal Info</h2>
+      <v-card>
+        <v-card-text>
           <v-form @submit.prevent="submit" ref="form">
             <v-text-field label="Username" name="username" ref="username" type="text" tabindex="1" required
                           v-validate="'required|alpha_num'"
@@ -25,12 +31,6 @@
             </v-text-field>
             <v-btn block color="blue" class="white--text" :disabled="errors.any()" type="submit" :loading="working" tabindex="4">Save</v-btn>
           </v-form>
-        </v-card-text>
-      </v-card>
-
-      <v-card>
-        <v-card-text class="grey--text">
-          Joined at {{ dateJoined }}
         </v-card-text>
       </v-card>
 

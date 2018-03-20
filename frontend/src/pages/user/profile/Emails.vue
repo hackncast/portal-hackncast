@@ -1,23 +1,23 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
+    <v-flex xs12 sm10 offset-sm1 md6 offset-md3 class="pb-4">
       <v-card class="mb-3" style="margin-top: -40px">
-        <v-card-title class="title pb-0 pt-1">
-          Primary Email
-          <v-spacer></v-spacer>
-          <v-btn flat icon color="grey" @click="changePrimaryEmailDialog = true"><v-icon>edit</v-icon></v-btn>
-        </v-card-title>
-        <v-card-text class="grey--text pt-0">
-          {{ primaryEmail }}
+        <v-card-text class="py-0">
+          <v-list>
+            <v-list-tile class="first-card">
+              <v-list-tile-content>
+                <v-list-tile-sub-title>Primary email, {{ primaryEmail }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn flat icon color="grey" @click="changePrimaryEmailDialog = true"><v-icon>edit</v-icon></v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
         </v-card-text>
       </v-card>
 
+      <h2 class="subheading mb-1 grey--text text--darken-3">Registered Emails</h2>
       <v-card>
-        <v-card-title class="title pb-0 pt-1">
-          Registered Emails
-          <v-spacer></v-spacer>
-          <v-btn flat icon color="grey" @click="newEmailDialog = true"><v-icon>add</v-icon></v-btn>
-        </v-card-title>
         <v-card-text class="pt-0 pb-1">
           <v-list>
             <template v-for="(email, index) in emails" >
@@ -67,6 +67,8 @@
       </v-dialog>
 
     </v-flex>
+
+    <v-btn fixed dark fab right bottom color="blue" @click="newEmailDialog = true"><v-icon>add</v-icon></v-btn>
   </v-layout>
 </template>
 
@@ -167,3 +169,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.first-card .list__tile
+  height: 37px !important
+</style>
