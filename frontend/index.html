@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Hack 'n' Cast</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet">
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>Hack 'n' Cast</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet">
+		<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/brands.js" integrity="sha384-sCI3dTBIJuqT6AwL++zH7qL8ZdKaHpxU43dDt9SyOzimtQ9eyRhkG3B7KMl6AO19" crossorigin="anonymous"></script>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+
+		<style type="text/css" media="screen">
+			.init-loader { position: absolute; top: calc(50% - 30px); left: calc(50% - 30px); }
+			.square.invisible { background: transparent !important; }
+			.self-building-square-spinner, .self-building-square-spinner * { box-sizing: border-box; }
+			.self-building-square-spinner { height: 60px; width: 60px; top: calc( -15px * 2 / 3); }
+			.self-building-square-spinner .square { height: 15px; width: 15px; top: calc( -15px * 2 / 3); margin-right: calc(15px / 3); margin-top: calc(15px / 3); background: #369ecd; float: left; position: relative; opacity: 0; animation: self-building-square-spinner 3.5s infinite; border-radius: 2px; }
+			.self-building-square-spinner .square:nth-child(2) { animation-delay: calc(300ms * 4); }
+			.self-building-square-spinner .square:nth-child(6) { animation-delay: calc(300ms * 3); }
+			.self-building-square-spinner .square:nth-child(7) { animation-delay: calc(300ms * 0); }
+			.self-building-square-spinner .square:nth-child(8) { animation-delay: calc(300ms * 1); }
+			.self-building-square-spinner .square:nth-child(9) { animation-delay: calc(300ms * 2); }
+			.self-building-square-spinner .clear{ clear: both; }
+			@keyframes self-building-square-spinner { 0% { opacity: 0; } 5% { opacity: 1; top: 0; } 50.9% { opacity: 1; top: 0; } 55.9% { opacity: 0; top: inherit; } }	
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="init-loader">
+				<div class="self-building-square-spinner">
+					<div class="square invisible"></div>
+					<div class="square"></div>
+					<div class="square invisible"></div>
+					<div class="square clear invisible"></div>
+					<div class="square invisible"></div>
+					<div class="square"></div>
+					<div class="square clear"></div>
+					<div class="square"></div>
+					<div class="square"></div>
+				</div>
+			</div>
+		</div>
+		<!-- built files will be auto injected -->
+
+	</body>
 </html>
