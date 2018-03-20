@@ -13,7 +13,6 @@ import vueTopprogress from 'vue-top-progress'
 
 // Styling
 import '@/style/base.sass'
-import 'font-awesome/css/font-awesome.css'
 
 // My plugins and modules
 import App from '@/App'

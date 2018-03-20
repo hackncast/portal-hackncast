@@ -16,9 +16,9 @@
           <transition-group name="customSlide" mode="out-in">
             <section v-show="step === 1" key="email" class="transitioned" style="position: absolute; width: 100%">
               <v-layout row justify-center>
-                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fa-github</v-icon></v-btn>
-                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fa-google</v-icon></v-btn>
-                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fa-twitter</v-icon></v-btn>
+                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fab fa-github</v-icon></v-btn>
+                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fab fa-google</v-icon></v-btn>
+                <v-btn icon @click="notYet"><v-icon class="social-login-icon">fab fa-twitter</v-icon></v-btn>
               </v-layout>
               <v-text-field autofocus label="Email" name="email" ref="email" type="email" required
                             prepend-icon="person"

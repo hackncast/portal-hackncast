@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "dotenv-webpack": "^1.5.4",
-    "font-awesome": "^4.7.0",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.5",
     "md5": "^2.2.1",
