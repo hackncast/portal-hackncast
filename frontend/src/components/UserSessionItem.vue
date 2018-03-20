@@ -10,7 +10,7 @@
             <div class="body-2">{{ header }}</div>
             <div class="caption grey--text">{{ session.ip }}</div>
             <div class="caption">Expires {{ session.expire_date | moment('from') }}</div>
-            <div class="caption">Last activity, {{ session.last_activity | moment('from') }}</div>
+            <div class="caption">Last activity, {{ session.updated_at | moment('from') }}</div>
             <div class="caption red--text" v-if="session.current === true">This is your current session.</div>
             <div class="hidden-xs-only">
               <div class="caption grey--text"><strong>IP Address:</strong> {{ session.ip }}</div>

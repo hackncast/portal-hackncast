@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import get_user_model
-from django.contrib.humanize.templatetags import humanize
 
-from user_sessions.models import Session
+from qsessions.models import Session
 from rest_framework import serializers
 from allauth.account.forms import AddEmailForm
 from allauth.account.models import EmailAddress
@@ -48,7 +47,7 @@ class SessionsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Session
-        fields = ('pk', 'expire_date', 'user_agent', 'last_activity', 'ip',
+        fields = ('pk', 'expire_date', 'user_agent', 'updated_at', 'ip',
                   'current')
-        read_only_fields = ('pk', 'expire_date', 'user_agent', 'last_activity',
+        read_only_fields = ('pk', 'expire_date', 'user_agent', 'updated_at',
                             'ip', 'current')

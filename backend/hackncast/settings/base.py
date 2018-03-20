@@ -74,15 +74,34 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-SESSION_ENGINE = 'user_sessions.backends.db'
+SESSION_ENGINE = 'qsessions.backends.cached_db'
+
+CACHES = {
+    'default': {
+        'KEY_PREFIX': 'hnc',
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': env('CACHE_BACKEND', default='redis://localhost:6379/1'),
+        'OPTIONS': {
+            'SOCKET_TIMEOUT': 5,
+            'SOCKET_CONNECT_TIMEOUT': 5,
+            'MAX_CONNECTIONS': 1000,
+            'SERIALIZER_CLASS': 'redis_cache.serializers.JSONSerializer',
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+            'CONNECTION_POOL_CLASS_KWARGS': {
+                'max_connections': 50,
+                'timeout': 20,
+            },
+        },
+    },
+}
 # ---------------------------------- Apps ----------------------------------- #
 DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    # 'django.contrib.sessions',
-    'user_sessions',
+    'qsessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
@@ -105,9 +124,7 @@ LOCAL_APPS = (
 # -------------------- Middlewares & Templates Settings --------------------- #
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'apps.core.middlewares.XForwardedForMiddleware',
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
-    'user_sessions.middleware.SessionMiddleware',
+    'qsessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

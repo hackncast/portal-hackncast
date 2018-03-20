@@ -15,7 +15,7 @@ from allauth.account import signals
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 
-from user_sessions.models import Session
+from qsessions.models import Session
 
 from . import serializers
 
@@ -30,7 +30,7 @@ class SessionList(APIView):
     def get(self, request):
         data = self.request.user.session_set.filter(
             expire_date__gt=now()
-        ).order_by('-last_activity')
+        ).order_by('-updated_at')
         serializer = self.get_serializer(
             data, many=True, context={'request': request},
         )
