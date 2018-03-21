@@ -25,11 +25,11 @@ class UserDetailsSerializer(UserSerializer):
     verified_email = serializers.SerializerMethodField()
 
     def get_verified_email(self, user):
-        email = user.emailaddress_set.get(email=user.email)
+        email = self.context.get('primary_email')
         return email.verified
 
     def get_email_pk(self, user):
-        email = user.emailaddress_set.get(email=user.email)
+        email = self.context.get('primary_email')
         return email.pk
 
     class Meta:
