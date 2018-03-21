@@ -47,6 +47,16 @@ Vue.http.interceptors.push(function (request, next) {
 
 Vue.http.interceptors.push(function (request, next) {
   next((response) => {
+    if (response.ok === false && (response.status >= 500 || response.status <= 505)) {
+      setTimeout(() => {
+        Vue.toasts.open({
+          text: 'An error ocurred while quering the server, please check your internet connection and try again later.',
+          type: 'error',
+          persist: true
+        })
+      }, 1000)
+    }
+
     if (response.body && response.body.django_messages) {
       for (let message of response.body.django_messages) {
         Vue.toasts.open({
