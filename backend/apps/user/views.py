@@ -7,6 +7,7 @@ from django.views.generic.base import RedirectView
 
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound, ParseError
@@ -20,63 +21,46 @@ from qsessions.models import Session
 from . import serializers
 
 
-class SessionList(APIView):
+class SessionList(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.SessionsSerializer
     name = 'session-list'
 
-    def get_serializer(self, *args, **kwargs):
-        return serializers.SessionsSerializer(*args, **kwargs)
-
-    def get(self, request):
-        data = self.request.user.session_set.filter(
+    def get_queryset(self):
+        return self.request.user.session_set.filter(
             expire_date__gt=now()
         ).order_by('-updated_at')
-        serializer = self.get_serializer(
-            data, many=True, context={'request': request},
-        )
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get_queryset_context(self):
+        return {'request': self.request}
 
 
-class SessionDetail(APIView):
+class SessionDetail(generics.RetrieveDestroyAPIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.SessionsSerializer
     name = 'session-detail'
 
-    def get_serializer(self, *args, **kwargs):
-        return serializers.SessionsSerializer(*args, **kwargs)
+    def get_queryset(self):
+        return self.request.user.session_set
 
-    def get(self, request, pk):
-        try:
-            data = request.user.session_set.get(pk=pk)
-        except Session.DoesNotExist:
-            raise NotFound('Session not found!')
+    def get_queryset_context(self):
+        return {'request': self.request}
 
-        serializer = self.get_serializer(data, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def delete(self, request, pk):
-        try:
-            session = request.user.session_set.get(pk=pk)
-        except Session.DoesNotExist:
-            raise NotFound('Session not found!')
-
-        if session.pk == request.session.session_key:
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.pk == self.request.session.session_key:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-        session.delete()
-        return Response({}, status=status.HTTP_200_OK)
 
-
-class PasswordChangesList(APIView):
+class PasswordChangesList(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.PasswordChangesSerializer
     name = 'password-changes-list'
 
-    def get_serializer(self, *args, **kwargs):
-        return serializers.PasswordChangesSerializer(*args, **kwargs)
-
-    def get(self, request):
-        data = self.request.user.password_changes.all().order_by('changed_at')
-        serializer = self.get_serializer(data, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        return self.request.user.password_changes.order_by('changed_at')
 
 
 class EmailList(APIView):
