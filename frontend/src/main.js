@@ -47,7 +47,7 @@ Vue.http.interceptors.push(function (request, next) {
 
 Vue.http.interceptors.push(function (request, next) {
   next((response) => {
-    if (response.ok === false && (response.status >= 500 || response.status <= 505)) {
+    if (response.ok === false && (response.status >= 500 && response.status <= 505)) {
       setTimeout(() => {
         Vue.toasts.open({
           text: 'An error ocurred while quering the server, please check your internet connection and try again later.',
