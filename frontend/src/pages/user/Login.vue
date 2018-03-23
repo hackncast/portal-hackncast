@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import md5 from 'md5/md5'
 import { FormMixin } from '@/mixins/FormMixin'
 import { mapActions } from 'vuex'
@@ -84,7 +84,7 @@ export default {
   },
 
   watch: {
-    email: _.debounce(function () {
+    email: debounce(function () {
       if (this.email.search('@') <= 0) {
         return
       }
