@@ -1,7 +1,7 @@
 import { UI } from '@/store/mutation-types'
 
 const NAVBAR_LIGHT_COLOR = 'blue accent-2'
-const NAVBAR_DARK_COLOR = 'blue-grey darken-4'
+const NAVBAR_DARK_COLOR = 'blue-grey darken-3'
 const BACKGROUND_DARK_COLOR = 'darkBackground'
 const BACKGROUND_LIGHT_COLOR = 'grey lighten-3'
 
@@ -14,12 +14,17 @@ export default {
     progressStatus: false
   },
 
+  getters: {
+    getChromeColor: state => state.darkTheme ? '#263238' : '#2962FF'
+  },
+
   mutations: {
     [UI.DARK_THEME] (state, value) {
       state.darkTheme = value
       localStorage.setItem('UI_DarkTheme', value)
       state.navbarColor = value ? NAVBAR_DARK_COLOR : NAVBAR_LIGHT_COLOR
       state.backgroundColor = value ? BACKGROUND_DARK_COLOR : BACKGROUND_LIGHT_COLOR
+      state.chromeColor = '#2e2e2e'
     },
     [UI.NAVBAR_COLOR] (state, color) {
       state.navbarColor = color
