@@ -96,7 +96,7 @@ CACHES = {
     },
 }
 # ---------------------------------- Apps ----------------------------------- #
-DJANGO_APPS = (
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.sites',
     'django.contrib.auth',
@@ -104,9 +104,9 @@ DJANGO_APPS = (
     'qsessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-)
+]
 
-THIRD_PARTY_APPS = (
+THIRD_PARTY_APPS = [
     'webpack_loader',
     'rest_framework',
     'rest_framework.authtoken',
@@ -114,12 +114,12 @@ THIRD_PARTY_APPS = (
     'allauth',
     'allauth.account',
     'rest_auth.registration',
-)
+]
 
-LOCAL_APPS = (
+LOCAL_APPS = [
     'apps.core',
     'apps.user',
-)
+]
 
 # -------------------- Middlewares & Templates Settings --------------------- #
 MIDDLEWARE = [

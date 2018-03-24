@@ -1,15 +1,17 @@
 from .base import *
 
+SILK = env('SILK', default=False)
+
 DEBUG = True
 MESSAGE_LEVEL = 0
-MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
+
+if SILK:
+    MIDDLEWARE.append('silk.middleware.SilkyMiddleware')
+    THIRD_PARTY_APPS.append('silk')
 
 TEMPLATE_DEBUG = False
 
-THIRD_PARTY_APPS += (
-    'django_extensions',
-    'silk',
-)
+THIRD_PARTY_APPS.append('django_extensions')
 
 ALLOWED_HOSTS = ['*']
 
