@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from rest_auth.registration.views import RegisterView
-from rest_auth.views import PasswordResetView, UserDetailsView
+from rest_auth.views import PasswordResetView, UserDetailsView, LoginView
+from django.utils.decorators import method_decorator
 
 from . import serializers
+from . import decorators
+
+watch_login = decorators.watch_login()
 
 
 class CaptchaRegisterView(RegisterView):
@@ -27,3 +31,9 @@ class CustomUserDetailsView(UserDetailsView):
         context = super().get_serializer_context()
         context['primary_email'] = self.primary_email
         return context
+
+
+class CustomLoginView(LoginView):
+    @method_decorator(watch_login)
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)

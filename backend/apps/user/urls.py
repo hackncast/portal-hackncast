@@ -6,6 +6,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('access/',
+         views.AccessAttemptList.as_view(), name=views.AccessAttemptList.name),
+    path('access/blocked/',
+         views.BlockedOriginList.as_view(), name=views.BlockedOriginList.name),
     path('session/',
          views.SessionList.as_view(), name=views.SessionList.name),
     path('session/<pk>/',

@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from datetime import timedelta
+
+from django.conf import settings
+from django.db.models import Count
+from django.core.cache import cache
 from django.contrib import messages
 from django.utils.timezone import now
 from django.views.generic.base import RedirectView
@@ -16,9 +21,56 @@ from allauth.account import signals
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 
-from qsessions.models import Session
+from defender import utils
+from defender.models import AccessAttempt
 
 from . import serializers
+
+
+class BlockedOriginList(APIView):
+    permission_classes = (IsAuthenticated,)
+    name = 'blocked-origin-list'
+
+    def get(self, request):
+        blocked = []
+        username = self.request.user.email
+        username_is_blocked = utils.is_user_already_locked(username)
+
+        if username_is_blocked:
+            c = cache.get_master_client()
+            user_ttl = c.ttl(
+                utils.get_username_blocked_cache_key(username)
+            )
+            attempts = AccessAttempt.objects.filter(username=username).\
+                order_by('ip_address', '-attempt_time').\
+                distinct('ip_address').values('ip_address', 'attempt_time')
+
+            for attempt in attempts:
+                if utils.is_source_ip_already_locked(attempt['ip_address']):
+                    ip_ttl = c.ttl(
+                        utils.get_ip_blocked_cache_key(attempt['ip_address'])
+                    )
+                    ttl = min([user_ttl, ip_ttl])
+                    attempt['block_end'] = attempt['attempt_time'] +\
+                        timedelta(seconds=ttl)
+                    print(ip_ttl, user_ttl)
+                    print(attempt)
+                    blocked.append(attempt)
+
+        return Response(blocked, status=status.HTTP_200_OK)
+
+
+class AccessAttemptList(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.AccessAttemptSerializer
+    name = 'access-list'
+
+    def get_queryset(self):
+        last_7days = now() - timedelta(days=7)
+        return AccessAttempt.objects.filter(
+            username=self.request.user.email,
+            attempt_time__gt=last_7days
+        ).order_by('-attempt_time')
 
 
 class SessionList(generics.ListAPIView):

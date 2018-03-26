@@ -7,6 +7,7 @@ from qsessions.models import Session
 from rest_framework import serializers
 from allauth.account.forms import AddEmailForm
 from allauth.account.models import EmailAddress
+from defender.models import AccessAttempt
 
 from . import models
 
@@ -51,3 +52,14 @@ class SessionsSerializer(serializers.ModelSerializer):
                   'current')
         read_only_fields = ('pk', 'expire_date', 'user_agent', 'updated_at',
                             'ip', 'current')
+
+
+class AccessAttemptSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AccessAttempt
+        fields = (
+            'pk', 'user_agent', 'ip_address', 'attempt_time', 'login_valid'
+        )
+        read_only_fields = (
+            'pk', 'user_agent', 'ip_address', 'attempt_time', 'login_valid'
+        )

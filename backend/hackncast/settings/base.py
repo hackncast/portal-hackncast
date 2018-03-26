@@ -104,6 +104,7 @@ DJANGO_APPS = [
     'qsessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'defender',
 ]
 
 THIRD_PARTY_APPS = [
@@ -182,6 +183,16 @@ WEBPACK_LOADER = {
         'IGNORE': [],
     }
 }
+
+# Django Defender
+DEFENDER_LOGIN_FAILURE_LIMIT = 5
+DEFENDER_BEHIND_REVERSE_PROXY = True
+DEFENDER_LOCK_OUT_BY_IP_AND_USERNAME = True
+DEFENDER_COOLOFF_TIME = 60 * 60 * 24
+DEFENDER_USERNAME_FORM_FIELD = 'email'
+DEFENDER_CACHE_PREFIX = 'defender'
+DEFENDER_REDIS_NAME = 'default'
+DEFENDER_ACCESS_ATTEMPT_EXPIRATION = 24 * 14
 # -------------------------- Custom Site Settings --------------------------- #
-FRONTEND_SITE_DOMAIN=env("SITE_DOMAIN", default="localhost:8080")
-FRONTEND_SITE_NAME=env("SITE_NAME", default="Portal Hack 'n' Cast")
+FRONTEND_SITE_DOMAIN = env("SITE_DOMAIN", default="localhost:8080")
+FRONTEND_SITE_NAME = env("SITE_NAME", default="Portal Hack 'n' Cast")

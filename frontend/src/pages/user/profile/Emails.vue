@@ -4,7 +4,7 @@
       <v-card class="mb-3" style="margin-top: -40px">
         <v-card-text class="py-0">
           <v-list>
-            <v-list-tile class="first-card">
+            <v-list-tile class="list-in-card">
               <v-list-tile-content>
                 <v-list-tile-sub-title>Primary email, {{ primaryEmail }}</v-list-tile-sub-title>
               </v-list-tile-content>
@@ -169,8 +169,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-.first-card .list__tile
-  height: 37px !important
-</style>

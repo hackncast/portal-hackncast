@@ -14,10 +14,10 @@ django-allauth = "*"
 django-rest-auth = "*"
 "psycopg2" = "*"
 django-rest-recaptcha = "*"
-django-user-sessions = "*"
 django-redis-cache = "*"
 hiredis = "*"
 django-qsessions = "*"
+django-defender = "*"
 
 
 [dev-packages]

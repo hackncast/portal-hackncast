@@ -9,18 +9,26 @@
 
       <h2 class="subheading mb-1 grey--text text--darken-3">Password</h2>
       <v-card class="mb-3">
-        <v-card-text class="grey--text text--darken-4">
+        <v-card-text class="">
+          <v-list-tile-sub-title>
           <template v-if="passwords.length === 0">
             Hey, you still use your first password from {{ dateJoined }}? Please, consider changing it soon...
           </template>
           <template v-else>
             You have changed your password {{ passwords.length }} time<span v-if="passwords.length > 1">s</span>. Last time was {{ lastChanged }}.
           </template>
+          </v-list-tile-sub-title>
         </v-card-text>
         <v-card-actions>
           <v-btn flat block color="blue" @click="showChangePasswordForm = true">Change Password</v-btn>
         </v-card-actions>
       </v-card>
+
+      <h2 class="subheading mb-1 grey--text text--darken-3">Access Attempt</h2>
+      <access-attempts :attempts="attempts" />
+
+      <h2 class="subheading mb-1 grey--text text--darken-3">Blocked Origins</h2>
+      <blocked-origins :blocks="blocks" />
 
       <h2 class="subheading mb-1 grey--text text--darken-3">Sessions</h2>
       <user-sessions :sessions="sessions" />
@@ -36,11 +44,13 @@ import { FormMixin } from '@/mixins/FormMixin'
 import { mapGetters } from 'vuex'
 import ChangePasswordForm from '@/components/forms/user/ChangePassword'
 import UserSessions from '@/components/UserSessions'
+import AccessAttempts from '@/components/AccessAttempts'
+import BlockedOrigins from '@/components/BlockedOrigins'
 
 export default {
   name: 'UserProfileSecurity',
 
-  components: { ChangePasswordForm, UserSessions },
+  components: { ChangePasswordForm, UserSessions, AccessAttempts, BlockedOrigins },
 
   mixins: [FormMixin],
 
@@ -48,7 +58,9 @@ export default {
     return {
       showChangePasswordForm: false,
       passwords: [],
-      sessions: []
+      sessions: [],
+      attempts: [],
+      blocks: []
     }
   },
 
@@ -95,13 +107,31 @@ export default {
           for (let session of sessions) {
             this.sessions.push(session)
           }
+          return this.$http.get('/api/user/access/')
+        })
+        .then(data => data.json())
+        .then(attempts => {
+          this.attempts.splice(0, this.attempts.length)
+          for (let attempt of attempts) {
+            this.attempts.push(attempt)
+          }
+          return this.$http.get('/api/user/access/blocked')
+        })
+        .then(data => data.json())
+        .then(blocks => {
+          this.blocks.splice(0, this.blocks.length)
+          for (let block of blocks) {
+            block.attempt_time = new Date(block.attempt_time)
+            block.block_end = new Date(block.block_end)
+            this.blocks.push(block)
+          }
           this.$progress.stop()
         })
         .catch(() => this.$progress.fail())
     }
   },
 
-  mounted () {
+  created () {
     this.fetchData()
   }
 }

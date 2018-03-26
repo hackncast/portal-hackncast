@@ -21,7 +21,7 @@ urlpatterns = [
          auth_views.PasswordResetConfirmView.as_view(),
          name='rest_password_reset_confirm'),
     path('auth/login/',
-         auth_views.LoginView.as_view(), name='rest_login'),
+         views.CustomLoginView.as_view(), name='rest_login'),
     path('auth/logout/',
          auth_views.LogoutView.as_view(), name='rest_logout'),
     path('auth/user/',
