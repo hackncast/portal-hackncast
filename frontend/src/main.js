@@ -4,6 +4,7 @@ import Vue from 'vue'
 
 // External Plugins
 import Vuetify from 'vuetify'
+import VueI18n from 'vue-i18n'
 import VueHead from 'vue-head'
 import VueMoment from 'vue-moment'
 import VueResource from 'vue-resource'
@@ -15,6 +16,7 @@ import vueTopprogress from 'vue-top-progress'
 import '@/style/base.sass'
 
 // My plugins and modules
+import messages from '@/i18n'
 import App from '@/App'
 import router from '@/router'
 import VueLodash from '@/plugins/VueLodash'
@@ -24,6 +26,7 @@ import Progress from '@/plugins/Progress'
 import { store } from '@/store/store'
 
 Vue.use(Vuetify)
+Vue.use(VueI18n)
 Vue.use(VueHead)
 Vue.use(VueLodash)
 Vue.use(VueMoment)
@@ -69,11 +72,17 @@ Vue.http.interceptors.push(function (request, next) {
   })
 })
 
+const i18n = new VueI18n({
+  locale: localStorage.getItem('language') || navigator.language || navigator.languages[0],
+  messages
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   components: { App },
   template: '<App/>'
 })
