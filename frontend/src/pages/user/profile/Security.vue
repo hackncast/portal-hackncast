@@ -2,35 +2,30 @@
   <v-layout row wrap>
     <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
       <v-card class="mb-3" style="margin-top: -40px">
-        <v-card-text class="grey--text text--darken-2">
+        <v-card-text class="grey--text text--darken-1">
           Last login at {{ lastLogin }}
         </v-card-text>
       </v-card>
 
-      <h2 class="subheading mb-1 grey--text text--darken-3">Password</h2>
+      <v-subheader class="pl-0" style="height: 30px;">Passwords</v-subheader>
       <v-card class="mb-3">
-        <v-card-text class="">
-          <v-list-tile-sub-title>
-          <template v-if="passwords.length === 0">
-            Hey, you still use your first password from {{ dateJoined }}? Please, consider changing it soon...
-          </template>
-          <template v-else>
-            You have changed your password {{ passwords.length }} time<span v-if="passwords.length > 1">s</span>. Last time was {{ lastChanged }}.
-          </template>
-          </v-list-tile-sub-title>
+        <v-card-text class="pb-0">
+          <v-list-tile-content>
+            {{ $tc('profile.passwordChange', passwords.length, {dateJoined, lastChanged, count: passwords.length })}}
+          </v-list-tile-content>
         </v-card-text>
         <v-card-actions>
           <v-btn flat block color="blue" @click="showChangePasswordForm = true">Change Password</v-btn>
         </v-card-actions>
       </v-card>
 
-      <h2 class="subheading mb-1 grey--text text--darken-3">Access Attempt</h2>
+      <v-subheader class="pl-0" style="height: 30px;">Access Attempt</v-subheader>
       <access-attempts :attempts="attempts" />
 
-      <h2 class="subheading mb-1 grey--text text--darken-3">Blocked Origins</h2>
+      <v-subheader class="pl-0" style="height: 30px;">Blocked Origins</v-subheader>
       <blocked-origins :blocks="blocks" />
 
-      <h2 class="subheading mb-1 grey--text text--darken-3">Sessions</h2>
+      <v-subheader class="pl-0" style="height: 30px;">Sessions</v-subheader>
       <user-sessions :sessions="sessions" />
 
       <change-password-form :show="showChangePasswordForm" @close="showChangePasswordForm = false" />

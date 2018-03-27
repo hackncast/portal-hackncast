@@ -1,14 +1,15 @@
 <template>
   <v-card class="mb-3">
-    <v-card-text class="py-0">
-      <v-list>
+    <v-card-text class="py-1">
+      <v-list three-line>
         <v-list-tile class="list-in-card">
           <v-list-tile-content>
-            <v-list-tile-sub-title>
-              We've found <span class="red--text">{{ failCount }} failed login attempt</span> from {{ ipsCount }} different origins in the last 7 days.
-            </v-list-tile-sub-title>
+            <i18n path="profile.attempts.found" tag="v-list-tile-sub-title">
+              <span place="failed" class="red--text">{{ $tc('profile.attempts.failed', failCount, { failCount }) }}</span>
+              <span place="origin">{{ $tc('profile.attempts.origin', ipsCount, { ipsCount }) }}</span>
+            </i18n>
           </v-list-tile-content>
-          <v-list-tile-action>
+          <v-list-tile-action style="min-width: 30px">
             <v-btn flat icon color="grey" @click=""><v-icon>info</v-icon></v-btn>
           </v-list-tile-action>
         </v-list-tile>

@@ -16,7 +16,7 @@
         </v-card-text>
       </v-card>
 
-      <h2 class="subheading mb-1 grey--text text--darken-3">Registered Emails</h2>
+      <v-subheader class="pl-0" style="height: 30px;">Registered Emails</v-subheader>
       <v-card>
         <v-card-text class="pt-0 pb-1">
           <v-list>

@@ -7,7 +7,7 @@
         </v-card-text>
       </v-card>
 
-      <h2 class="subheading mb-1 grey--text text--darken-3">Personal Info</h2>
+      <v-subheader class="pl-0" style="height: 30px;">Personal Info</v-subheader>
       <v-card>
         <v-card-text>
           <v-form @submit.prevent="submit" ref="form">

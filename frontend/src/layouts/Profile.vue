@@ -10,7 +10,7 @@
           <v-layout align-center justify-center style="">
             <v-avatar size="120px" class="elevation-2">
               <img :src="currentUser.avatar" :alt="currentUser.displayName">
-              <v-btn fab absolute dark small class="elevation-3" color="blue" style="bottom: 0px; left: 80px;" @click="notYet">
+              <v-btn fab absolute dark small class="elevation-3" color="blue" style="bottom: 0px; left: 80px; z-index: 1;" @click="notYet">
                 <v-icon dark>edit</v-icon>
               </v-btn>
             </v-avatar>
