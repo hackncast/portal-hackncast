@@ -7,12 +7,12 @@
       </template>
     </zoom-center-transition>
     <div v-if="currentSessions.length === 0" class="pa-3">
-      No active sessions found
+      {{ $t('messages.no-active-sessions') }}
     </div>
 
     <v-dialog v-model="mapDialog" max-width="">
       <v-card>
-        <v-card-title class="body-2">Approximated Access Location</v-card-title>
+        <v-card-title class="body-2">{{ $t('messages.approximate-location') }}</v-card-title>
         <v-card-text>
           <div v-cloak>
             <img :src="mapUrl" border="0" style="width: 100%; border-radius: 3px"/>
@@ -20,7 +20,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" flat @click.stop="closeMapDialog">Close</v-btn>
+            <v-btn color="primary" flat @click.stop="closeMapDialog">{{ $t('labels.close') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

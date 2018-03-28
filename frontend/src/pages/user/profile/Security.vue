@@ -3,11 +3,11 @@
     <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
       <v-card class="mb-3" style="margin-top: -40px">
         <v-card-text class="grey--text text--darken-1">
-          Last login at {{ lastLogin }}
+          {{ $t('messages.last-login', {lastLogin}) }}
         </v-card-text>
       </v-card>
 
-      <v-subheader class="pl-0" style="height: 30px;">Passwords</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('labels.passwords') }}</v-subheader>
       <v-card class="mb-3">
         <v-card-text class="pb-0">
           <v-list-tile-content>
@@ -19,13 +19,13 @@
         </v-card-actions>
       </v-card>
 
-      <v-subheader class="pl-0" style="height: 30px;">Access Attempt</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('labels.access-attempt') }}</v-subheader>
       <access-attempts :attempts="attempts" />
 
-      <v-subheader class="pl-0" style="height: 30px;">Blocked Origins</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('labels.blocked-origins') }}</v-subheader>
       <blocked-origins :blocks="blocks" />
 
-      <v-subheader class="pl-0" style="height: 30px;">Sessions</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('labels.sessions') }}</v-subheader>
       <user-sessions :sessions="sessions" />
 
       <change-password-form :show="showChangePasswordForm" @close="showChangePasswordForm = false" />
@@ -63,6 +63,8 @@ export default {
     ...mapGetters(['currentUser']),
 
     lastChanged () {
+      if (this.passwords.length === 0) return ''
+
       return this.passwords[0].toLocaleString(
         navigator.language,
         { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }

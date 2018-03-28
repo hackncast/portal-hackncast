@@ -1,4 +1,22 @@
 export default {
+  labels: {
+    'passwords': 'Passwords',
+    'access-attempt': 'Access Attempt',
+    'blocked-origins': 'Blocked Origins',
+    'sessions': 'Sessions',
+    'close': 'Close',
+    'end-session': 'End Session',
+    'ip-address': 'IP Address',
+    'current-session': 'This is your current session.',
+    'last-activity': 'Last activity',
+    'expires': 'Expires'
+  },
+  messages: {
+    'last-login': 'Last login at {lastLogin}',
+    'no-active-sessions': 'No active sessions found',
+    'approximate-location': 'Approximated Access Location',
+    'no-location': 'No Location Defined'
+  },
   'email': 'Email',
   'password': 'Password',
   'remember-me': 'Remember me',
