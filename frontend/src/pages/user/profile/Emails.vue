@@ -6,7 +6,7 @@
           <v-list>
             <v-list-tile class="list-in-card">
               <v-list-tile-content>
-                <v-list-tile-sub-title>Primary email, {{ primaryEmail }}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{ $t('profile.primary-email', {email: primaryEmail}) }}</v-list-tile-sub-title>
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-btn flat icon color="grey" @click="changePrimaryEmailDialog = true"><v-icon>edit</v-icon></v-btn>
@@ -16,7 +16,7 @@
         </v-card-text>
       </v-card>
 
-      <v-subheader class="pl-0" style="height: 30px;">Registered Emails</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('label.registered-emails') }}</v-subheader>
       <v-card>
         <v-card-text class="pt-0 pb-1">
           <v-list>
@@ -27,17 +27,17 @@
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title>{{ email.email }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ email.verified ? 'Verified' : 'Not verified yet!'}}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{ email.verified ? $t('label.verified') : $t('label.not-verified')}}</v-list-tile-sub-title>
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-menu bottom left :disabled="email.verified && email.primary">
                   <v-btn icon ripple slot="activator"><v-icon :color="email.verified && email.primary ? 'grey lighten-2' : 'grey'">more_vert</v-icon></v-btn>
                   <v-list>
                     <v-list-tile @click="resendVerification(email.pk)" :disabled="email.verified">
-                      <v-list-tile-title>Resend Verification</v-list-tile-title>
+                      <v-list-tile-title>{{ $t('label.resend-verification') }}</v-list-tile-title>
                     </v-list-tile>
                     <v-list-tile @click="excludeEmail(email.pk)"  :disabled="email.primary">
-                      <v-list-tile-title>Exclude</v-list-tile-title>
+                      <v-list-tile-title>{{ $t('label.exclude') }}</v-list-tile-title>
                     </v-list-tile>
                   </v-list>
                 </v-menu>
@@ -51,17 +51,19 @@
 
       <user-email-form :show="newEmailDialog" @close="newEmailDialog = false" @success="fetchEmails" />
 
-      <v-dialog v-model="changePrimaryEmailDialog" max-width="290">
+      <v-dialog v-model="changePrimaryEmailDialog" max-width="400">
         <v-card>
-          <v-card-title class="headline pb-0">Change Primary Email Address</v-card-title>
+          <v-card-title class="headline pb-0">{{ $t('profile.change-primary-email') }}</v-card-title>
           <v-card-text class="pt-0">
           <v-select :items="elegibleForPrimary" v-model="newPrimaryEmail" label="Select" single-line></v-select>
-          <strong class="blue--text">Note:</strong> An email MUST be verified before being set as primary.
+          <i18n path="profile.change-email-attention" tag="p">
+            <strong place="attention" class="blue--text">{{ $t('label.attention') }}:</strong>
+          </i18n>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="red darken-1" flat="flat" @click.native="changePrimaryEmailDialog = false; newPrimaryEmail = primaryEmail">Cancel</v-btn>
-            <v-btn color="green darken-1" flat="flat" @click="setAsPrimaryEmail" :loading="working" :disabled="newPrimaryEmail === primaryEmail" tabindex="1">Set as Primary</v-btn>
+            <v-btn color="red darken-1" flat="flat" @click.native="changePrimaryEmailDialog = false; newPrimaryEmail = primaryEmail">{{ $t('label.cancel') }}</v-btn>
+            <v-btn color="green darken-1" flat="flat" @click="setAsPrimaryEmail" :loading="working" :disabled="newPrimaryEmail === primaryEmail" tabindex="1">{{ $t('label.set-as-primary') }}</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

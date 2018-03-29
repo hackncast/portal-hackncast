@@ -4,16 +4,16 @@
       <transition name="fade" mode="out-in">
         <v-layout row wrap v-if="ready" key="map">
           <v-flex xs4 class="pb-0">
-            <img @click="onMapClick" :src="mapUrl" :alt="$t('messages.approximate-location')" border="0" style="width: 100%; border-radius: 3px" :class=" bogon ? 'not-clickable' : 'clickable'"/>
+            <img @click="onMapClick" :src="mapUrl" :alt="$t('profile.session.approximate-location')" border="0" style="width: 100%; border-radius: 3px" :class=" bogon ? 'not-clickable' : 'clickable'"/>
           </v-flex>
           <v-flex xs8 class="pb-0">
             <div class="body-2">{{ header }}</div>
             <div class="caption grey--text">{{ session.ip }}</div>
-            <div class="caption">{{ $t('labels.expires') }} {{ session.expire_date | moment('from') }}</div>
-            <div class="caption">{{ $t('labels.last-activity') }}, {{ session.updated_at | moment('from') }}</div>
-            <div class="caption red--text" v-if="session.current === true">{{ $t('labels.current-session') }}</div>
+            <div class="caption">{{ $t('label.expires') }} {{ session.expire_date | moment('from') }}</div>
+            <div class="caption">{{ $t('label.last-activity') }}, {{ session.updated_at | moment('from') }}</div>
+            <div class="caption red--text" v-if="session.current === true">{{ $t('label.current-session') }}</div>
             <div class="hidden-xs-only">
-              <div class="caption grey--text"><strong>{{ $t('labels.ip-address') }}:</strong> {{ session.ip }}</div>
+              <div class="caption grey--text"><strong>{{ $t('label.ip-address') }}:</strong> {{ session.ip }}</div>
               <div class="caption grey--text"><strong>User Agent: </strong>{{ session.user_agent }}</div>
             </div>
           </v-flex>
@@ -30,7 +30,7 @@
     </v-container>
     <transition name="fade" mode="out-in">
       <v-card-actions class="px-0 pt-0" v-if="ready">
-        <v-btn block flat color="red" class="mx-0" :disabled="session.current === true" @click="$emit('end')">{{ $t('labels.end-session') }}</v-btn>
+        <v-btn block flat color="red" class="mx-0" :disabled="session.current === true" @click="$emit('end')">{{ $t('label.end-session') }}</v-btn>
       </v-card-actions>
     </transition>
   </v-card>
@@ -89,7 +89,7 @@ export default {
     },
     header () {
       if (this.bogon) {
-        return this.$t('messages.no-location')
+        return this.$t('profile.session.no-location')
       } else {
         return `${this.city}, ${this.region} (${this.country})`
       }

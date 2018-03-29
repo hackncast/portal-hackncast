@@ -3,29 +3,29 @@
     <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
       <v-card class="mb-3" style="margin-top: -40px">
         <v-card-text class="grey--text text--darken-1">
-          {{ $t('messages.last-login', {lastLogin}) }}
+          {{ $t('profile.last-login', {lastLogin: $d(currentUser.lastLogin, 'long')}) }}
         </v-card-text>
       </v-card>
 
-      <v-subheader class="pl-0" style="height: 30px;">{{ $t('labels.passwords') }}</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('label.passwords') }}</v-subheader>
       <v-card class="mb-3">
-        <v-card-text class="pb-0">
+        <v-card-text class="pb-1">
           <v-list-tile-content>
             {{ $tc('profile.passwordChange', passwords.length, {dateJoined, lastChanged, count: passwords.length })}}
           </v-list-tile-content>
         </v-card-text>
         <v-card-actions>
-          <v-btn flat block color="blue" @click="showChangePasswordForm = true">Change Password</v-btn>
+          <v-btn flat block color="blue" @click="showChangePasswordForm = true">{{ $t('label.change-password') }}</v-btn>
         </v-card-actions>
       </v-card>
 
-      <v-subheader class="pl-0" style="height: 30px;">{{ $t('labels.access-attempt') }}</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('label.access-attempt') }}</v-subheader>
       <access-attempts :attempts="attempts" />
 
-      <v-subheader class="pl-0" style="height: 30px;">{{ $t('labels.blocked-origins') }}</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('label.blocked-origins') }}</v-subheader>
       <blocked-origins :blocks="blocks" />
 
-      <v-subheader class="pl-0" style="height: 30px;">{{ $t('labels.sessions') }}</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('label.sessions') }}</v-subheader>
       <user-sessions :sessions="sessions" />
 
       <change-password-form :show="showChangePasswordForm" @close="showChangePasswordForm = false" />
@@ -64,26 +64,10 @@ export default {
 
     lastChanged () {
       if (this.passwords.length === 0) return ''
-
-      return this.passwords[0].toLocaleString(
-        navigator.language,
-        { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
-      )
+      return this.$d(this.passwords[0], 'dateLong')
     },
 
-    lastLogin () {
-      return this.currentUser.lastLogin.toLocaleString(
-        navigator.language,
-        { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
-      )
-    },
-
-    dateJoined () {
-      return this.currentUser.dateJoined.toLocaleString(
-        navigator.language,
-        { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
-      )
-    }
+    dateJoined () { return this.$d(this.currentUser.dateJoined, 'dateLong') }
   },
 
   methods: {

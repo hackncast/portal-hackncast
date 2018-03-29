@@ -1,0 +1,60 @@
+export default {
+  label: {
+    'passwords': 'Senhas',
+    'access-attempt': 'Tentativas de Acesso',
+    'blocked-origins': 'Origens Bloqueadas',
+    'sessions': 'Sessões',
+    'close': 'Fechar',
+    'end-session': 'Finalizar Sessão',
+    'ip-address': 'Endereço IP',
+    'current-session': 'Esta á a sua sessão atual',
+    'last-activity': 'Última atividade',
+    'registration': 'Cadastramento',
+    'thank-you': 'Obrigado!',
+    'email': 'Email',
+    'emails': 'Emails',
+    'password': 'Senha',
+    'confirm-password': 'Confirmação de Senha',
+    'register': 'Cadastrar-se',
+    'already-registered': 'Já se Cadastrado?',
+    'avatar-alt': 'Avatar de {email}',
+    'next': 'Próximo',
+    'remember-me': 'Lembrar de mim',
+    'login': 'Login',
+    'need-help': 'Precisa de Ajuda?',
+    'expires': 'Expira',
+    'change-password': 'Trocar a Senha',
+    'level': 'Nível',
+    'experience': 'Experiência',
+    'security': 'Segurança',
+    'registered-emails': 'Emails Cadastrados',
+    'account': 'Conta',
+    'verified': 'Validado',
+    'not-verified': 'Validação pendente!',
+    'resend-verification': 'Reenviar Validação',
+    'exclude': 'Excluir',
+    'cancel': 'Cancelar',
+    'set-as-primary': 'Definir como Principal',
+    'new-email': 'Novo Email',
+    'add': 'Adicionar',
+    'attention': 'Atenção'
+  },
+  profile: {
+    'new-email-address': 'Novo Endereço de Email',
+    'change-email-attention': '{attention} O email deve ser verificado antes de ser configurado como endereço principal.',
+    'change-primary-email': 'Alterar o Email Principal',
+    'last-login': 'Último login em {lastLogin}',
+    'primary-email': 'Email principal, {email}',
+    session: {
+      'no-location': 'Localização Indefinida',
+      'approximate-location': 'Local de Acesso Aproximado',
+      'no-active-sessions': 'Nenhuma sessão ativa foi encontrada'
+    },
+    attempts: {
+      failed: '{failCount} tentativa incorreta de login | {failCount} tentativas incorretas de login',
+      origin: '{ipsCount} origem diferente | {ipsCount} origens diferentes',
+      found: 'Nos encontramos {failed} de {origin} nos últimos 7 dias.'
+    },
+    passwordChange: 'Ei, você ainda utiliza a mesma senha desde {dateJoined}? Por favor, considere troca-la em breve... | Você modificou sua senha apenas uma vez, em {lastChanged}. | Você já modificou sua senha {count} vezes. A última vez foi em {lastChanged}.'
+  }
+}

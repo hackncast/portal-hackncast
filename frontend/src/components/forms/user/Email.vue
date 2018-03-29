@@ -2,19 +2,19 @@
   <v-dialog v-model="show" max-width="290">
     <v-card>
       <v-form @submit.prevent="submit" ref="form">
-        <v-card-title class="headline">New Email Address</v-card-title>
+        <v-card-title class="headline">{{ $t('profile.new-email-address') }}</v-card-title>
         <v-card-text>
-          <v-text-field label="New Email" name="email" ref="email" type="email" tabindex="1" required autofocus
+          <v-text-field :label="$t('label.new-email')" name="email" ref="email" type="email" tabindex="1" required autofocus
                         v-validate="'required|email'"
-                        data-vv-as="new email"
+                        data-vv-as="$t('label.new-email')"
                         :error-messages="errors.collect('email')"
                         v-model="email">
           </v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red darken-1" flat="flat" @click.native="$emit('close')">Cancel</v-btn>
-          <v-btn color="green darken-1" flat="flat" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working" tabindex="1">Add</v-btn>
+          <v-btn color="red darken-1" flat="flat" @click.native="$emit('close')">{{ $t('label.cancel') }}</v-btn>
+          <v-btn color="green darken-1" flat="flat" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working" tabindex="1">{{ $t('label.add') }}</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>

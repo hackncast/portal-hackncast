@@ -16,7 +16,8 @@ import vueTopprogress from 'vue-top-progress'
 import '@/style/base.sass'
 
 // My plugins and modules
-import messages from '@/i18n'
+import messages from '@/i18n/messages'
+import dateTimeFormats from '@/i18n/dateTimeFormats'
 import App from '@/App'
 import router from '@/router'
 import VueLodash from '@/plugins/VueLodash'
@@ -74,7 +75,8 @@ Vue.http.interceptors.push(function (request, next) {
 
 const i18n = new VueI18n({
   locale: localStorage.getItem('language') || navigator.language || navigator.languages[0],
-  messages
+  messages,
+  dateTimeFormats
 })
 
 /* eslint-disable no-new */

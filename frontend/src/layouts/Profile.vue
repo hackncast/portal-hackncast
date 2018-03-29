@@ -18,18 +18,18 @@
           <v-layout row justify-space-around text-xs-center>
             <v-flex xs3>
               <div class="body-2 text--lighten-4" :class="textColor">1</div>
-              <div class="caption text--lighten-3" :class="textColor">LEVEL</div>
+              <div class="caption text--lighten-3" :class="textColor" style="text-transform: uppercase">{{ $t('label.level') }}</div>
             </v-flex>
             <v-flex xs3>
               <div class="body-2 text--lighten-4" :class="textColor">0</div>
-              <div class="caption text--lighten-3" :class="textColor">EXPERIENCE</div>
+              <div class="caption text--lighten-3" :class="textColor" style="text-transform: uppercase">{{ $t('label.experience') }}</div>
             </v-flex>
           </v-layout>
         </v-flex>
         <v-tabs fixed-tabs icons-and-text show-arrows color="transparent" dark slider-color="yellow" class="pt-2" style="padding-bottom: 2.8em">
-          <v-tab exact ripple :to="{ name: 'user:profile' }">Account <v-icon>account_box</v-icon></v-tab>
-          <v-tab exact ripple :to="{ name: 'user:profile:emails' }">Emails <v-icon>email</v-icon></v-tab>
-          <v-tab exact ripple :to="{ name: 'user:profile:security' }">Security <v-icon>security</v-icon></v-tab>
+          <v-tab exact ripple :to="{ name: 'user:profile' }">{{ $t('label.account') }} <v-icon>account_box</v-icon></v-tab>
+          <v-tab exact ripple :to="{ name: 'user:profile:emails' }">{{ $t('label.emails') }} <v-icon>email</v-icon></v-tab>
+          <v-tab exact ripple :to="{ name: 'user:profile:security' }">{{ $t('label.security') }} <v-icon>security</v-icon></v-tab>
         </v-tabs>
       </v-container>
       <v-container fluid>

@@ -8,7 +8,7 @@
           <v-icon dark style="font-size: 5em;">person</v-icon>
         </v-avatar>
         <v-avatar v-else key="avatar" size="100px" class="primary mb-3">
-          <img :src="avatar" :alt="$t('avatar-alt', {email: email})" :title="$t('avatar-alt', {email: email})">
+          <img :src="avatar" :alt="$t('label.avatar-alt', {email: email})" :title="$t('label.avatar-alt', {email: email})">
         </v-avatar>
         </transition>
       </v-flex>
@@ -20,30 +20,30 @@
                 <v-btn icon @click="notYet"><v-icon class="social-login-icon">fab fa-google</v-icon></v-btn>
                 <v-btn icon @click="notYet"><v-icon class="social-login-icon">fab fa-twitter</v-icon></v-btn>
               </v-layout>
-              <v-text-field autofocus :label="$t('email')" name="email" ref="email" type="email" required
+              <v-text-field autofocus :label="$t('label.email')" name="email" ref="email" type="email" required
                             prepend-icon="person"
                             v-validate="'required|email'"
-                            :data-vv-as="$t('email')"
+                            :data-vv-as="$t('label.email')"
                             :error-messages="errors.collect('email')"
                             v-model.trim="email">
               </v-text-field>
 
-              <v-btn block color="primary" class="white--text" @click="nextLoginPage" :disabled="email.length === 0 || errors.has('email')">{{ $t('next') }}</v-btn>
+              <v-btn block color="primary" class="white--text" @click="nextLoginPage" :disabled="email.length === 0 || errors.has('email')">{{ $t('label.next') }}</v-btn>
             </section>
             <section v-show="step === 2" key="password" style="position: absolute; width: 100%">
               <v-btn icon class="ma-0" @click="back()"><v-icon>arrow_back</v-icon></v-btn>
-              <v-text-field :label="$t('password')" name="password" ref="password" required
+              <v-text-field :label="$t('label.password')" name="password" ref="password" required
                             :type="showPassord ? 'text' : 'password'"
                             prepend-icon="lock"
                             v-validate="'required|min:6'"
-                            :data-vv-as="$t('password')"
+                            :data-vv-as="$t('label.password')"
                             :error-messages="errors.collect('password')"
                             v-model="password">
               </v-text-field>
 
-              <v-checkbox disabled :label="$t('remember-me')" name="remember" v-model="remember" type="checkbox"/>
+              <v-checkbox disabled :label="$t('label.remember-me')" name="remember" v-model="remember" type="checkbox"/>
 
-              <v-btn block color="primary" type="submit" class="white--text" :loading="working">{{ $t('login') }}</v-btn>
+              <v-btn block color="primary" type="submit" class="white--text" :loading="working">{{ $t('label.login') }}</v-btn>
             </section>
           </transition-group>
         </v-form>
@@ -51,8 +51,8 @@
         <error-bottom-sheet :non-field-errors="nonFieldErrors" @clear-errors="clearNonFieldErrors()"/>
 
         <v-layout row justify-space-between>
-          <v-btn flat small class="ml-0" :to="{ name: 'user:registration' }">{{ $t('register') }}</v-btn>
-          <v-btn flat small class="mr-0" :to="{ 'name': 'user:reset_password' }">{{ $t('need-help') }}</v-btn>
+          <v-btn flat small class="ml-0" :to="{ name: 'user:registration' }">{{ $t('label.register') }}</v-btn>
+          <v-btn flat small class="mr-0" :to="{ 'name': 'user:reset_password' }">{{ $t('label.need-help') }}</v-btn>
         </v-layout>
     </v-flex>
   </v-layout>
