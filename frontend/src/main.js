@@ -8,9 +8,10 @@ import VueI18n from 'vue-i18n'
 import VueHead from 'vue-head'
 import VueMoment from 'vue-moment'
 import VueResource from 'vue-resource'
-import VeeValidate from 'vee-validate'
 import Transitions from 'vue2-transitions'
 import vueTopprogress from 'vue-top-progress'
+import VeeValidate, { Validator } from 'vee-validate'
+import VeeMessagePtBR from 'vee-validate/dist/locale/pt_BR'
 
 // Styling
 import '@/style/base.sass'
@@ -26,21 +27,29 @@ import VuetifyToasts from '@/plugins/VuetifyToasts'
 import Progress from '@/plugins/Progress'
 import { store } from '@/store/store'
 
-Vue.use(Vuetify)
+// Localization
 Vue.use(VueI18n)
+const locale = localStorage.getItem('language') || navigator.language || navigator.languages[0]
+const i18n = new VueI18n({ locale, messages, dateTimeFormats })
+Validator.localize('pt_BR', VeeMessagePtBR)
+document.documentElement.setAttribute('lang', locale)
+
+// Vue Plugins Initialization
+Vue.use(Vuetify)
 Vue.use(VueHead)
+Vue.use(Progress)
 Vue.use(VueLodash)
 Vue.use(VueMoment)
 Vue.use(VueCookies)
 Vue.use(VueResource)
-Vue.use(VeeValidate)
 Vue.use(Transitions)
 Vue.use(VuetifyToasts)
 Vue.use(vueTopprogress)
-Vue.use(Progress)
+Vue.use(VeeValidate, { locale: locale.replace('-', '_') })
 
 Vue.config.productionTip = false
 
+// Interceptors
 Vue.http.interceptors.push(function (request, next) {
   let csrftoken = Vue.cookies.get('csrftoken')
   if (request.method !== 'GET' && request.method !== 'OPTION' && csrftoken !== undefined) {
@@ -71,12 +80,6 @@ Vue.http.interceptors.push(function (request, next) {
       delete response.body.django_messages
     }
   })
-})
-
-const i18n = new VueI18n({
-  locale: localStorage.getItem('language') || navigator.language || navigator.languages[0],
-  messages,
-  dateTimeFormats
 })
 
 /* eslint-disable no-new */
