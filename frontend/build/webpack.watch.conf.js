@@ -103,6 +103,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       // browse to http://localhost:3000/ during development,
       // ./public directory is being served
       ghostMode: false,
+      open: false,
       host: HOST,
       port: PORT,
       proxy: `${PROXY_PROTOCOL}://${PROXY_HOST}:${PROXY_PORT}`,
