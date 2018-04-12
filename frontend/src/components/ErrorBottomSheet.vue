@@ -4,7 +4,7 @@
       <v-card-title>
         <div>
           <v-btn ref="errorBottomSheetCloseButton" small absolute :dark="dark" fab top right color="red darken-2" @click="$emit('clear-errors')"><v-icon>close</v-icon></v-btn>
-          <v-subheader style="line-height: 1.5em; padding: 0px;">{{ text }}</v-subheader>
+          <v-subheader style="line-height: 1.5em; padding: 0px;">{{ defaultErrorHeading }}</v-subheader>
           <ul style="padding-left: 2em; color: hsla(0,0%,100%,.7)">
             <li v-for="erro in nonFieldErrors">{{ erro }}</li>
           </ul>
@@ -25,11 +25,17 @@ export default {
     },
     text: {
       type: String,
-      default: 'The following errors ocurred while submitting your form:'
+      default: undefined
     },
     nonFieldErrors: {
       type: Array,
       required: true
+    }
+  },
+
+  computed: {
+    defaultErrorHeading () {
+      return this.text || this.$t('message.form-error-heading')
     }
   },
 

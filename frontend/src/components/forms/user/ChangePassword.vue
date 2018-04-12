@@ -2,28 +2,28 @@
   <v-dialog v-model="show" max-width="400">
     <v-card>
       <v-form @submit.prevent="submit" ref="form">
-        <v-card-title class="headline">Change Password</v-card-title>
+        <v-card-title class="headline">{{ $t('label.change-password') }}</v-card-title>
         <v-card-text>
-          <v-text-field light label="Old Password" name="old_password" ref="oldPassword" tabindex="1" required autofocus
+          <v-text-field light :label="$t('label.old-password')" name="old_password" ref="oldPassword" tabindex="1" required autofocus
                         type="password"
                         v-model="oldPassword"
                         v-validate="'required'"
-                        data-vv-as="old password"
+                        :data-vv-as="$t('label.old-password')"
                         :error-messages="errors.collect('old_password')">
           </v-text-field>
-          <v-text-field light label="New Password" name="new_password1" ref="newPassword1" tabindex="2" required
+          <v-text-field light :label="$t('label.new-password')" name="new_password1" ref="newPassword1" tabindex="2" required
                         v-model="newPassword1"
                         v-validate="'required|not_equals:oldPassword'"
-                        data-vv-as="new password"
+                        :data-vv-as="$t('label.new-password')"
                         :error-messages="errors.collect('new_password1')"
                         :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                         :append-icon-cb="() => (showPassword = !showPassword)"
                         :type="showPassword ? 'text' : 'password'">
           </v-text-field>
-          <v-text-field light label="Confirm New Password" name="new_password2" ref="newPassword2" tabindex="3" required
+          <v-text-field light :label="$t('label.confirm-new-password')" name="new_password2" ref="newPassword2" tabindex="3" required
                         v-model="newPassword2"
                         v-validate="'required|confirmed:$newPassword1'"
-                        data-vv-as="confirm password"
+                        :data-vv-as="$t('label.confirm-new-password')"
                         :error-messages="errors.collect('new_password2')"
                         :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                         :append-icon-cb="() => (showPassword = !showPassword)"
@@ -32,8 +32,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red darken-1" flat="flat" @click.native="$emit('close')" tabindex="4">Cancel</v-btn>
-          <v-btn color="green darken-1" flat="flat" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working" tabindex="5">Change</v-btn>
+          <v-btn color="red darken-1" flat="flat" @click.native="$emit('close')" tabindex="4">{{ $t('label.cancel') }}</v-btn>
+          <v-btn color="green darken-1" flat="flat" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working" tabindex="5">{{ $t('label.change') }}</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
@@ -115,14 +115,8 @@ export default {
     }
   },
   created () {
-    Validator.extend('equals', {
-      getMessage: field => 'Passwords doesn\'t match',
-      validate: (value, other) => {
-        return String(value) === String(this[other])
-      }
-    })
     Validator.extend('not_equals', {
-      getMessage: field => 'The new password must differ from tha last one',
+      getMessage: field => this.$t('message.passwords-must-differ'),
       validate: (value, other) => {
         return String(value) !== String(this[other])
       }

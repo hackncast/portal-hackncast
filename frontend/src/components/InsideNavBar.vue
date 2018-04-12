@@ -35,7 +35,7 @@
           <v-list-tile-action>
             <v-switch v-model="darkTheme" color="blue darken-2"></v-switch>
           </v-list-tile-action>
-          <v-list-tile-title>Dark Theme</v-list-tile-title>
+          <v-list-tile-title>{{ $t('label.dark-theme') }}</v-list-tile-title>
           <v-list-tile-action style="margin-right: -30px">
             <v-btn flat icon color="grey"><v-icon>settings</v-icon></v-btn>
           </v-list-tile-action>
@@ -45,9 +45,9 @@
       <v-divider></v-divider>
 
       <v-card-actions>
-        <v-btn flat @click="menu = false">Close</v-btn>
+        <v-btn flat @click="menu = false">{{ $t('label.close') }}</v-btn>
         <v-spacer></v-spacer>
-        <v-btn flat color="red darken-2" @click="doLogout" :loading="working">Logout <v-icon right>exit_to_app</v-icon></v-btn>
+        <v-btn flat color="red darken-2" @click="doLogout" :loading="working">{{ $t('label.logout') }} <v-icon right>exit_to_app</v-icon></v-btn>
       </v-card-actions>
     </v-card>
   </v-menu>

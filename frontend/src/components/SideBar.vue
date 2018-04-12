@@ -16,8 +16,8 @@
           </v-list-tile-action>
       </v-list-tile>
       <v-list-tile id="sidebar-quick-btns">
-          <v-btn flat block color="grey" class="ma-0"><v-icon left>color_lens</v-icon> UI Settings</v-btn>
-          <v-btn flat block color="red darken-2" @click="doLogout" class="ma-0" :loading="working">Logout <v-icon right>exit_to_app</v-icon></v-btn>
+        <v-btn flat block color="grey" class="ma-0"><v-icon left>color_lens</v-icon> {{ $t('label.ui') }}</v-btn>
+        <v-btn flat block color="red darken-2" @click="doLogout" class="ma-0" :loading="working">{{ $t('label.logout') }} <v-icon right>exit_to_app</v-icon></v-btn>
       </v-list-tile>
     </v-list>
     <v-list class="pt-0" dense>
@@ -27,7 +27,7 @@
           <v-icon>home</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title>Home</v-list-tile-title>
+          <v-list-tile-title>{{ $t('label.home') }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile v-for="item in items" :key="item.title" @click="">

@@ -1,5 +1,24 @@
 export default {
+  message: {
+    'server-error': 'An error ocurred while quering the server, please check your internet connection and try again later.',
+    'email-not-confirmed': 'Sorry, this email hasn\'t been confirmed.',
+    'default-error': 'Sorry, your form still have errors!',
+    'form-error-heading': 'The following errors ocurred while submitting your form:',
+    'passwords-must-differ': 'The new password must differ from tha last one'
+  },
+  dialog: {
+    'unverified-email': {
+      title: 'Oops... Have you confirmed your email?',
+      text: 'In order to enjoy all our site features, we request you to confirm the ownership of the following email address:',
+      'spam-alert': 'Please, check your inbox and SPAM box. If there is no email, please click below...'
+    }
+  },
   label: {
+    'home': 'Home',
+    'ui': 'User Interface',
+    'dark-theme': 'Dark Theme',
+    'send-me-again': 'Send-me Again...',
+    'check-validation': 'Check Validation...',
     'passwords': 'Passwords',
     'access-attempt': 'Access Attempt',
     'blocked-origins': 'Blocked Origins',
@@ -14,13 +33,17 @@ export default {
     'email': 'Email',
     'emails': 'Emails',
     'password': 'Password',
+    'old-password': 'Old Password',
+    'new-password': 'New Password',
     'confirm-password': 'Confirm Password',
+    'confirm-new-password': 'Confirm New Password',
     'register': 'Register',
     'already-registered': 'Already registered?',
     'avatar-alt': 'Avatar of {email}',
     'next': 'Next',
     'remember-me': 'Remember me',
     'login': 'Login',
+    'logout': 'Logout',
     'need-help': 'Need help?',
     'expires': 'Expires',
     'change-password': 'Change Password',
@@ -34,6 +57,7 @@ export default {
     'resend-verification': 'Resend Verification',
     'exclude': 'Exclude',
     'cancel': 'Cancel',
+    'change': 'Change',
     'set-as-primary': 'Set as Primary',
     'new-email': 'New Email',
     'add': 'Add',

@@ -16,19 +16,19 @@
 
     <v-dialog v-if="!currentUser.verifiedEmail" :value="loaded && !currentUser.verifiedEmail" persistent max-width="350">
       <v-card>
-        <v-card-title class="headline">Oops... Have you confirmed your email?</v-card-title>
+        <v-card-title class="headline">{{ $t('dialog.unverified-email.title')  }}</v-card-title>
         <v-card-text>
-          <p>In order to enjoy all our site features, we request you to confirm the ownership of the following email address:</p>
+          <p style="text-align: justify">{{ $t('dialog.unverified-email.text') }}</p>
           <ul style="margin-left: 2em; margin-bottom: 1.5em">
             <li>{{ currentUser.safeEmailAddress }}</li>
           </ul>
-          <p>Please, check your inbox and SPAM box. If there is no email, please click below...</p>
+          <p style="text-align: justify">{{ $t('dialog.unverified-email.spam-alert') }}</p>
         </v-card-text>
         <v-card-actions>
-          <v-btn flat color="green darken-1" v-if="!checkAgain" @click="doResend" :loading="resendWorking">Send-me Again...</v-btn>
-          <v-btn flat color="green darken-1" v-else @click="doCheckAgain" :loading="resendWorking">Check Validation...</v-btn>
+          <v-btn flat color="green darken-1" v-if="!checkAgain" @click="doResend" :loading="resendWorking">{{ $t('label.send-me-again') }}</v-btn>
+          <v-btn flat color="green darken-1" v-else @click="doCheckAgain" :loading="resendWorking">{{ $t('label.check-validation') }}</v-btn>
           <v-spacer></v-spacer>
-          <v-btn flat color="red darken-1" @click="doLogout" :loading="logoutWorking">Logout</v-btn>
+          <v-btn flat color="red darken-1" @click="doLogout" :loading="logoutWorking">{{ $t('label.logout') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -86,7 +86,7 @@ export default {
         this.fetchUserData()
           .then(user => {
             if (!user.verifiedEmail) {
-              this.$toasts.open({ text: 'Sorry, this email hasn\'t been confirmed.' })
+              this.$toasts.open({ text: this.$t('message.email-not-confirmed') })
             }
           })
           .catch(err => console.log(err))

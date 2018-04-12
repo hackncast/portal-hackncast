@@ -11,10 +11,6 @@ import ProfileEmails from '@/pages/user/profile/Emails'
 import ProfileAccount from '@/pages/user/profile/Account'
 import ProfileSecurity from '@/pages/user/profile/Security'
 
-import UserProfileNavbar from '@/components/UserProfileNavbar'
-
-let UserProfile = { 'navbarExtend': UserProfileNavbar }
-
 export default [
   {
     path: '/user',
@@ -32,9 +28,9 @@ export default [
     component: ProfileLayout,
     meta: { requiresAuth: true },
     children: [
-      { path: '', name: 'user:profile', components: Object.assign({ 'default': ProfileAccount }, UserProfile) },
-      { path: 'emails', name: 'user:profile:emails', components: Object.assign({ 'default': ProfileEmails }, UserProfile) },
-      { path: 'security', name: 'user:profile:security', components: Object.assign({ 'default': ProfileSecurity }, UserProfile) }
+      { path: '', name: 'user:profile', component: ProfileAccount },
+      { path: 'emails', name: 'user:profile:emails', component: ProfileEmails },
+      { path: 'security', name: 'user:profile:security', component: ProfileSecurity }
     ]
   }
 ]

@@ -5,9 +5,7 @@ export const FormMixin = {
 
   data () {
     return {
-      defaultErrorMessage: 'Sorry, your form still have errors!',
-      networkErrorMessage: 'An error occured while communicating with the server, please try again later.',
-      backend500ErrorMessage: 'Ooops, something is wrong with our backend server, please try again later.',
+      defaultErrorMessage: this.$t('message.default-error'),
       nonFieldErrors: []
     }
   },
@@ -45,11 +43,7 @@ export const FormMixin = {
       })
     },
     processErrors (err) {
-      if (err.ok === false && err.status === 0) {
-        this.nonFieldErrors.push(this.networkErrorMessage)
-      } else if (err.ok === false && err.status === 500) {
-        this.nonFieldErrors.push(this.backend500ErrorMessage)
-      } else if (err.json) {
+      if (err.json) {
         err.json().then(data => this.injectErrors(data))
       } else if (typeof err === 'object') {
         this.injectErrors(err)

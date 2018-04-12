@@ -1,5 +1,24 @@
 export default {
+  message: {
+    'server-error': 'Um erro ocorreu durante a consulta ao servidor, por favor verifique sua conexão com a internet e tente novamente mais tarde.',
+    'email-not-confirmed': 'Desculpe, este email ainda não foi confirmado.',
+    'default-error': 'Desculpe, seu formulário contém erros!',
+    'form-error-heading': 'Os seguintes erros ocorreram durante o envio do formlário:',
+    'passwords-must-differ': 'A nova senha deve ser diferente da anterior'
+  },
+  dialog: {
+    'unverified-email': {
+      title: 'Oops... Você já confirmou seu email?',
+      text: 'Para poder usufruir de todas as funcionalidades do nosso site, pedimos que você confirme que é dono do seguinte endereço de email:',
+      'spam-alert': 'Por favor, verifique sua caixa de entrada e de SPAM. Se não houver um email de confirmação, clique abaixo...'
+    }
+  },
   label: {
+    'home': 'Início',
+    'ui': 'Interface',
+    'dark-theme': 'Tema Escuro',
+    'send-me-again': 'Enviar novamente...',
+    'check-validation': 'Verificar Validação...',
     'passwords': 'Senhas',
     'access-attempt': 'Tentativas de Acesso',
     'blocked-origins': 'Origens Bloqueadas',
@@ -14,16 +33,20 @@ export default {
     'email': 'Email',
     'emails': 'Emails',
     'password': 'Senha',
-    'confirm-password': 'Confirmação de Senha',
+    'new-password': 'Nova Senha',
+    'old-password': 'Antiga Senha',
+    'confirm-password': 'Confirmar Senha',
+    'confirm-new-password': 'Confirmar Nova Senha',
     'register': 'Cadastrar-se',
     'already-registered': 'Já se Cadastrado?',
     'avatar-alt': 'Avatar de {email}',
     'next': 'Próximo',
     'remember-me': 'Lembrar de mim',
     'login': 'Login',
+    'logout': 'Logout',
     'need-help': 'Precisa de Ajuda?',
     'expires': 'Expira',
-    'change-password': 'Trocar a Senha',
+    'change-password': 'Alterar Senha',
     'level': 'Nível',
     'experience': 'Experiência',
     'security': 'Segurança',
@@ -34,6 +57,7 @@ export default {
     'resend-verification': 'Reenviar Validação',
     'exclude': 'Excluir',
     'cancel': 'Cancelar',
+    'change': 'Alterar',
     'set-as-primary': 'Definir como Principal',
     'new-email': 'Novo Email',
     'add': 'Adicionar',
