@@ -1,5 +1,7 @@
 <template>
 <v-container fluid fill-height pt-1>
+  <loading-dialog v-if="!captchaReady" />
+
   <v-layout align-center justify-center style="z-index: 2">
     <v-flex xs12 sm6 md4>
       <v-card color="white" class="elevation-3" style="overflow: hidden">
@@ -27,6 +29,7 @@
 
               <vue-recaptcha ref="invisibleRecaptcha"
                              @verify="submit"
+                             @render="onCaptchaReady"
                              size="invisible"
                              :sitekey="sitekey"
                              tabindex="-1">
@@ -48,11 +51,12 @@
 <script>
 import VueRecaptcha from 'vue-recaptcha'
 import { FormMixin } from '@/mixins/FormMixin'
+import LoadingDialog from '@/components/dialog/Loading'
 
 export default {
   name: 'ResetPassword',
 
-  components: {VueRecaptcha},
+  components: { VueRecaptcha, LoadingDialog },
 
   mixins: [FormMixin],
 
@@ -65,6 +69,7 @@ export default {
   data () {
     return {
       sitekey: process.env.CAPTCHA_PUBLIC_KEY,
+      captchaReady: false,
       working: false,
       valid: false,
       email: '',
@@ -95,6 +100,10 @@ export default {
           })
           .finally(() => { this.working = false })
       }
+    },
+
+    onCaptchaReady () {
+      this.captchaReady = true
     }
   }
 }
