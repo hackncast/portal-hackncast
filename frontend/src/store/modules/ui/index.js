@@ -13,7 +13,8 @@ export default {
     backgroundColor: (localStorage.getItem('UI_DarkTheme') === 'true') ? BACKGROUND_DARK_COLOR : BACKGROUND_LIGHT_COLOR,
     language: I18n.locale,
     sidebarVisible: false,
-    progressStatus: false
+    progressStatus: false,
+    uiSettingsVisible: false
   },
 
   getters: {
@@ -33,6 +34,9 @@ export default {
     },
     [UI.SIDEBAR_VISIBLE] (state, visible) {
       state.sidebarVisible = visible
+    },
+    [UI.SETTINGS_VISIBLE] (state, visible) {
+      state.uiSettingsVisible = visible
     },
     [UI.LANGUAGE] (state, language) {
       I18n.locale = language

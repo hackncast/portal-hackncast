@@ -3,9 +3,8 @@ import Router from 'vue-router'
 import { store } from '@/store/store'
 import { UI } from '@/store/mutation-types'
 
-import InsideLayout from '@/layouts/Inside'
 import UserRoutes from '@/router/user'
-import HelloWorld from '@/components/HelloWorld'
+import DashboardRoutes from '@/router/dashboard'
 
 Vue.use(Router)
 
@@ -14,17 +13,8 @@ let router = new Router({
     return { x: 0, y: 0 }
   },
   routes: Array.concat(
-    [
-      {
-        path: '/',
-        component: InsideLayout,
-        meta: { requiresAuth: true },
-        children: [
-          {path: '', name: 'home', component: HelloWorld}
-        ]
-      }
-    ],
-    UserRoutes
+    UserRoutes,
+    DashboardRoutes
   )
 })
 

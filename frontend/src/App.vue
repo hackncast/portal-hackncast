@@ -1,17 +1,27 @@
 <template>
-  <div id="main">
+  <v-app :dark="$store.state.Ui.darkTheme" id="app" :class="backgroundColor">
     <vue-topprogress color="#90CAF9" ref="progress"></vue-topprogress>
+
     <transition :name="transitionName" mode="out-in">
-      <router-view/>
+      <layout-broker :layouts="layouts" :current="$route.meta.layout"/>
     </transition>
-  </div>
+
+    <unconfirmed-email-dialog/>
+    <ui-settings-dialog/>
+  </v-app>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import layouts from '@/layouts'
+import LayoutBroker from 'vue-layout-broker'
+import UiSettingsDialog from '@/components/dialog/UiSettings'
+import UnconfirmedEmailDialog from '@/components/dialog/UnconfirmedEmail'
 
 export default {
   name: 'App',
+
+  components: { LayoutBroker, UiSettingsDialog, UnconfirmedEmailDialog },
 
   head: {
     meta () {
@@ -23,12 +33,20 @@ export default {
 
   data () {
     return {
-      transitionName: ''
+      transitionName: '',
+      layouts
     }
   },
 
   computed: {
-    ...mapGetters({ chromeColor: 'getChromeColor' }),
+    ...mapGetters({
+      chromeColor: 'getChromeColor',
+      currentUser: 'currentUser'
+    }),
+
+    backgroundColor () {
+      return this.$store.state.Ui.backgroundColor
+    },
 
     progressStatus () {
       return this.$store.state.Ui.progressStatus
@@ -48,6 +66,7 @@ export default {
         this.transitionName = ''
       }
     },
+
     progressStatus (to, from) {
       if (to === 'fail') {
         this.$refs.progress.fail()

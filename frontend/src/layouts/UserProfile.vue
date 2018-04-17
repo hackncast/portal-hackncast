@@ -4,7 +4,7 @@
 
     <side-bar/>
 
-    <v-content>
+    <v-content style="padding-top: 40px;">
       <v-container fluid :class="$store.state.Ui.navbarColor" class="pb-0 px-0 elevation-2">
         <v-flex xs12 sm6 offset-sm3 md4 offset-md4>
           <v-layout align-center justify-center style="">
@@ -33,7 +33,7 @@
         </v-tabs>
       </v-container>
       <v-container fluid>
-        <router-view />
+        <slot></slot>
       </v-container>
     </v-content>
   </v-app>

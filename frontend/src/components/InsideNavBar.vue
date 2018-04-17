@@ -37,7 +37,7 @@
           </v-list-tile-action>
           <v-list-tile-title>{{ $t('label.dark-theme') }}</v-list-tile-title>
           <v-list-tile-action style="margin-right: -30px">
-            <v-btn flat icon color="grey"><v-icon>settings</v-icon></v-btn>
+            <v-btn flat icon color="grey" @click="showUiSettings"><v-icon>settings</v-icon></v-btn>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
@@ -103,6 +103,11 @@ export default {
 
     showDrawer () {
       this.$store.state.Ui.sidebarVisible = true
+    },
+
+    showUiSettings () {
+      this.menu = false
+      this.$store.state.Ui.uiSettingsVisible = true
     },
 
     doLogout () {

@@ -10,7 +10,7 @@
     </v-toolbar>
     <v-content>
       <transition name="fade" mode="out-in">
-        <router-view />
+        <slot></slot>
       </transition>
     </v-content>
     <v-footer color="transparent" style="z-index: 2">
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'OutsideLayout',
+  name: 'PublicLayout',
 
   data () {
     return {

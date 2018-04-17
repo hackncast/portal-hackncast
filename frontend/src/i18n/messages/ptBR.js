@@ -16,6 +16,7 @@ export default {
   label: {
     'home': 'Início',
     'ui': 'Interface',
+    'ui-settings': 'Confirgurações de Interface',
     'dark-theme': 'Tema Escuro',
     'send-me-again': 'Enviar novamente...',
     'check-validation': 'Verificar Validação...',
@@ -61,7 +62,12 @@ export default {
     'set-as-primary': 'Definir como Principal',
     'new-email': 'Novo Email',
     'add': 'Adicionar',
-    'attention': 'Atenção'
+    'attention': 'Atenção',
+    'general': 'Geral'
+  },
+  helper: {
+    'dark-ui': 'Utilize o tema escuro em ambientes com pouca iluminação.',
+    'ui-language': 'Linguagem utilizada na interface'
   },
   profile: {
     'new-email-address': 'Novo Endereço de Email',

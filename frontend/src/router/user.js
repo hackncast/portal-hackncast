@@ -1,6 +1,3 @@
-import OutsideLayout from '@/layouts/Outside'
-import ProfileLayout from '@/layouts/Profile'
-
 import Login from '@/pages/user/Login'
 import Registration from '@/pages/user/Registration'
 import ResetPassword from '@/pages/user/ResetPassword'
@@ -13,24 +10,51 @@ import ProfileSecurity from '@/pages/user/profile/Security'
 
 export default [
   {
-    path: '/user',
-    component: OutsideLayout,
-    children: [
-      { path: 'email/confirmation/:key/', name: 'user:email_confirmation', component: EmailConfirmation, meta: { mayRequiresAuth: true } },
-      { path: 'password/reset/send/', name: 'user:reset_password', component: ResetPassword },
-      { path: 'password/reset/token/:uidb64/:token/', name: 'user:reset_password_token', component: ResetPasswordToken },
-      { path: 'registration', name: 'user:registration', component: Registration },
-      { path: 'login', name: 'user:login', component: Login }
-    ]
+    path: '/user/login',
+    name: 'user:login',
+    component: Login,
+    meta: { layout: 'Public' }
+  },
+  {
+    path: '/user/registration',
+    name: 'user:registration',
+    component: Registration,
+    meta: { layout: 'Public' }
+  },
+  {
+    path: '/user/email/confirmation/:key/',
+    name: 'user:email_confirmation',
+    component: EmailConfirmation,
+    meta: { mayRequiresAuth: true }
+  },
+  {
+    path: '/user/password/reset/send/',
+    name: 'user:reset_password',
+    component: ResetPassword,
+    meta: { layout: 'Public' }
+  },
+  {
+    path: '/user/password/reset/token/:uidb64/:token/',
+    name: 'user:reset_password_token',
+    component: ResetPasswordToken,
+    meta: { layout: 'Public' }
   },
   {
     path: '/user/profile',
-    component: ProfileLayout,
-    meta: { requiresAuth: true },
-    children: [
-      { path: '', name: 'user:profile', component: ProfileAccount },
-      { path: 'emails', name: 'user:profile:emails', component: ProfileEmails },
-      { path: 'security', name: 'user:profile:security', component: ProfileSecurity }
-    ]
+    name: 'user:profile',
+    component: ProfileAccount,
+    meta: { layout: 'UserProfile', requiresAuth: true }
+  },
+  {
+    path: '/user/profile/emails',
+    name: 'user:profile:emails',
+    component: ProfileEmails,
+    meta: { layout: 'UserProfile', requiresAuth: true }
+  },
+  {
+    path: '/user/profile/security',
+    name: 'user:profile:security',
+    component: ProfileSecurity,
+    meta: { layout: 'UserProfile', requiresAuth: true }
   }
 ]

@@ -16,6 +16,7 @@ export default {
   label: {
     'home': 'Home',
     'ui': 'User Interface',
+    'ui-settings': 'User Interface Settings',
     'dark-theme': 'Dark Theme',
     'send-me-again': 'Send-me Again...',
     'check-validation': 'Check Validation...',
@@ -61,7 +62,12 @@ export default {
     'set-as-primary': 'Set as Primary',
     'new-email': 'New Email',
     'add': 'Add',
-    'attention': 'Attention'
+    'attention': 'Attention',
+    'general': 'General'
+  },
+  helper: {
+    'dark-ui': 'Use the darke theme in lower ligths environments.',
+    'ui-language': 'User Interface Language'
   },
   profile: {
     'new-email-address': 'New Email Address',

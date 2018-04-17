@@ -16,7 +16,7 @@
           </v-list-tile-action>
       </v-list-tile>
       <v-list-tile id="sidebar-quick-btns">
-        <v-btn flat block color="grey" class="ma-0"><v-icon left>color_lens</v-icon> {{ $t('label.ui') }}</v-btn>
+        <v-btn flat block color="grey" class="ma-0" @click="showUiSettings"><v-icon left>color_lens</v-icon> {{ $t('label.ui') }}</v-btn>
         <v-btn flat block color="red darken-2" @click="doLogout" class="ma-0" :loading="working">{{ $t('label.logout') }} <v-icon right>exit_to_app</v-icon></v-btn>
       </v-list-tile>
     </v-list>
@@ -68,10 +68,17 @@ export default {
 
   methods: {
     ...mapActions(['logout']),
+
+    showUiSettings () {
+      this.drawer = false
+      this.$store.state.Ui.uiSettingsVisible = true
+    },
+
     push (name) {
       this.$router.push({ name })
       this.drawer = false
     },
+
     doLogout () {
       this.working = true
       this.logout()
