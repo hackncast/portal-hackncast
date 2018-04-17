@@ -6,7 +6,7 @@
     </div>
     <div class="text-xs-right">
       <v-btn flat v-for="action in actions" :key="action.name" :style="closeBtnStyle" :color="action.color" @click.native="action.callback()">{{ action.name }}</v-btn>
-      <v-btn flat v-if="options.closeable" :style="closeBtnStyle" :color="type ? (type === 'warning' ? 'black' : 'white') : 'red'" @click.native="open = false">Close</v-btn>
+      <v-btn flat v-if="options.closeable" :style="closeBtnStyle" :color="type ? (type === 'warning' ? 'black' : 'white') : 'red'" @click.native="open = false">{{ closeText }}</v-btn>
     </div>
   </v-snackbar>
 </template>
@@ -20,7 +20,8 @@ export default {
     text: String,
     type: String,
     options: Object,
-    actions: Array
+    actions: Array,
+    closeText: String
   },
 
   data () {

@@ -3,33 +3,34 @@
     <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
       <v-card class="mb-3" style="margin-top: -40px">
         <v-card-text class="grey--text">
-          Joined at {{ dateJoined }}
+          {{ $t('label.joined-at', {date: dateJoined}) }}
         </v-card-text>
       </v-card>
 
-      <v-subheader class="pl-0" style="height: 30px;">Personal Info</v-subheader>
+      <v-subheader class="pl-0" style="height: 30px;">{{ $t('label.personal-info') }}</v-subheader>
       <v-card>
         <v-card-text>
           <v-form @submit.prevent="submit" ref="form">
-            <v-text-field label="Username" name="username" ref="username" type="text" tabindex="1" required
-                          v-validate="'required|alpha_num'"
-                          data-vv-as="username"
+            <!-- TODO: Add propper verification for username -->
+            <v-text-field :label="$t('label.username')" name="username" ref="username" type="text" tabindex="1" required
+                          v-validate="'required'"
+                          :data-vv-as="$t('label.username')"
                           :error-messages="errors.collect('username')"
                           v-model="username">
             </v-text-field>
-            <v-text-field label="First Name" name="firstname" ref="firstname" type="text" tabindex="2" required
+            <v-text-field :label="$t('label.first-name')" name="firstname" ref="firstname" type="text" tabindex="2" required
                           v-validate="'required'"
-                          data-vv-as="first name"
+                          :data-vv-as="$t('label.first-name')"
                           :error-messages="errors.collect('firstname')"
                           v-model="firstName">
             </v-text-field>
-            <v-text-field label="Last Name" name="lastname" ref="lastname" type="text" tabindex="2" required
+            <v-text-field :label="$t('label.last-name')" name="lastname" ref="lastname" type="text" tabindex="2" required
                           v-validate=""
-                          data-vv-as="last name"
+                          :data-vv-as="$t('label.last-name')"
                           :error-messages="errors.collect('lastname')"
                           v-model="lastName">
             </v-text-field>
-            <v-btn block color="blue" class="white--text" :disabled="errors.any()" type="submit" :loading="working" tabindex="4">Save</v-btn>
+            <v-btn block color="blue" class="white--text" :disabled="errors.any()" type="submit" :loading="working" tabindex="4">{{ $t('label.save') }}</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
@@ -91,7 +92,7 @@ export default {
             .then(data => data.json())
             .then(obj => this.fetchUserData())
             .then(user => {
-              this.$toasts.open({ text: 'Profile updated successfully!' })
+              this.$toasts.open({ text: this.$t('message.profile-updated') })
               this.loadData()
             })
             .catch(err => { this.processErrors(err) })

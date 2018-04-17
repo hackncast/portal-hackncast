@@ -6,10 +6,10 @@
         <v-card-title primary-title class="text-xs-center blue white--text" id="register-card-title">
           <transition name="delayed-fade" mode="out-in">
             <div key="registration" v-if="!sent" style="width: 100%">
-              <h1 class="headline">Change Your Password</h1>
+              <h1 class="headline">{{ $t('label.change-password') }}</h1>
             </div>
             <div key="success" v-else style="width: 100%">
-              <h1 class="headline">Thank you!</h1>
+              <h1 class="headline">{{ $t('label.thank-you') }}</h1>
               <v-progress-linear :indeterminate="true" :active="true" height="2" color="blue darken-3" style="margin-bottom: 0px"/>
             </div>
           </transition>
@@ -17,11 +17,11 @@
         <transition name="shrink" duration="500">
           <v-card-text v-show="!sent" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
-              <v-text-field light label="New Password" name="new_password1" ref="new_password1" required autofocus
+              <v-text-field light :label="$t('label.new-password')" name="new_password1" ref="new_password1" required autofocus
                             v-model="new_password1"
                             prepend-icon="lock"
                             v-validate="'required'"
-                            data-vv-as="password"
+                            :data-vv-as="$t('label.new-password')"
                             :error-messages="errors.collect('new_password1')"
                             :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                             :append-icon-cb="() => (showPassword = !showPassword)"
@@ -29,11 +29,11 @@
                             >
               </v-text-field>
 
-              <v-text-field light label="Confirm New Password" name="new_password2" ref="new_password2" required
+              <v-text-field light :label="$t('label.confirm-new-password')" name="new_password2" ref="new_password2" required
                             v-model="new_password2"
                             v-validate="'required|confirmed:new_password1'"
                             prepend-icon="lock"
-                            data-vv-as="password"
+                            :data-vv-as="$t('label.confirm-new-password')"
                             :error-messages="errors.collect('new_password2')"
                             :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                             :append-icon-cb="() => (showPassword = !showPassword)"
@@ -41,13 +41,13 @@
                             >
               </v-text-field>
 
-              <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working">Change</v-btn>
+              <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working">{{ $t('label.change') }}</v-btn>
             </v-form>
           </v-card-text>
         </transition>
       </v-card>
 
-      <v-btn flat block small class="white--text mt-3" :to="{ name: 'user:login' }">I remembered my password!</v-btn>
+      <v-btn flat block small class="white--text mt-3" :to="{ name: 'user:login' }">{{ $t('label.i-remembered-my-password') }}</v-btn>
 
       <error-bottom-sheet :non-field-errors="nonFieldErrors" @clear-errors="clearNonFieldErrors()"/>
     </v-flex>
@@ -95,7 +95,7 @@ export default {
             if (err.json) {
               err.json().then(data => {
                 if (data.uid || data.token) {
-                  this.nonFieldErrors.push('The informed token is invalid!')
+                  this.nonFieldErrors.push(this.$t('message.invalid-token'))
                 }
               })
             }

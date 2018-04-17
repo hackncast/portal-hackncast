@@ -25,7 +25,7 @@ export default [
     path: '/user/email/confirmation/:key/',
     name: 'user:email_confirmation',
     component: EmailConfirmation,
-    meta: { mayRequiresAuth: true }
+    meta: { layout: 'Public', mayRequiresAuth: true }
   },
   {
     path: '/user/password/reset/send/',

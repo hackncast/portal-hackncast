@@ -4,7 +4,9 @@ export default {
     'email-not-confirmed': 'Sorry, this email hasn\'t been confirmed.',
     'default-error': 'Sorry, your form still have errors!',
     'form-error-heading': 'The following errors ocurred while submitting your form:',
-    'passwords-must-differ': 'The new password must differ from tha last one'
+    'passwords-must-differ': 'The new password must differ from tha last one',
+    'invalid-token': 'The informed token is invalid!',
+    'profile-updated': 'Profile updated successfully!'
   },
   dialog: {
     'unverified-email': {
@@ -15,6 +17,8 @@ export default {
   },
   label: {
     'home': 'Home',
+    'lost-your-password': 'Lost Your Password?',
+    'check-your-email': 'Please, check your email!',
     'ui': 'User Interface',
     'ui-settings': 'User Interface Settings',
     'dark-theme': 'Dark Theme',
@@ -36,8 +40,10 @@ export default {
     'password': 'Password',
     'old-password': 'Old Password',
     'new-password': 'New Password',
+    'confirm-email': 'Confirm Your Email',
     'confirm-password': 'Confirm Password',
     'confirm-new-password': 'Confirm New Password',
+    'reset-password': 'Reset Password',
     'register': 'Register',
     'already-registered': 'Already registered?',
     'avatar-alt': 'Avatar of {email}',
@@ -63,11 +69,20 @@ export default {
     'new-email': 'New Email',
     'add': 'Add',
     'attention': 'Attention',
-    'general': 'General'
+    'general': 'General',
+    'confirm': 'Confirm!',
+    'i-remembered-my-password': 'I remembered my password!',
+    'personal-info': 'Personal Informations',
+    'joined-at': 'Joined at {date}',
+    'username': 'Username',
+    'first-name': 'First Name',
+    'last-name': 'Last Name',
+    'save': 'Save'
   },
   helper: {
     'dark-ui': 'Use the darke theme in lower ligths environments.',
-    'ui-language': 'User Interface Language'
+    'ui-language': 'User Interface Language',
+    'email-confirmation': 'Please click in the button bellow to validate your email address.'
   },
   profile: {
     'new-email-address': 'New Email Address',

@@ -4,7 +4,9 @@ export default {
     'email-not-confirmed': 'Desculpe, este email ainda não foi confirmado.',
     'default-error': 'Desculpe, seu formulário contém erros!',
     'form-error-heading': 'Os seguintes erros ocorreram durante o envio do formlário:',
-    'passwords-must-differ': 'A nova senha deve ser diferente da anterior'
+    'passwords-must-differ': 'A nova senha deve ser diferente da anterior',
+    'invalid-token': 'O token informado é inválido!',
+    'profile-updated': 'Perfil atualizado com sucesso!'
   },
   dialog: {
     'unverified-email': {
@@ -15,6 +17,8 @@ export default {
   },
   label: {
     'home': 'Início',
+    'lost-your-password': 'Esqueceu sua Senha?',
+    'check-your-email': 'Por favor, verifique seu email!',
     'ui': 'Interface',
     'ui-settings': 'Confirgurações de Interface',
     'dark-theme': 'Tema Escuro',
@@ -36,8 +40,10 @@ export default {
     'password': 'Senha',
     'new-password': 'Nova Senha',
     'old-password': 'Antiga Senha',
+    'confirm-email': 'Confirme seu Email',
     'confirm-password': 'Confirmar Senha',
     'confirm-new-password': 'Confirmar Nova Senha',
+    'reset-password': 'Resetar Senha',
     'register': 'Cadastrar-se',
     'already-registered': 'Já é Cadastrado?',
     'avatar-alt': 'Avatar de {email}',
@@ -63,11 +69,20 @@ export default {
     'new-email': 'Novo Email',
     'add': 'Adicionar',
     'attention': 'Atenção',
-    'general': 'Geral'
+    'general': 'Geral',
+    'confirm': 'Confirmar!',
+    'i-remembered-my-password': 'Lembrei da minha senha!',
+    'personal-info': 'Dados Pessoais',
+    'joined-at': 'Registrado em {date}',
+    'username': 'Nome de Usuário',
+    'first-name': 'Primeiro Nome',
+    'last-name': 'Sobrenome',
+    'save': 'Salvar'
   },
   helper: {
     'dark-ui': 'Utilize o tema escuro em ambientes com pouca iluminação.',
-    'ui-language': 'Linguagem utilizada na interface'
+    'ui-language': 'Linguagem utilizada na interface',
+    'email-confirmation': 'Por favor, clique no botão abaixo para validar o seu endereço de email.'
   },
   profile: {
     'new-email-address': 'Novo Endereço de Email',

@@ -6,10 +6,10 @@
         <v-card-title primary-title class="text-xs-center blue white--text" id="register-card-title">
           <transition name="delayed-fade" mode="out-in">
             <div key="registration" v-if="!sent" style="width: 100%">
-              <h1 class="headline">Confirm Your Email</h1>
+              <h1 class="headline">{{ $t('label.confirm-email') }}</h1>
             </div>
             <div key="success" v-else style="width: 100%">
-              <h1 class="headline">Thank You!</h1>
+              <h1 class="headline">{{ $t('label.thank-you') }}</h1>
               <v-progress-linear :indeterminate="true" :active="true" height="2" color="blue darken-3" style="margin-bottom: 0px"/>
             </div>
           </transition>
@@ -17,8 +17,8 @@
         <transition name="shrink" duration="500">
           <v-card-text v-show="!sent" v-model="valid">
             <v-form @submit.prevent="submit" ref="form">
-              <p class="black--text text-xs-center">Please click in the button bellow to validate your email address.</p>
-              <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working">Confirm!</v-btn>
+              <p class="black--text text-xs-center">{{ $t('helper.email-confirmation') }}</p>
+              <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working">{{ $t('label.confirm') }}</v-btn>
             </v-form>
           </v-card-text>
         </transition>

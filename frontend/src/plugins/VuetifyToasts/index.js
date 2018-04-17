@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import I18n from '@/i18n'
 import VuetifyToast from './toast'
 
 let queue = []
@@ -11,6 +12,7 @@ let toasts = {
     let propsData = {
       title: params.title,
       text: params.text,
+      closeText: I18n.i18n.t('label.close'),
       type: params.type,
       timeout: params.timeout,
       actions: params.actions || []
