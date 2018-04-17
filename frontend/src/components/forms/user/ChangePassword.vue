@@ -1,17 +1,17 @@
 <template>
-  <v-dialog v-model="show" max-width="400">
+  <v-dialog v-model="show" persistent max-width="400">
     <v-card>
       <v-form @submit.prevent="submit" ref="form">
         <v-card-title class="headline">{{ $t('label.change-password') }}</v-card-title>
         <v-card-text>
-          <v-text-field light :label="$t('label.old-password')" name="old_password" ref="oldPassword" tabindex="1" required autofocus
+          <v-text-field :label="$t('label.old-password')" name="old_password" ref="oldPassword" tabindex="1" required autofocus
                         type="password"
                         v-model="oldPassword"
                         v-validate="'required'"
                         :data-vv-as="$t('label.old-password')"
                         :error-messages="errors.collect('old_password')">
           </v-text-field>
-          <v-text-field light :label="$t('label.new-password')" name="new_password1" ref="newPassword1" tabindex="2" required
+          <v-text-field :label="$t('label.new-password')" name="new_password1" ref="newPassword1" tabindex="2" required
                         v-model="newPassword1"
                         v-validate="'required|not_equals:oldPassword'"
                         :data-vv-as="$t('label.new-password')"
@@ -20,7 +20,7 @@
                         :append-icon-cb="() => (showPassword = !showPassword)"
                         :type="showPassword ? 'text' : 'password'">
           </v-text-field>
-          <v-text-field light :label="$t('label.confirm-new-password')" name="new_password2" ref="newPassword2" tabindex="3" required
+          <v-text-field :label="$t('label.confirm-new-password')" name="new_password2" ref="newPassword2" tabindex="3" required
                         v-model="newPassword2"
                         v-validate="'required|confirmed:$newPassword1'"
                         :data-vv-as="$t('label.confirm-new-password')"
