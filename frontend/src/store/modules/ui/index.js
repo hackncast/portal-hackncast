@@ -1,4 +1,5 @@
 import { UI } from '@/store/mutation-types'
+import I18n from '@/i18n'
 
 const NAVBAR_LIGHT_COLOR = 'blue accent-2'
 const NAVBAR_DARK_COLOR = 'blue-grey darken-3'
@@ -10,6 +11,7 @@ export default {
     darkTheme: (localStorage.getItem('UI_DarkTheme') === 'true'),
     navbarColor: (localStorage.getItem('UI_DarkTheme') === 'true') ? NAVBAR_DARK_COLOR : NAVBAR_LIGHT_COLOR,
     backgroundColor: (localStorage.getItem('UI_DarkTheme') === 'true') ? BACKGROUND_DARK_COLOR : BACKGROUND_LIGHT_COLOR,
+    language: I18n.locale,
     sidebarVisible: false,
     progressStatus: false
   },
@@ -31,6 +33,10 @@ export default {
     },
     [UI.SIDEBAR_VISIBLE] (state, visible) {
       state.sidebarVisible = visible
+    },
+    [UI.LANGUAGE] (state, language) {
+      I18n.locale = language
+      state.language = language
     },
     [UI.PROGRESS_START] (state) {
       if (state.progressStatus !== state) {
