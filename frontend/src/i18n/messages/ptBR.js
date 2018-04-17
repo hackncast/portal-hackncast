@@ -38,7 +38,7 @@ export default {
     'confirm-password': 'Confirmar Senha',
     'confirm-new-password': 'Confirmar Nova Senha',
     'register': 'Cadastrar-se',
-    'already-registered': 'Já se Cadastrado?',
+    'already-registered': 'Já é Cadastrado?',
     'avatar-alt': 'Avatar de {email}',
     'next': 'Próximo',
     'remember-me': 'Lembrar de mim',
