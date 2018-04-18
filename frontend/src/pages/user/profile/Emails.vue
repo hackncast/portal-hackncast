@@ -31,7 +31,7 @@
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-menu bottom left :disabled="email.verified && email.primary">
-                  <v-btn icon ripple slot="activator"><v-icon :color="email.verified && email.primary ? 'grey lighten-2' : 'grey'">more_vert</v-icon></v-btn>
+                  <v-btn icon ripple slot="activator"><v-icon :color="email.verified && email.primary ? 'transparent' : 'grey'">more_vert</v-icon></v-btn>
                   <v-list>
                     <v-list-tile @click="resendVerification(email.pk)" :disabled="email.verified">
                       <v-list-tile-title>{{ $t('label.resend-verification') }}</v-list-tile-title>
