@@ -49,6 +49,31 @@ class BlockedOriginList(APIView):
         return Response(blocked, status=status.HTTP_200_OK)
 
 
+class BlockedOriginDetail(APIView):
+    permission_classes = (IsAuthenticated,)
+    name = 'blocked-origin-fatail'
+
+    def delete(self, request, address):
+        if not utils.is_valid_ip(address):
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+        username = self.request.user.email
+
+        if not utils.is_source_ip_already_locked(address):
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+        exists = AccessAttempt.objects.filter(
+            username=username, ip_address=address
+        ).exists()
+
+        if not exists:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+        utils.unblock_ip(address)
+
+        return Response({}, status=status.HTTP_200_OK)
+
+
 class AccessAttemptList(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.AccessAttemptSerializer

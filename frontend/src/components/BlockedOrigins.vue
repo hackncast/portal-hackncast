@@ -5,7 +5,7 @@
         <!-- TODO: Add animation -->
         <template v-for="(block, index) in blocks">
           <v-divider v-if="index !== 0" :key="index" />
-          <blocked-origin-item :block="block" :key="block.ip_address" />
+          <blocked-origin-item :block="block" :key="block.ip_address" @unblock="onUnblock" />
         </template>
       </v-list>
       <v-list v-else three-line class="py-3">
@@ -16,10 +16,19 @@
         </v-list-tile>
       </v-list>
     </v-card-text>
+
+    <confirm-dialog :visible="confirmDialog" :dialog-key="unblockAddress" @negative="confirmDialog = false" @positive="doUnblock">
+      <p style="text-align: justify">{{ $t('dialog.unblock-address.text') }}</p>
+      <ul style="margin-left: 2em; margin-bottom: 1.5em">
+        <li><strong>{{ unblockAddress }}</strong></li>
+      </ul>
+      <p style="text-align: justify">{{ $t('dialog.unblock-address.alert') }}</p>
+    </confirm-dialog>
   </v-card>
 </template>
 
 <script>
+import ConfirmDialog from '@/components/dialog/Confirm'
 import BlockedOriginItem from '@/components/BlockedOriginItem'
 
 export default {
@@ -41,9 +50,18 @@ export default {
       this.confirmDialog = true
     },
 
-  props: {
-    blocks: {
-      type: Array
+    doUnblock (address) {
+      this.$http.delete(`/api/user/access/blocked/${address}`)
+        .then(data => {
+          this.blocks.find((block, key) => {
+            if (block.ip_address === address) {
+              this.blocks.splice(key, 1)
+            }
+          })
+          this.$toasts.open({ text: this.$t('message.unblock-success'), type: 'success' })
+        })
+        .catch(() => this.$toasts.open({ text: this.$t('message.unblock-error'), type: 'error' }))
+        .finally(() => { this.confirmDialog = false })
     }
   },
 

@@ -15,7 +15,7 @@
       </v-list-tile-sub-title>
     </v-list-tile-content>
     <v-list-tile-action>
-      <v-btn flat icon color="grey" @click=""><v-icon>info</v-icon></v-btn>
+      <v-btn flat icon color="grey" @click="$emit('unblock', block.ip_address)"><v-icon>no_encryption</v-icon></v-btn>
     </v-list-tile-action>
   </v-list-tile>
 </template>
