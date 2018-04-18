@@ -6,16 +6,40 @@ export default {
     'form-error-heading': 'The following errors ocurred while submitting your form:',
     'passwords-must-differ': 'The new password must differ from tha last one',
     'invalid-token': 'The informed token is invalid!',
-    'profile-updated': 'Profile updated successfully!'
+    'profile-updated': 'Profile updated successfully!',
+    'no-blocked-origin': 'Yay, seems like no one is trying to hack you! Or maybe they\'re too good to be catched...',
+    'unblock-error': 'Um erro ocorreu a realizar remove o bloqueio da origem especificada.',
+    'unblock-success': 'Origin successfully unblocked!'
   },
   dialog: {
     'unverified-email': {
       title: 'Oops... Have you confirmed your email?',
       text: 'In order to enjoy all our site features, we request you to confirm the ownership of the following email address:',
       'spam-alert': 'Please, check your inbox and SPAM box. If there is no email, please click below...'
+    },
+    'confirm-step': {
+      title: 'Just for caution...',
+      text: 'Are you sure you want to proceed?'
+    },
+    'unblock-address': {
+      text: 'Are you sure you want to unblock the following address?',
+      alert: 'If this access attempt wasn\'t made by you, this action can compromise your security.'
+    },
+    'access-attempts': {
+      title: 'Failed Access Attempts'
     }
   },
   label: {
+    'hours': '{hours} hour | {hours} hours',
+    'minutes': '{minutes} minute | {minutes} minutes',
+    'seconds': '{seconds} second | {seconds} seconds',
+    'and': 'and',
+    'os': 'OS',
+    'engine': 'Engine',
+    'browser': 'Browser',
+    'date-and-time': 'Date & Time',
+    'yes': 'Yes',
+    'no': 'No',
     'home': 'Home',
     'lost-your-password': 'Lost Your Password?',
     'check-your-email': 'Please, check your email!',
@@ -100,6 +124,11 @@ export default {
       origin: '{ipsCount} different origin | {ipsCount} different origins',
       found: 'We\'ve found {failed} from {origin} in the last 7 days.'
     },
-    passwordChange: 'Hey, you still use your first password from {dateJoined}? Please, consider changing it soon... | You have changed your password one time, on {lastChanged}. | You have changed your password {count} times. Last time was {lastChanged}.'
+    passwordChange: 'Hey, you still use your first password from {dateJoined}? Please, consider changing it soon... | You have changed your password one time, on {lastChanged}. | You have changed your password {count} times. Last time was {lastChanged}.',
+    blockedOrigin: {
+      title: 'Origin {address} locked out {ago}.',
+      waiting: 'Will be unlocked in {countdown}',
+      unlocked: 'This origin was unlocked!'
+    }
   }
 }

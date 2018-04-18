@@ -94,17 +94,8 @@ export default {
         .then(attempts => {
           this.attempts.splice(0, this.attempts.length)
           for (let attempt of attempts) {
+            attempt['ua'] = this.$ua(attempt.user_agent)
             this.attempts.push(attempt)
-          }
-          return this.$http.get('/api/user/access/blocked')
-        })
-        .then(data => data.json())
-        .then(blocks => {
-          this.blocks.splice(0, this.blocks.length)
-          for (let block of blocks) {
-            block.attempt_time = new Date(block.attempt_time)
-            block.block_end = new Date(block.block_end)
-            this.blocks.push(block)
           }
           this.$progress.stop()
         })

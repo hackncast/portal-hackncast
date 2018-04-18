@@ -3,19 +3,43 @@ export default {
     'server-error': 'Um erro ocorreu durante a consulta ao servidor, por favor verifique sua conexão com a internet e tente novamente mais tarde.',
     'email-not-confirmed': 'Desculpe, este email ainda não foi confirmado.',
     'default-error': 'Desculpe, seu formulário contém erros!',
-    'form-error-heading': 'Os seguintes erros ocorreram durante o envio do formlário:',
+    'form-error-heading': 'Os seguintes erros ocorreram durante o envio do formulário:',
     'passwords-must-differ': 'A nova senha deve ser diferente da anterior',
     'invalid-token': 'O token informado é inválido!',
-    'profile-updated': 'Perfil atualizado com sucesso!'
+    'profile-updated': 'Perfil atualizado com sucesso!',
+    'no-blocked-origin': 'Yay, parece que ninguém está tentando hacker você! Ou talvez eles sejam bons de mais para serem pegos...',
+    'unblock-error': 'Um erro ocorreu a realizar remove o bloqueio da origem especificada.',
+    'unblock-success': 'Origem liberada com sucesso!'
   },
   dialog: {
     'unverified-email': {
       title: 'Oops... Você já confirmou seu email?',
       text: 'Para poder usufruir de todas as funcionalidades do nosso site, pedimos que você confirme que é dono do seguinte endereço de email:',
       'spam-alert': 'Por favor, verifique sua caixa de entrada e de SPAM. Se não houver um email de confirmação, clique abaixo...'
+    },
+    'confirm-step': {
+      title: 'Só por precaução...',
+      text: 'Você tem certeza que deseja prosseguir?'
+    },
+    'unblock-address': {
+      text: 'Você tem certeza que deseja desbloquear o seguinte endereço?',
+      alert: 'Se este acesso não foi feito por você, esta ação pode comprometer sua segurança.'
+    },
+    'access-attempts': {
+      title: 'Tentativas de Acesso Incorretas'
     }
   },
   label: {
+    'hours': '{hours} hora | {hours} horas',
+    'minutes': '{minutes} minuto | {minutes} minutos',
+    'seconds': '{seconds} segundo | {seconds} segundos',
+    'and': 'e',
+    'os': 'OS',
+    'engine': 'Motor',
+    'browser': 'Navegador',
+    'date-and-time': 'Data & Hora',
+    'yes': 'Sim',
+    'no': 'Não',
     'home': 'Início',
     'lost-your-password': 'Esqueceu sua Senha?',
     'check-your-email': 'Por favor, verifique seu email!',
@@ -100,6 +124,11 @@ export default {
       origin: '{ipsCount} origem diferente | {ipsCount} origens diferentes',
       found: 'Nos encontramos {failed} de {origin} nos últimos 7 dias.'
     },
-    passwordChange: 'Ei, você ainda utiliza a mesma senha desde {dateJoined}? Por favor, considere troca-la em breve... | Você modificou sua senha apenas uma vez, em {lastChanged}. | Você já modificou sua senha {count} vezes. A última vez foi em {lastChanged}.'
+    passwordChange: 'Ei, você ainda utiliza a mesma senha desde {dateJoined}? Por favor, considere troca-la em breve... | Você modificou sua senha apenas uma vez, em {lastChanged}. | Você já modificou sua senha {count} vezes. A última vez foi em {lastChanged}.',
+    blockedOrigin: {
+      title: 'Origem {address} bloqueada há {ago}.',
+      waiting: 'Será desbloqueada em {countdown}',
+      unlocked: 'Esta origem foi desbloqueada!'
+    }
   }
 }

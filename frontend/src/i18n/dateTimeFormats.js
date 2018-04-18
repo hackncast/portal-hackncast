@@ -16,6 +16,9 @@ export default {
     },
     long: {
       year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'
+    },
+    longNumeric: {
+      year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     }
   }
 }

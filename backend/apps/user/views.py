@@ -33,30 +33,19 @@ class BlockedOriginList(APIView):
 
     def get(self, request):
         blocked = []
+        c = cache.get_master_client()
         username = self.request.user.email
-        username_is_blocked = utils.is_user_already_locked(username)
 
-        if username_is_blocked:
-            c = cache.get_master_client()
-            user_ttl = c.ttl(
-                utils.get_username_blocked_cache_key(username)
-            )
-            attempts = AccessAttempt.objects.filter(username=username).\
-                order_by('ip_address', '-attempt_time').\
-                distinct('ip_address').values('ip_address', 'attempt_time')
+        attempts = AccessAttempt.objects.filter(username=username)\
+            .order_by('ip_address', '-attempt_time')\
+            .distinct('ip_address').values('ip_address', 'attempt_time')
 
-            for attempt in attempts:
-                if utils.is_source_ip_already_locked(attempt['ip_address']):
-                    ip_ttl = c.ttl(
-                        utils.get_ip_blocked_cache_key(attempt['ip_address'])
-                    )
-                    ttl = min([user_ttl, ip_ttl])
-                    attempt['block_end'] = attempt['attempt_time'] +\
-                        timedelta(seconds=ttl)
-                    print(ip_ttl, user_ttl)
-                    print(attempt)
-                    blocked.append(attempt)
-
+        for attempt in attempts:
+            if utils.is_source_ip_already_locked(attempt['ip_address']):
+                attempt['ttl'] = c.ttl(
+                    utils.get_ip_blocked_cache_key(attempt['ip_address'])
+                )
+                blocked.append(attempt)
         return Response(blocked, status=status.HTTP_200_OK)
 
 
