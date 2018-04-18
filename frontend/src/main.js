@@ -20,6 +20,7 @@ import router from '@/router'
 import VueLodash from '@/plugins/VueLodash'
 import VueCookies from '@/plugins/VueCookies'
 import VuetifyToasts from '@/plugins/VuetifyToasts'
+import VueUA from '@/plugins/VueUA'
 import Progress from '@/plugins/Progress'
 import { store } from '@/store/store'
 
@@ -28,6 +29,7 @@ import I18n from '@/i18n'
 const i18n = I18n.init(Vue)
 
 // Vue Plugins Initialization
+Vue.use(VueUA)
 Vue.use(Vuetify)
 Vue.use(VueHead)
 Vue.use(Progress)

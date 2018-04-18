@@ -21,6 +21,7 @@
     "moment": "^2.21.0",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
+    "ua-parser-js": "^0.7.17",
     "vee-validate": "^2.0.5",
     "vue": "^2.5.2",
     "vue-head": "^2.0.12",
