@@ -2,8 +2,14 @@
   <v-layout row wrap>
     <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
       <v-card class="mb-3" style="margin-top: -40px">
-        <v-card-text class="grey--text text--darken-1">
-          {{ $t('profile.last-login', {lastLogin: $d(currentUser.lastLogin, 'long')}) }}
+        <v-card-text class="py-0">
+          <v-list three-line class="py-2">
+            <v-list-tile class="list-in-card">
+              <v-list-tile-sub-title>
+                {{ $t('profile.last-login', {lastLogin: $d(currentUser.lastLogin, 'long')}) }}
+              </v-list-tile-sub-title>
+            </v-list-tile>
+          </v-list>
         </v-card-text>
       </v-card>
 
