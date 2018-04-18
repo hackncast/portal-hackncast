@@ -6,7 +6,7 @@
         <v-card-text>
           <v-text-field :label="$t('label.new-email')" name="email" ref="email" type="email" tabindex="1" required autofocus
                         v-validate="'required|email'"
-                        data-vv-as="$t('label.new-email')"
+                        :data-vv-as="$t('label.new-email')"
                         :error-messages="errors.collect('email')"
                         v-model="email">
           </v-text-field>
