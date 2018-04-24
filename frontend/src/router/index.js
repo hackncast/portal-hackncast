@@ -3,8 +3,14 @@ import Router from 'vue-router'
 import { store } from '@/store/store'
 import { UI } from '@/store/mutation-types'
 
-import UserRoutes from '@/router/user'
-import DashboardRoutes from '@/router/dashboard'
+const routes = []
+const requireModule = require.context('.', false, /\.js$/)
+
+requireModule.keys().forEach(fileName => {
+  if (fileName === './index.js') return
+
+  routes.push(requireModule(fileName).default)
+})
 
 Vue.use(Router)
 
@@ -12,10 +18,7 @@ let router = new Router({
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   },
-  routes: Array.concat(
-    UserRoutes,
-    DashboardRoutes
-  )
+  routes: Array.concat(...routes)
 })
 
 router.afterEach((to, from, next) => {
