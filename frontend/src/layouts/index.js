@@ -1,9 +1,9 @@
-import Public from './Public'
-import Dashboard from './Dashboard'
-import UserProfile from './UserProfile'
+const modules = {}
+const requireModule = require.context('.', false, /\.vue$/)
 
-export default {
-  Public,
-  Dashboard,
-  UserProfile
-}
+requireModule.keys().forEach(name => {
+  const registerName = name.replace('./', '').replace('.vue', '')
+  modules[registerName] = requireModule(name).default
+})
+
+export default modules
