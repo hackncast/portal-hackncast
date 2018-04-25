@@ -17,6 +17,7 @@ import '@/style/base.sass'
 // My plugins and modules
 import App from '@/App'
 import router from '@/router'
+import Api from '@/plugins/Api'
 import VueLodash from '@/plugins/VueLodash'
 import VueCookies from '@/plugins/VueCookies'
 import VuetifyToasts from '@/plugins/VuetifyToasts'
@@ -41,6 +42,7 @@ Vue.use(Transitions)
 Vue.use(VuetifyToasts)
 Vue.use(vueTopprogress)
 Vue.use(VeeValidate, { locale: I18n.veeValidateLocale })
+Vue.use(Api)
 
 Vue.config.productionTip = false
 
