@@ -61,14 +61,6 @@ export default {
       ],
       items: []
     }
-  },
-
-  watch: {
-    visible (to, from) {
-      if (to === true) {
-        console.log('Load data')
-      }
-    }
   }
 }
 </script>
