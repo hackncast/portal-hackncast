@@ -1,3 +1,6 @@
+import apiUrls from '@/apiUrls'
+import { Resource } from 'vue-resource'
+
 let api
 let methods = {
   partialUpdate: {method: 'PATCH'},
@@ -5,10 +8,10 @@ let methods = {
   options: {method: 'OPTIONS'}
 }
 
-function __buildResources (vue, resources) {
+function __buildResources (resources) {
   let context = {}
   for (let entry of resources) {
-    let resource = vue.resource(entry.url, {}, methods)
+    let resource = Resource(entry.url, {}, methods)
 
     if (entry.methods) {
       if (entry.methods.indexOf('GET') < 0) {
@@ -39,22 +42,16 @@ function __buildResources (vue, resources) {
 }
 
 class ApiHelper {
-  constructor (vue) {
+  constructor () {
     if (!api) {
       api = this
-      this.vue = vue
     } else {
       return api
     }
 
-    vue.http.get('/api/')
-      .then(data => data.json())
-      .then(data => {
-        for (let contextName of Object.keys(data)) {
-          if (contextName === 'django_messages') continue
-          this[contextName] = __buildResources(vue, data[contextName])
-        }
-      })
+    for (let contextName of Object.keys(apiUrls)) {
+      this[contextName] = __buildResources(apiUrls[contextName])
+    }
     return api
   }
 }
@@ -62,7 +59,7 @@ class ApiHelper {
 const Api = {
   install (Vue, options) {
     if (!api) {
-      api = new ApiHelper(Vue)
+      api = new ApiHelper()
     }
     Vue.prototype.$api = api
     Vue.api = api

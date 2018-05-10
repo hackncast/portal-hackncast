@@ -24,10 +24,13 @@ import VuetifyToasts from '@/plugins/VuetifyToasts'
 import VueUA from '@/plugins/VueUA'
 import Progress from '@/plugins/Progress'
 import { store } from '@/store/store'
+import models from '@/models'
 
 // Localization
 import I18n from '@/i18n'
 const i18n = I18n.init(Vue)
+
+models.initialize()
 
 // Vue Plugins Initialization
 Vue.use(VueUA)

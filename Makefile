@@ -7,6 +7,9 @@ else
 endif
 HOST ?= localhost
 
+export_api:
+	cd backend; pipenv run python manage.py export_api --file ../frontend/src/apiUrls.js
+
 run-backend:
 	cd backend; pipenv run python manage.py runserver $(HOST):$(BE_PORT)
 
