@@ -1,6 +1,5 @@
 import json
 from django.contrib import messages
-from django.utils.deprecation import MiddlewareMixin
 
 CONTENT_TYPES = ["application/javascript", "application/json"]
 
@@ -28,7 +27,7 @@ class AjaxMessaging(object):
         response = self.get_response(request)
 
         if request.is_ajax():
-            if response['Content-Type'] in CONTENT_TYPES:
+            if response.get('Content-Type') in CONTENT_TYPES:
                 try:
                     content = json.loads(response.content.decode())
                     assert isinstance(content, dict)
