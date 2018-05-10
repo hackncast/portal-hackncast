@@ -88,10 +88,14 @@ export default {
       }
     },
     header () {
-      if (this.bogon) {
+      if (this.bogon === true) {
         return this.$t('profile.session.no-location')
       } else {
-        return `${this.city}, ${this.region} (${this.country})`
+        if (this.city && this.region && this.country) {
+          return `${this.city}, ${this.region} (${this.country})`
+        } else {
+          return 'Unknown'
+        }
       }
     }
   },
