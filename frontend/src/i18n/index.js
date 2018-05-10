@@ -1,5 +1,6 @@
 import VueI18n from 'vue-i18n'
 import messages from './messages'
+import moment from 'moment/moment'
 import dateTimeFormats from './dateTimeFormats'
 import { Validator } from 'vee-validate'
 import VeeMessagePtBR from 'vee-validate/dist/locale/pt_BR'
@@ -25,6 +26,7 @@ let I18n = {
     this.i18n.locale = locale
     localStorage.setItem('language', locale)
     this.__updateHtmlLang()
+    moment.locale(locale)
     Validator.localize(this.veeValidateLocale)
   },
 
@@ -42,6 +44,7 @@ let I18n = {
       messages,
       dateTimeFormats
     })
+    moment.locale(this.__locale)
     this.__updateHtmlLang()
     Validator.localize('pt_BR', VeeMessagePtBR)
     return this.i18n
