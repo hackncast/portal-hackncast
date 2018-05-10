@@ -1,5 +1,5 @@
-import { UI } from '@/store/mutation-types'
 import I18n from '@/i18n'
+import { UI } from '@/store/mutation-types'
 
 const NAVBAR_LIGHT_COLOR = 'blue accent-2'
 const NAVBAR_DARK_COLOR = 'blue-grey darken-3'
