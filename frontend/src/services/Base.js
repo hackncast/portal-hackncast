@@ -40,9 +40,7 @@ export default class BaseService {
       this.__list.query()
         .then(data => data.json())
         .then(data => {
-          let list = []
-          for (let item of data) { list.push(this.__model.fromJson(item)) }
-          return resolve(list)
+          return resolve(data.map(part => this.__model.fromJson(part)))
         })
         .catch(err => { reject(err) })
     })

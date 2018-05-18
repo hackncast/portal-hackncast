@@ -2,9 +2,7 @@ import camelCase from 'lodash/camelCase'
 
 export default class BaseModel {
   constructor (data = {}) {
-    for (let attr in data) {
-      this[attr] = data[attr]
-    }
+    Object.keys(data).forEach(key => { this[key] = data[key] })
   }
 
   static initialize () {
@@ -14,9 +12,7 @@ export default class BaseModel {
 
   static fromJson (data) {
     let newData = {}
-    for (let key in data) {
-      newData[camelCase(key)] = data[key]
-    }
+    Object.keys(data).forEach(key => { newData[camelCase(key)] = data[key] })
     return new this(newData)
   }
 
