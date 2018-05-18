@@ -6,4 +6,11 @@ requireModule.keys().forEach(name => {
   modules[registerName] = requireModule(name).default
 })
 
+export const meta = {
+  'public': { layout: 'Public' },
+  'publicMayAuth': { layout: 'Public', mayRequiresAuth: true },
+  'dashboard': { layout: 'Dashboard', requiresAuth: true },
+  'userProfile': { layout: 'UserProfile', requiresAuth: true }
+}
+
 export default modules

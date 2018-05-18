@@ -1,3 +1,5 @@
+import { meta } from '@/layouts'
+
 import Login from '@/pages/user/Login'
 import Registration from '@/pages/user/Registration'
 import ResetPassword from '@/pages/user/ResetPassword'
@@ -13,48 +15,48 @@ export default [
     path: '/user/login',
     name: 'user:login',
     component: Login,
-    meta: { layout: 'Public' }
+    meta: { ...meta.public }
   },
   {
     path: '/user/registration',
     name: 'user:registration',
     component: Registration,
-    meta: { layout: 'Public' }
+    meta: { ...meta.public }
   },
   {
     path: '/user/email/confirmation/:key/',
     name: 'user:email_confirmation',
     component: EmailConfirmation,
-    meta: { layout: 'Public', mayRequiresAuth: true }
+    meta: { ...meta.publicMayAuth }
   },
   {
     path: '/user/password/reset/send/',
     name: 'user:reset_password',
     component: ResetPassword,
-    meta: { layout: 'Public' }
+    meta: { ...meta.public }
   },
   {
     path: '/user/password/reset/token/:uidb64/:token/',
     name: 'user:reset_password_token',
     component: ResetPasswordToken,
-    meta: { layout: 'Public' }
+    meta: { ...meta.public }
   },
   {
     path: '/user/profile',
     name: 'user:profile',
     component: ProfileAccount,
-    meta: { layout: 'UserProfile', requiresAuth: true }
+    meta: { ...meta.userProfile }
   },
   {
     path: '/user/profile/emails',
     name: 'user:profile:emails',
     component: ProfileEmails,
-    meta: { layout: 'UserProfile', requiresAuth: true }
+    meta: { ...meta.userProfile }
   },
   {
     path: '/user/profile/security',
     name: 'user:profile:security',
     component: ProfileSecurity,
-    meta: { layout: 'UserProfile', requiresAuth: true }
+    meta: { ...meta.userProfile }
   }
 ]
