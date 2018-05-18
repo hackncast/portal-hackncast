@@ -1,3 +1,8 @@
+export const AUTH = {
+  SESSIONS: 'AUTH_SESSIONS',
+  REMOVE_SESSION: 'AUTH_REMOVE_SESSION'
+}
+
 export const UI = {
   DARK_THEME: 'UI_DARK_THEME',
   LANGUAGE: 'UI_LANGUAGE',
