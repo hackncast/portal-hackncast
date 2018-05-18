@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { USER, UI } from '@/store/mutation-types'
-import User from '@/models/user'
+import UserService from '@/services/User'
 
 export default {
   checkStoredLogin ({ getters, dispatch, commit, state }) {
@@ -33,16 +33,12 @@ export default {
 
   fetchUserData ({ commit }) {
     return new Promise((resolve, reject) => {
-      Vue.http.get('/api/auth/user/')
-        .then(data => data.json())
-        .then(data => {
-          let user = User.fromJson(data)
+      UserService.getCurrentUser()
+        .then(user => {
           commit(USER.FETCH_DATA, user)
           resolve(user)
         })
-        .catch(err => {
-          reject(err)
-        })
+        .catch(err => reject(err))
     })
   },
 
