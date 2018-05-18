@@ -1,12 +1,12 @@
 <template>
   <v-card class="mb-3 px-2">
     <zoom-center-transition group>
-      <template v-for="(session, index) in currentSessions">
+      <template v-for="(session, index) in getSessions">
         <v-divider v-if="index !== 0" :key="index" />
-        <user-session-item :session="session" :key="session.pk" @end="endSession(session.pk)" @openDialog="(url) => openMapDialog(url)"/>
+        <user-session-item :session="session" :key="session.pk" @end="endSession(session)" @openDialog="(url) => openMapDialog(url)"/>
       </template>
     </zoom-center-transition>
-    <div v-if="currentSessions.length === 0" class="pa-3">
+    <div v-if="getSessions.length === 0" class="pa-3">
       {{ $t('profile.session.no-active-sessions') }}
     </div>
 
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapGetters, mapState, mapActions } from 'vuex'
 import UserSessionItem from '@/components/UserSessionItem'
 
 export default {
@@ -35,31 +36,32 @@ export default {
 
   components: { UserSessionItem },
 
-  props: {
-    sessions: {
-      type: Array
-    }
-  },
-
   data () {
     return {
       mapUrl: null,
-      mapDialog: false,
-      currentSessions: this.sessions
+      mapDialog: false
     }
   },
 
+  computed: {
+    ...mapState({
+      sessions: state => state.Auth.sessions
+    }),
+    ...mapGetters(['getSessions'])
+  },
+
   methods: {
-    endSession (pk) {
-      this.$progress.start()
-      this.$http.delete(`/api/user/session/${pk}/`)
-        .then(() => {
-          this.currentSessions = this.currentSessions.filter(session => session.pk !== pk)
-          this.$progress.stop()
-        })
-        .catch(() => {
+    ...mapActions([
+      'fetchUserSessions', 'removeUserSession'
+    ]),
+
+    endSession (session) {
+      this.removeUserSession(session)
+        .then(data => this.$progress.stop())
+        .catch(err => {
           this.$progress.fail()
           this.$toasts.open({ text: 'An error ocurred while excluding this session' })
+          throw err
         })
     },
     openMapDialog (url) {
@@ -72,6 +74,10 @@ export default {
         this.mapUrl = null
       }, 250)
     }
+  },
+
+  created () {
+    this.fetchUserSessions()
   }
 }
 </script>

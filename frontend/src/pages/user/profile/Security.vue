@@ -86,14 +86,6 @@ export default {
           for (let password of passwords) {
             this.passwords.push(new Date(password.changed_at))
           }
-          return this.$http.get('/api/user/session/')
-        })
-        .then(data => data.json())
-        .then(sessions => {
-          this.sessions.splice(0, this.sessions.length)
-          for (let session of sessions) {
-            this.sessions.push(session)
-          }
           return this.$http.get('/api/user/access/')
         })
         .then(data => data.json())
@@ -105,7 +97,10 @@ export default {
           }
           this.$progress.stop()
         })
-        .catch(() => this.$progress.fail())
+        .catch(err => {
+          this.$progress.fail()
+          throw err
+        })
     }
   },
 

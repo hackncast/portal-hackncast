@@ -9,16 +9,16 @@
           <v-flex xs8 class="pb-0">
             <div class="body-2">{{ header }}</div>
             <div class="caption grey--text">{{ session.ip }}</div>
-            <div class="caption">{{ $t('label.expires') }} {{ session.expire_date | moment('from') }}</div>
-            <div class="caption">{{ $t('label.last-activity') }}, {{ session.updated_at | moment('from') }}</div>
+            <div class="caption">{{ $t('label.expires') }} {{ session.expireDate.from() }}</div>
+            <div class="caption">{{ $t('label.last-activity') }}, {{ session.updatedAt.from() }}</div>
             <div class="caption red--text" v-if="session.current === true">{{ $t('label.current-session') }}</div>
             <div class="hidden-xs-only">
               <div class="caption grey--text"><strong>{{ $t('label.ip-address') }}:</strong> {{ session.ip }}</div>
-              <div class="caption grey--text"><strong>User Agent: </strong>{{ session.user_agent }}</div>
+              <div class="caption grey--text"><strong>User Agent: </strong>{{ session.userAgent }}</div>
             </div>
           </v-flex>
           <v-flex xs12 class="hidden-sm-and-up">
-            <div class="caption grey--text"><strong>User Agent: </strong>{{ session.user_agent }}</div>
+            <div class="caption grey--text"><strong>User Agent: </strong>{{ session.userAgent }}</div>
           </v-flex>
         </v-layout>
         <v-layout row v-else key="loading">
