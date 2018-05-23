@@ -26,6 +26,8 @@ django-extensions = "*"
 django-webpack-loader = "*"
 django-silk = "*"
 "flake8" = "*"
+pytest-django = "*"
+pytest-cov = "*"
 
 
 [requires]
