@@ -28,6 +28,8 @@ django-silk = "*"
 "flake8" = "*"
 pytest-django = "*"
 pytest-cov = "*"
+factory-boy = "*"
+pytest-env = "*"
 
 
 [requires]
