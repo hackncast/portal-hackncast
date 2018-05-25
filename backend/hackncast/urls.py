@@ -36,7 +36,7 @@ urlpatterns = [
     ),
 ]
 
-if settings.DEBUG and settings.SILK:
+if settings.DEBUG and getattr(settings, 'SILK', False):
     urlpatterns += [
         url(r'^api/silk/', include('silk.urls', namespace='silk'))
     ]
