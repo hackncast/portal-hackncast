@@ -176,7 +176,7 @@ WEBPACK_LOADER = {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'static/',
         'STATS_FILE': os.path.join(
-            str(ROOT_DIR.path('../frontend')),  'webpack-stats.json'
+            str(ROOT_DIR.path('../frontend')), 'webpack-stats.json'
         ),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
