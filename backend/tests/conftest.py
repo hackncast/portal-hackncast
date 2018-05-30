@@ -3,7 +3,7 @@
 
 import pytest
 
-from tests.factories import UserFactory
+from tests.factories import UserFactory, UserSessionFactory
 
 from .utils import ApiClient
 
@@ -26,3 +26,13 @@ def fake_users(db):
         else:
             return UserFactory.create_batch(count)
     return make_fake_users
+
+
+@pytest.fixture(scope='function')
+def fake_user_sessions(db):
+    def make_fake_user_sessions(user, count=1):
+        if count == 1:
+            return UserSessionFactory.create(user=user)
+        else:
+            return UserSessionFactory.create_batch(count, user=user)
+    return make_fake_user_sessions
