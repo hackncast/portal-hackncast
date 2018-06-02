@@ -3,9 +3,9 @@ from collections import OrderedDict
 import django
 from django.urls import get_urlconf, get_resolver
 
-if django.VERSION >= (2, 0):
+if django.VERSION >= (2, 0):  # pragma: no cover
     from django.urls import URLResolver
-else:
+else:  # pragma: no cover
     try:
         from django.urls import RegexURLResolver
     except ImportError:
@@ -28,7 +28,7 @@ TRANSLATE = {
 }
 
 
-def __getUrlsFromApp(resolver, translator):
+def __getUrlsFromApp(resolver, translator):  # pragma: no cover
     urls = []
     root = resolver.pattern.describe()\
         .replace("'", "").replace("^", "").replace("$", "")
@@ -73,7 +73,7 @@ def __getUrlsFromApp(resolver, translator):
     return urls
 
 
-def getUrls():
+def getUrls():  # pragma: no cover
     urls = OrderedDict()
     resolver = get_resolver(get_urlconf())
     for app_resolver in resolver.url_patterns:

@@ -6,7 +6,11 @@ from django.db import migrations
 
 
 def fix_site_name_domain(apps, schema_editor):
-    site = Site.objects.get(pk=1)
+    try:
+        site = Site.objects.get(pk=1)
+    except Site.DoesNotExist:
+        site = Site.objects.create()
+
     site.domain = settings.FRONTEND_SITE_DOMAIN
     site.name = settings.FRONTEND_SITE_NAME
     site.save()

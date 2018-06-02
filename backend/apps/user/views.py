@@ -3,9 +3,6 @@
 
 from datetime import timedelta
 
-from django.conf import settings
-from django.db.models import Count
-from django.core.cache import cache
 from django.contrib import messages
 from django.utils.timezone import now
 from django.views.generic.base import RedirectView
@@ -33,7 +30,6 @@ class BlockedOriginList(APIView):
 
     def get(self, request):
         blocked = []
-        c = cache.get_master_client()
         username = self.request.user.email
 
         attempts = AccessAttempt.objects.filter(username=username)\
@@ -41,17 +37,21 @@ class BlockedOriginList(APIView):
             .distinct('ip_address').values('ip_address', 'attempt_time')
 
         for attempt in attempts:
-            if utils.is_source_ip_already_locked(attempt['ip_address']):
-                attempt['ttl'] = c.ttl(
+            attempt['ttl'] = 0
+            if utils.is_source_ip_already_locked(attempt['ip_address']):  # pragma: no branch
+                ttl = utils.REDIS_SERVER.ttl(
                     utils.get_ip_blocked_cache_key(attempt['ip_address'])
                 )
+                if ttl is not None:  # pragma: no branch
+                    attempt['ttl'] = ttl
+
                 blocked.append(attempt)
         return Response(blocked, status=status.HTTP_200_OK)
 
 
 class BlockedOriginDetail(APIView):
     permission_classes = (IsAuthenticated,)
-    name = 'blocked-origin-fatail'
+    name = 'blocked-origin-detail'
 
     def delete(self, request, address):
         if not utils.is_valid_ip(address):
@@ -197,7 +197,7 @@ class EmailDetail(APIView):
             from_email_address = EmailAddress.objects.get(
                 user=request.user, primary=True
             )
-        except EmailAddress.DoesNotExist:
+        except EmailAddress.DoesNotExist:  # pragma: no cover
             from_email_address = None
         email.set_as_primary()
 
@@ -213,7 +213,7 @@ class EmailDetail(APIView):
         return Response({'email': email.email}, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
-        if pk is None:
+        if pk is None:  # pragma: no cover
             raise ParseError('Please specify the email address')
 
         try:

@@ -12,11 +12,22 @@ import factory.fuzzy
 from faker import Faker
 from qsessions.models import Session
 from factory.django import DjangoModelFactory
+from allauth.account.models import EmailAddress
 
-now = timezone.now()
 faker = Faker()
+now = timezone.now()
 User = get_user_model()
 DEFAULT_PASSWORD = "password"
+
+
+class EmailAddressFactory(DjangoModelFactory):
+    verified = False
+    primary = False
+    user = factory.SubFactory('test.factories.UserFactory', email_address=None)
+    email = factory.SelfAttribute('..email')
+
+    class Meta:
+        model = EmailAddress
 
 
 class UserFactory(DjangoModelFactory):
@@ -24,6 +35,8 @@ class UserFactory(DjangoModelFactory):
     last_name = factory.Faker('last_name')
     password = factory.PostGenerationMethodCall('set_password',
                                                 DEFAULT_PASSWORD)
+    email_address = factory.RelatedFactory(EmailAddressFactory, 'user',
+                                           primary=True)
 
     @factory.lazy_attribute
     def username(self):

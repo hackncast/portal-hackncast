@@ -111,3 +111,4 @@ webpack-stats.json
 
 # Others
 db.sqlite3
+.pytest_cache/

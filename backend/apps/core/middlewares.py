@@ -4,7 +4,7 @@ from django.contrib import messages
 CONTENT_TYPES = ["application/javascript", "application/json"]
 
 
-class AjaxMessaging(object):
+class AjaxMessaging(object):  # pragma: no cover
     """
     Middlware for JSON responses. It adds to each JSON response array with
     messages from django.contrib.messages framework.

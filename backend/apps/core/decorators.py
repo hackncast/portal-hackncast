@@ -13,7 +13,7 @@ def lockout_response():
     raise exceptions.AuthenticationFailed(msg)
 
 
-def watch_login(status_code=302, msg=''):
+def watch_login(status_code=302, msg=''):  # pragma: no cover
     def decorated_login(func):
         @functools.wraps(func)
         def wrapper(request, *args, **kwargs):

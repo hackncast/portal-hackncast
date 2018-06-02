@@ -20,7 +20,7 @@ class EmailSerializer(serializers.ModelSerializer):
         self.add_form = AddEmailForm(
             data=self.initial_data, user=self.request._request.user
         )
-        if not self.add_form.is_valid():
+        if not self.add_form.is_valid():  # pragma: no cover
             raise serializers.ValidationError(self.add_form.errors)
         return value
 

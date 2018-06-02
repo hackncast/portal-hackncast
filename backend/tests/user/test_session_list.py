@@ -80,6 +80,22 @@ def test_session_segmentation(api_client, fake_users, fake_user_sessions):
             assert response.status_code == 404
 
 
+def test_cant_delete_current_session(api_client, fake_users, fake_user_sessions):
+    user = fake_users()
+    fake_user_sessions(user, count=3)
+
+    assert Session.objects.count() == 3
+
+    with api_client.auth(user=user):
+        response = api_client.get(SESSION)
+        assert len(response.content) == 4
+        current = [item for item in response.content if item['current']][0]
+
+        response = api_client.delete(SESSION_DETAIL(current['pk']))
+        assert response.status_code == 400
+        assert Session.objects.count() == 4
+
+
 def test_session_deletion(api_client, fake_users, fake_user_sessions):
     user = fake_users()
     fake_user_sessions(user, count=3)

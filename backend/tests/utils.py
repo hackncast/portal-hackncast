@@ -8,9 +8,12 @@ from functools import partial
 from django.urls import reverse
 from rest_framework.test import APIClient
 
+from defender.connection import get_redis_connection
+
 from tests.factories import DEFAULT_PASSWORD
 
-Response = namedtuple('Response', ['status_code', 'content'])
+REDIS_SERVER = get_redis_connection()
+Response = namedtuple('Response', ['status_code', 'content', 'url'])
 
 
 def part_reverse(name):
@@ -28,35 +31,55 @@ class ApiClient:
         if response.status_code == 204:
             return None
         else:
-            return response.json()
+            if response.content:
+                return response.json()
+            return None
 
-    def get(self, url):
-        response = self._client.get(url, format='json')
-        return Response(response.status_code, self.__get_content(response))
+    def get(self, url, *args, **kwargs):
+        response = self._client.get(url, format='json', *args, **kwargs)
+        if response.status_code == 302:
+            return Response(response.status_code, None, response.get('location'))
+        return Response(
+            response.status_code, self.__get_content(response), None,
+        )
 
-    def post(self, url, data):
-        response = self._client.post(url, data, format='json')
-        return Response(response.status_code, self.__get_content(response))
+    def post(self, url, data, *args, **kwargs):
+        response = self._client.post(url, data, format='json', *args, **kwargs)
+        return Response(
+            response.status_code, self.__get_content(response), None,
+        )
 
-    def put(self, url, data):
-        response = self._client.put(url, data, format='json')
-        return Response(response.status_code, self.__get_content(response))
+    def put(self, url, data, *args, **kwargs):
+        response = self._client.put(url, data, format='json', *args, **kwargs)
+        return Response(
+            response.status_code, self.__get_content(response), None,
+        )
 
-    def patch(self, url, data):
-        response = self._client.patch(url, data, format='json')
-        return Response(response.status_code, self.__get_content(response))
+    def patch(self, url, data, *args, **kwargs):
+        response = self._client.patch(
+            url, data, format='json', *args, **kwargs
+        )
+        return Response(
+            response.status_code, self.__get_content(response), None,
+        )
 
-    def delete(self, url):
-        response = self._client.delete(url, format='json')
-        return Response(response.status_code, self.__get_content(response))
+    def delete(self, url, *args, **kwargs):
+        response = self._client.delete(url, format='json', *args, **kwargs)
+        return Response(
+            response.status_code, self.__get_content(response), None,
+        )
 
-    def options(self, url):
-        response = self._client.options(url, format='json')
-        return Response(response.status_code, self.__get_content(response))
+    def options(self, url, *args, **kwargs):
+        response = self._client.options(url, format='json', *args, **kwargs)
+        return Response(
+            response.status_code, self.__get_content(response), None,
+        )
 
-    def head(self, url):
-        response = self._client.head(url, format='json')
-        return Response(response.status_code, self.__get_content(response))
+    def head(self, url, *args, **kwargs):
+        response = self._client.head(url, format='json', *args, **kwargs)
+        return Response(
+            response.status_code, self.__get_content(response), None,
+        )
 
     @contextmanager
     def auth(self, username=None, password=None, user=None,
