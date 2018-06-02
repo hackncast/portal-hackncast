@@ -12,6 +12,7 @@ USER = reverse('rest_user_details')
 CHANGE_PASSWORD = reverse('rest_password_change')
 RESET_PASSWORD = reverse('rest_password_reset')
 CONFIRM_RESET = reverse('rest_password_reset_confirm')
+QUERY_HIBP = 'apps.core.password_validation.query_hibp'
 
 
 def test_unauthorized_password_change(api_client):
@@ -30,7 +31,7 @@ def test_password_change(api_client, fake_users):
             'new_password1': 'complex_psswd',
             'new_password2': 'complex_psswd',
         }
-        with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+        with mock.patch(QUERY_HIBP) as mocked:
             mocked.return_value = (False, None)
             response = api_client.post(CHANGE_PASSWORD, data)
 
@@ -76,7 +77,7 @@ def test_password_reset(api_client, fake_users, mailoutbox):
         'new_password2': 'complex_psswd',
         'uid': uid, 'token': token,
     }
-    with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+    with mock.patch(QUERY_HIBP) as mocked:
         mocked.return_value = (False, None)
         response = api_client.post(CONFIRM_RESET, data)
     assert response.status_code == 200
@@ -97,7 +98,7 @@ def test_pwned_password_change(api_client, fake_users):
             'new_password1': 'senha123',
             'new_password2': 'senha123',
         }
-        with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+        with mock.patch(QUERY_HIBP) as mocked:
             mocked.return_value = (True, 2)
             response = api_client.post(CHANGE_PASSWORD, data)
         assert response.status_code == 400
@@ -138,7 +139,7 @@ def test_pwned_password_reset(api_client, fake_users, mailoutbox):
         'new_password2': 'senha123',
         'uid': uid, 'token': token,
     }
-    with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+    with mock.patch(QUERY_HIBP) as mocked:
         mocked.return_value = (True, 2)
         response = api_client.post(CONFIRM_RESET, data)
     assert response.status_code == 400

@@ -3,7 +3,7 @@
 
 from django.urls import path
 
-from . import views
+from . import viewsets as views
 from rest_auth import views as auth_views
 from rest_auth.registration.views import VerifyEmailView
 

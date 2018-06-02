@@ -167,7 +167,7 @@ GR_CAPTCHA_SECRET_KEY = env('CAPTCHA_SECRET_KEY')
 # REST Auth
 OLD_PASSWORD_FIELD_ENABLED = True
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'apps.core.serializers.UserDetailsSerializer',
+    'USER_DETAILS_SERIALIZER': 'apps.core.api.serializers.UserDetailsSerializer',
 }
 
 # Webpack Loader

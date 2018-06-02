@@ -9,7 +9,7 @@ from allauth.account.forms import AddEmailForm
 from allauth.account.models import EmailAddress
 from defender.models import AccessAttempt
 
-from . import models
+from .. import models
 
 UserModel = get_user_model()
 

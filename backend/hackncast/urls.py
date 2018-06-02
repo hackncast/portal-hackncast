@@ -20,8 +20,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     # My apps
-    url(r'^api/', include('apps.core.urls')),
-    url(r'^api/user/', include('apps.user.urls')),
+    url(r'^api/', include('apps.core.api.urls')),
+    url(r'^api/user/', include('apps.user.api.urls')),
 
     # Fixes
     # This url is used by django-allauth and empty TemplateView is defined just

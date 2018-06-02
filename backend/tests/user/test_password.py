@@ -7,6 +7,7 @@ from django.urls import reverse
 REGISTRATION = reverse('rest_register')
 CHANGE_PASSWORD = reverse('rest_password_change')
 PASSWORD_CHANGES = reverse('password-changes-list')
+QUERY_HIBP = 'apps.core.password_validation.query_hibp'
 
 
 def __register_user(api_client):
@@ -16,7 +17,7 @@ def __register_user(api_client):
         'password2': 'some_password',
         'recaptcha': 'PASSED',
     }
-    with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+    with mock.patch(QUERY_HIBP) as mocked:
         mocked.return_value = (False, None)
         response = api_client.post(REGISTRATION, data)
     assert response.status_code == 201
@@ -47,7 +48,7 @@ def test_many_password_change(api_client):
             'new_password1': 'second_psswd',
             'new_password2': 'second_psswd',
         }
-        with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+        with mock.patch(QUERY_HIBP) as mocked:
             mocked.return_value = (False, None)
             response = api_client.post(CHANGE_PASSWORD, data)
         assert response.status_code == 200
@@ -61,7 +62,7 @@ def test_many_password_change(api_client):
             'new_password1': 'third_psswd',
             'new_password2': 'third_psswd',
         }
-        with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+        with mock.patch(QUERY_HIBP) as mocked:
             mocked.return_value = (False, None)
             response = api_client.post(CHANGE_PASSWORD, data)
         assert response.status_code == 200

@@ -10,7 +10,8 @@ from rest_framework.response import Response
 from rest_auth.registration.views import RegisterView
 from rest_auth.views import PasswordResetView, UserDetailsView, LoginView
 
-from . import serializers, decorators, utils
+from . import serializers
+from .. import decorators, utils
 
 watch_login = decorators.watch_login()
 
