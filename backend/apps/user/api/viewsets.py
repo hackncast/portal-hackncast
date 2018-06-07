@@ -3,17 +3,6 @@
 
 from datetime import timedelta
 
-from django.contrib import messages
-from django.utils.timezone import now
-from django.views.generic.base import RedirectView
-
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import NotFound, ParseError
-
 from allauth.account import signals
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -21,14 +10,27 @@ from allauth.account.models import EmailAddress
 from defender import utils
 from defender.models import AccessAttempt
 
+from django.contrib import messages
+from django.utils.timezone import now
+from django.views.generic.base import RedirectView
+
+from rest_framework import status, viewsets, mixins
+from rest_framework.decorators import action
+from rest_framework.exceptions import NotFound
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from apps.core.api.viewsets import ListOnlyViewSet
+
 from . import serializers
 
 
-class BlockedOriginList(APIView):
+class BlockedOriginViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticated,)
-    name = 'blocked-origin-list'
+    lookup_field = 'address'
+    lookup_value_regex = '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
 
-    def get(self, request):
+    def list(self, request):
         blocked = []
         username = self.request.user.email
 
@@ -48,12 +50,7 @@ class BlockedOriginList(APIView):
                 blocked.append(attempt)
         return Response(blocked, status=status.HTTP_200_OK)
 
-
-class BlockedOriginDetail(APIView):
-    permission_classes = (IsAuthenticated,)
-    name = 'blocked-origin-detail'
-
-    def delete(self, request, address):
+    def destroy(self, request, address=None):
         if not utils.is_valid_ip(address):
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -74,10 +71,9 @@ class BlockedOriginDetail(APIView):
         return Response({}, status=status.HTTP_200_OK)
 
 
-class AccessAttemptList(generics.ListAPIView):
+class AccessAttemptViewSet(ListOnlyViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.AccessAttemptSerializer
-    name = 'access-list'
 
     def get_queryset(self):
         last_7days = now() - timedelta(days=7)
@@ -87,30 +83,20 @@ class AccessAttemptList(generics.ListAPIView):
         ).order_by('-attempt_time')
 
 
-class SessionList(generics.ListAPIView):
+class SessionViewSet(mixins.DestroyModelMixin, viewsets.ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.SessionsSerializer
-    name = 'session-list'
 
     def get_queryset(self):
-        return self.request.user.session_set.filter(
-            expire_date__gt=now()
-        ).order_by('-updated_at')
+        queryset = self.request.user.session_set
+        if self.action == 'list':
+            queryset = queryset.filter(
+                expire_date__gt=now()
+            ).order_by('-updated_at')
+        return queryset
 
-    def get_queryset_context(self):
-        return {'request': self.request}
-
-
-class SessionDetail(generics.RetrieveDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = serializers.SessionsSerializer
-    name = 'session-detail'
-
-    def get_queryset(self):
-        return self.request.user.session_set
-
-    def get_queryset_context(self):
-        return {'request': self.request}
+    # def get_queryset_context(self):
+    #     return {'request': self.request}
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -120,28 +106,24 @@ class SessionDetail(generics.RetrieveDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class PasswordChangesList(generics.ListAPIView):
+class PasswordChangesViewSet(ListOnlyViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.PasswordChangesSerializer
-    name = 'password-changes-list'
 
     def get_queryset(self):
         return self.request.user.password_changes.order_by('changed_at')
 
 
-class EmailList(APIView):
+class EmailViewSet(mixins.CreateModelMixin,
+                   mixins.DestroyModelMixin,
+                   viewsets.ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated,)
-    name = 'email-list'
+    serializer_class = serializers.EmailSerializer
 
-    def get_serializer(self, *args, **kwargs):
-        return serializers.EmailSerializer(*args, **kwargs)
+    def get_queryset(self):
+        return self.request.user.emailaddress_set.all().order_by('email')
 
-    def get(self, request):
-        data = self.request.user.emailaddress_set.all().order_by('email')
-        serializer = self.get_serializer(data, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
+    def create(self, request):
         serializer = self.get_serializer(
             data=request.data, context={'request': request},
         )
@@ -160,67 +142,8 @@ class EmailList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class EmailDetail(APIView):
-    permission_classes = (IsAuthenticated,)
-    name = 'email-detail'
-
-    def get_serializer(self, *args, **kwargs):
-        return serializers.EmailSerializer(*args, **kwargs)
-
-    def get(self, request, pk):
-        try:
-            data = self.request.user.emailaddress_set.get(pk=pk)
-        except EmailAddress.DoesNotExist:
-            raise NotFound('Email address not found!')
-
-        serializer = self.get_serializer(data)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        try:
-            email = request.user.emailaddress_set.get(pk=pk)
-        except EmailAddress.DoesNotExist:
-            raise NotFound('Email address not found!')
-
-        query = EmailAddress.objects.filter(user=request.user, verified=True)
-        if not email.verified and query.exists():
-            get_adapter(request).add_message(
-                request, messages.ERROR,
-                'account/messages/unverified_primary_email.txt'
-            )
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Sending the old primary address to the signal
-        # adds a db query.
-        try:
-            from_email_address = EmailAddress.objects.get(
-                user=request.user, primary=True
-            )
-        except EmailAddress.DoesNotExist:  # pragma: no cover
-            from_email_address = None
-        email.set_as_primary()
-
-        get_adapter(request).add_message(
-            request._request, messages.SUCCESS,
-            'account/messages/primary_email_set.txt'
-        )
-        signals.email_changed.send(
-            sender=request.user.__class__, request=request._request,
-            user=request.user, from_email_address=from_email_address,
-            to_email_address=email
-        )
-        return Response({'email': email.email}, status=status.HTTP_200_OK)
-
-    def delete(self, request, pk):
-        if pk is None:  # pragma: no cover
-            raise ParseError('Please specify the email address')
-
-        try:
-            email_address = request.user.emailaddress_set.get(pk=pk)
-        except EmailAddress.DoesNotExist:
-            raise NotFound('Email address not found!')
-
+    def destroy(self, request, pk=None):
+        email_address = self.get_object()
         if email_address.primary:
             messages.error(
                 request,
@@ -231,27 +154,59 @@ class EmailDetail(APIView):
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
         email = email_address.email
-        email_address.delete()
+        self.perform_destroy(email_address)
         signals.email_removed.send(
             sender=request.user.__class__, request=request._request,
-            user=request.user, email_address=email_address
+            user=request.user, email_address=email_address,
         )
         messages.success(
             request, 'Email \'{}\' excluded successfully'.format(email)
         )
-        return Response({}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @action(methods=['post', 'get'], detail=False)
+    def primary(self, request):
+        if request.method == 'GET':
+            queryset = self.get_queryset().get(primary=True)
+            serializer = self.serializer_class(queryset)
+        else:
+            try:
+                email = self.get_queryset().get(
+                    pk=self.request.data.get('pk', None)
+                )
+            except EmailAddress.DoesNotExist:
+                raise NotFound('Email address not found!')
 
-class ResendEmailConfirmationView(APIView):
-    permission_classes = (IsAuthenticated,)
+            if not email.verified:
+                get_adapter(request).add_message(
+                    request, messages.ERROR,
+                    'account/messages/unverified_primary_email.txt'
+                )
+                return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
-    def post(self, request, pk):
-        try:
-            email = self.request.user.emailaddress_set.get(pk=pk)
-        except EmailAddress.DoesNotExist:
-            email = None
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            email.set_as_primary()
+            get_adapter(request).add_message(
+                request._request, messages.SUCCESS,
+                'account/messages/primary_email_set.txt'
+            )
 
+            # Sending the old primary address to the signal, adds a db query.
+            try:
+                from_email_address = self.get_queryset().filter(primary=True)
+            except EmailAddress.DoesNotExist:  # pragma: no cover
+                from_email_address = None
+
+            signals.email_changed.send(
+                sender=request.user.__class__, request=request._request,
+                user=request.user, from_email_address=from_email_address,
+                to_email_address=email
+            )
+            serializer = self.serializer_class(email)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=True)
+    def resend(self, request, pk=None):
+        email = self.get_object()
         get_adapter(request._request).add_message(
             request._request, messages.INFO,
             'account/messages/email_confirmation_sent.txt',

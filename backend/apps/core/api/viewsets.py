@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from rest_framework import viewsets, mixins
 from rest_auth.registration.views import RegisterView
 from rest_auth.views import PasswordResetView, UserDetailsView, LoginView
 
@@ -49,3 +50,7 @@ class CustomLoginView(LoginView):
     @method_decorator(watch_login)
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
+
+
+class ListOnlyViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    pass

@@ -10,7 +10,8 @@ from tests.factories import EmailAddressFactory
 USER = reverse('rest_user_details')
 EMAILS = reverse('email-list')
 EMAIL = part_reverse('email-detail')
-RESEND_EMAIL = part_reverse('resend_email_confirmation')
+EMAIL_PRIMARY = reverse('email-primary')
+RESEND_EMAIL = part_reverse('email-resend')
 
 
 def test_unauthorized_email_listing(api_client):
@@ -118,15 +119,15 @@ def test_email_exclusion(api_client, fake_users):
         assert len(response.content) == 4
 
         response = api_client.delete(EMAIL(e1.pk))
-        assert response.status_code == 200
+        assert response.status_code == 204
         assert user.emailaddress_set.count() == 3
 
         response = api_client.delete(EMAIL(e2.pk))
-        assert response.status_code == 200
+        assert response.status_code == 204
         assert user.emailaddress_set.count() == 2
 
         response = api_client.delete(EMAIL(e3.pk))
-        assert response.status_code == 200
+        assert response.status_code == 204
         assert user.emailaddress_set.count() == 1
 
 
@@ -180,6 +181,23 @@ def test_resend_inexistent_email_confirmation(api_client, fake_users,
         assert len(mailoutbox) == 0
 
 
+def test_get_primary_email(api_client, fake_users):
+    user = fake_users()
+    primary = user.emailaddress_set.get(primary=True)
+    with api_client.auth(user=user):
+        response = api_client.get(EMAIL_PRIMARY)
+        assert response.status_code == 200
+        assert 'email' in response.content
+        assert 'pk' in response.content
+        assert 'verified' in response.content
+        assert 'primary' in response.content
+
+        assert response.content['pk'] == primary.pk
+        assert response.content['email'] == primary.email
+        assert response.content['primary'] is True
+        assert response.content['verified'] is False
+
+
 def test_change_primary_email(api_client, fake_users):
     user = fake_users()
     primary_email = user.emailaddress_set.get(primary=True)
@@ -191,7 +209,7 @@ def test_change_primary_email(api_client, fake_users):
     assert user.emailaddress_set.filter(verified=True).count() == 2
 
     with api_client.auth(user=user):
-        response = api_client.put(EMAIL(e1.pk), {})
+        response = api_client.post(EMAIL_PRIMARY, {'pk': e1.pk})
         assert response.status_code == 200
 
         e1.refresh_from_db()
@@ -199,7 +217,7 @@ def test_change_primary_email(api_client, fake_users):
         assert primary_email.primary is False
         assert e1.primary is True
 
-        response = api_client.put(EMAIL(primary_email.pk), {})
+        response = api_client.post(EMAIL_PRIMARY, {'pk': primary_email.pk})
         assert response.status_code == 200
 
         e1.refresh_from_db()
@@ -216,7 +234,7 @@ def test_change_primary_email_unverified(api_client, fake_users):
     e1 = EmailAddressFactory.create(user=user, email="new_email_1@teste.com")
 
     with api_client.auth(user=user):
-        response = api_client.put(EMAIL(e1.pk), {})
+        response = api_client.post(EMAIL_PRIMARY, {'pk': e1.pk})
         assert response.status_code == 400
 
         e1.refresh_from_db()
@@ -224,7 +242,7 @@ def test_change_primary_email_unverified(api_client, fake_users):
         assert primary_email.primary is True
         assert e1.primary is False
 
-        response = api_client.put(EMAIL(primary_email.pk), {})
+        response = api_client.post(EMAIL_PRIMARY, {'pk': primary_email.pk})
         assert response.status_code == 200
 
         e1.refresh_from_db()
@@ -239,5 +257,5 @@ def test_change_primary_inexistent_email(api_client, fake_users):
     inexistent_pk = primary_email.pk + 1
 
     with api_client.auth(user=user):
-        response = api_client.put(EMAIL(inexistent_pk), {})
+        response = api_client.post(EMAIL_PRIMARY, {'pk': inexistent_pk})
         assert response.status_code == 404
