@@ -1,6 +1,8 @@
 export const AUTH = {
   SESSIONS: 'AUTH_SESSIONS',
-  REMOVE_SESSION: 'AUTH_REMOVE_SESSION'
+  REMOVE_SESSION: 'AUTH_REMOVE_SESSION',
+  FETCH_DATA: 'AUTH_FETCH_DATA',
+  LOGOUT: 'AUTH_LOGOUT'
 }
 
 export const UI = {
@@ -15,6 +17,4 @@ export const UI = {
 }
 
 export const USER = {
-  FETCH_DATA: 'USER_FETCH_DATA',
-  LOGOUT: 'USER_LOGOUT'
 }
