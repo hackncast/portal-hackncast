@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+from urllib.parse import urlencode
 from collections import namedtuple
 from contextlib import contextmanager
 from functools import partial
@@ -18,9 +19,31 @@ Response = namedtuple('Response', ['status_code', 'content', 'url'])
 
 def part_reverse(name):
     def innert_part_reverse(name, *args, **kwargs):
-        return reverse(name, args=args, **kwargs)
+        query = None
+        if 'query' in kwargs:
+            query = kwargs.pop('query')
+            query = urlencode(query)
+        url = reverse(name, args=args, **kwargs)
+
+        if query:
+            url = '{}?{}'.format(url, query)
+        return url
 
     return partial(innert_part_reverse, name)
+
+
+def find_object(array, key, value):
+    found = None
+    for obj in array:
+        if obj.get(key, None) == value:
+            return obj
+    return found
+
+
+def date_format(date):
+    if not date:
+        return date
+    return date.isoformat().split('+')[0] + 'Z'
 
 
 class ApiClient:
