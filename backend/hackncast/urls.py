@@ -22,6 +22,7 @@ urlpatterns = [
     # My apps
     url(r'^api/', include('apps.core.api.urls')),
     url(r'^api/user/', include('apps.user.api.urls')),
+    url(r'^api/manage/', include('apps.manage.api.urls')),
 
     # Fixes
     # This url is used by django-allauth and empty TemplateView is defined just
