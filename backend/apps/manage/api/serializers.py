@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 
 from rest_framework import serializers
 
@@ -47,8 +47,26 @@ class GroupUsersSerializer(serializers.ModelSerializer):
 
 class GroupSerializer(serializers.ModelSerializer):
     users = GroupUsersSerializer(source='user_set', many=True, read_only=True)
+    permissions = serializers.SerializerMethodField()
+    all_permissions = tuple(Permission.objects
+                            .prefetch_related('content_type')
+                            .only('id', 'name', 'content_type__app_label'))
+
+    def get_permissions(self, session):
+        permissions = {}
+        for permission in self.all_permissions:
+            label = permission.content_type.app_label
+            ps = permissions.get(label, [])
+            ps.append({
+                'pk': permission.pk,
+                'name': permission.name,
+                'enabled': False,
+            })
+            permissions[label] = ps
+
+        return permissions
 
     class Meta:
         model = Group
-        fields = ('pk', 'name', 'users')
-        read_only_fields = ('pk', 'users')
+        fields = ('pk', 'name', 'users', 'permissions')
+        read_only_fields = ('pk', 'users', 'permissions')

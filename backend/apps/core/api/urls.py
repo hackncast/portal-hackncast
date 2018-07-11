@@ -8,7 +8,6 @@ from rest_auth import views as auth_views
 from rest_auth.registration.views import VerifyEmailView
 
 urlpatterns = [
-    path('', views.RootView.as_view(), name=views.RootView.name),
     # Customized Views
     path('auth/registration/',
          views.CaptchaRegisterView.as_view(), name='rest_register'),

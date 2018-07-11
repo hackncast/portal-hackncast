@@ -47,7 +47,10 @@ class ManageGroupViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
     serializer_class = serializers.GroupSerializer
 
     def get_queryset(self):
-        return Group.objects.prefetch_related('user_set').order_by('name')
+        return Group.objects\
+            .prefetch_related('user_set', 'permissions')\
+            .defer('permissions__name', 'permissions__codename')\
+            .order_by('name')
 
     @action(methods=['delete', 'put', 'patch'], detail=True)
     def users(self, request, pk):

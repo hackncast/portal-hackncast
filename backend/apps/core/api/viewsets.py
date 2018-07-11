@@ -4,7 +4,6 @@
 from django.utils.decorators import method_decorator
 
 from rest_framework import status
-from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from rest_framework import viewsets, mixins
@@ -12,16 +11,9 @@ from rest_auth.registration.views import RegisterView
 from rest_auth.views import PasswordResetView, UserDetailsView, LoginView
 
 from . import serializers
-from .. import decorators, utils
+from .. import decorators
 
 watch_login = decorators.watch_login()
-
-
-class RootView(APIView):
-    name = 'root'
-
-    def get(self, request):
-        return Response(utils.getUrls(), status=status.HTTP_200_OK)
 
 
 class CaptchaRegisterView(RegisterView):
