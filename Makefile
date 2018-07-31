@@ -1,17 +1,23 @@
-ifdef PORT
-	BE_PORT ?= $(PORT)
-	FE_PORT ?= $(PORT)
-else
-	BE_PORT ?= 8000
-	FE_PORT ?= 8080
-endif
-HOST ?= localhost
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
 
-export_api:
-	cd backend; pipenv run python manage.py export_api --file ../frontend/src/apiUrls.js
+run:
+	pipenv run ./manage.py runserver
 
-run-backend:
-	cd backend; pipenv run python manage.py runserver $(HOST):$(BE_PORT)
+clean_silk:
+	@echo -e $(BLUE)Cleaning SILK log tables...$(NC)
+	pipenv run ./manage.py silk_clear_request_log
 
-run-frontend:
-	cd frontend; HOST=$(HOST) PORT=$(FE_PORT) npm run dev
+lint:
+	@echo -e $(BLUE)Linting project...$(NC)
+	@-flake8 || true
+
+test:
+	@echo -e $(BLUE)Testing project...$(NC)
+	@pipenv run pytest
+
+coverage:
+	@echo -e $(BLUE)Testing project coverage...$(NC)
+	@pipenv run pytest --cov . -n 2
