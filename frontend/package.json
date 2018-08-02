@@ -13,6 +13,7 @@
     "vue": "^2.5.16",
     "vue-axios": "^2.1.2",
     "vue-head": "^2.0.12",
+    "vue-layout-broker": "0.0.3",
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1",
     "vue-top-progress": "^0.7.0",

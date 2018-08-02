@@ -8,6 +8,16 @@
   </div>
 </template>
 
+<script>
+import LayoutBroker from 'vue-layout-broker'
+
+export default {
+  name: 'App',
+
+  components: { LayoutBroker }
+}
+</script>
+
 <style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
