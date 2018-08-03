@@ -28,5 +28,7 @@ requireModule.keys().forEach(fileName => {
 Vue.use(Router)
 
 export default new Router({
+  base: process.env.BASE_URL ? process.env.BASE_URL : undefined,
+  mode: 'history',
   routes: Array.concat(routes)
 })
