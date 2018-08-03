@@ -11,7 +11,11 @@
 <script>
 export default {
   name: 'LoginPage',
-  route: 'auth-login',
-  layout: 'Public'
+
+  route: {
+    name: 'auth-login',
+    layout: 'Public',
+    middlewares: ['PublicOnly']
+  }
 }
 </script>

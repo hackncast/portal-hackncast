@@ -11,7 +11,11 @@
 <script>
 export default {
   name: 'Registration',
-  route: 'auth-registration',
-  layout: 'Public'
+
+  route: {
+    name: 'auth-registration',
+    layout: 'Public',
+    middlewares: ['PublicOnly']
+  }
 }
 </script>
