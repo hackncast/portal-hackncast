@@ -12,3 +12,14 @@ Vue.use(VueMoment)
 Vue.use(Vuetify, {})
 Vue.use(TopProgress)
 Vue.use(VueAxios, axios)
+
+const requireModule = require.context('.', true, /\.js$/)
+
+requireModule.keys().forEach(fileName => {
+  if (fileName === './index.js') return
+  const plugin = requireModule(fileName).default
+
+  if (plugin) {
+    Vue.use(plugin)
+  }
+})
