@@ -1,5 +1,3 @@
-import Vue from 'vue'
-import Router from 'vue-router'
 import middlewares from '@/middlewares'
 
 const routes = []
@@ -38,10 +36,4 @@ requireModule.keys().forEach(fileName => {
   })
 })
 
-Vue.use(Router)
-
-export default new Router({
-  mode: 'history',
-  routes: routes,
-  base: process.env.BASE_URL ? process.env.BASE_URL : undefined
-})
+export default routes
