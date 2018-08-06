@@ -16,4 +16,12 @@ export const mutations = {
 }
 
 export const actions = {
+  fetchUser ({commit, state}) {
+    return Vue.api.auth.fetchUser()
+      .then(response => {
+        commit('SET_USER', response.data)
+        return state.user
+      })
+      .catch(err => { throw err })
+  }
 }
