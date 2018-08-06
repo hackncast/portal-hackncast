@@ -1,12 +1,14 @@
 <template>
   <v-container fluid>
-    <p>Home</p>
-    <p>
-      <router-link :to="{name: 'auth-login'}">Login</router-link>
-    </p>
-    <p>
-      <router-link :to="{name: 'auth-registration'}">Registration</router-link>
-    </p>
+    <v-slide-y-transition mode="out-in">
+      <v-layout column align-center>
+        <img src="@/assets/glider-transluscent.svg"
+             style="width: 150px"
+             class="mb-5"
+             :class="[ $store.state.ui.darkTheme ? 'in-dark' : 'in-light' ]"
+             />
+      </v-layout>
+    </v-slide-y-transition>
   </v-container>
 </template>
 
@@ -16,7 +18,7 @@ export default {
 
   route: {
     name: 'home',
-    layout: 'Public',
+    layout: 'Dashboard',
     middlewares: ['PrivateOnly']
   }
 }
