@@ -7,6 +7,9 @@ import VueMoment from 'vue-moment'
 import VeeValidate from 'vee-validate'
 import TopProgress from 'vue-top-progress'
 
+// Pending
+// import Transitions from 'vue2-transitions'
+
 Vue.use(VueHead)
 Vue.use(Vuetify)
 Vue.use(VueMoment)

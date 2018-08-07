@@ -41,6 +41,17 @@ export default {
         setTimeout(() => { this.$refs.progress.done() }, 500)
       }
     }
+  },
+
+  created () {
+    this.$router.beforeEach((to, from, next) => {
+      this.$store.dispatch('ui/startProgressBar')
+      setTimeout(() => { next() }, 250)
+    })
+
+    this.$router.afterEach((to, from) => {
+      this.$store.dispatch('ui/endProgressBar')
+    })
   }
 }
 </script>
