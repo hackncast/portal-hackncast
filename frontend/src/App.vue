@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import layouts from '@/layouts'
 import Toast from '@/plugins/toast/Toast'
 import LayoutBroker from 'vue-layout-broker'
@@ -21,6 +22,24 @@ export default {
   data () {
     return {
       layouts
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      progressStatus: 'ui/progressBarStatus'
+    })
+  },
+
+  watch: {
+    progressStatus (to, from) {
+      if (to === 'fail') {
+        setTimeout(() => { this.$refs.progress.fail() }, 500)
+      } else if (to === 'start' && from !== 'start') {
+        this.$refs.progress.start()
+      } else if (to === 'stop' && from !== 'stop') {
+        setTimeout(() => { this.$refs.progress.done() }, 500)
+      }
     }
   }
 }
