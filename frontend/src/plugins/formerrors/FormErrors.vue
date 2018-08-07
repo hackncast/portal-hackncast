@@ -1,12 +1,12 @@
 <template>
-  <v-bottom-sheet inset persistent :value="nonFieldErrors.length > 0">
+  <v-bottom-sheet inset persistent :value="formErrors.length > 0">
     <v-card dark>
       <v-card-title>
         <div>
-          <v-btn ref="errorBottomSheetCloseButton" small absolute dark fab top right color="red darken-2" @click="closeErrorSheet"><v-icon>close</v-icon></v-btn>
+          <v-btn ref="errorCloseButton" small absolute dark fab top right color="red darken-2" @click="closeErrors"><v-icon>close</v-icon></v-btn>
           <v-subheader style="line-height: 1.5em; padding: 0px;">Os seguintes erros ocorreram durante o envio do formulário:</v-subheader>
           <ul style="padding-left: 2em; color: hsla(0%, 0%, 100%, .7)">
-            <li v-for="erro in nonFieldErrors">{{ erro }}</li>
+            <li :key="index" v-for="(error, index) in formErrors">{{ error }}</li>
           </ul>
         </div>
       </v-card-title>
@@ -17,14 +17,12 @@
 <script>
 export default {
   computed: {
-    nonFieldErrors () {
-      return this.$store.state.nonFieldErrors
-    }
+    formErrors () { return this.$store.state.formerrors.all }
   },
 
   methods: {
-    closeErrorSheet () {
-      this.$store.dispatch('toastErrors')
+    closeErrors () {
+      this.$store.dispatch('formerrors/clear')
     },
 
     refocusForm () {
@@ -41,9 +39,9 @@ export default {
   },
 
   watch: {
-    nonFieldErrors (val) {
-      if (this.nonFieldErrors.length > 0) {
-        this.$nextTick(() => this.$refs.errorBottomSheetCloseButton.$el.focus())
+    formErrors (val) {
+      if (this.formErrors.length > 0) {
+        this.$nextTick(() => this.$refs.errorCloseButton.$el.focus())
       } else {
         if (document.forms.length > 0) { this.$nextTick(() => this.refocusForm()) }
       }

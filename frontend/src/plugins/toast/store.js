@@ -4,51 +4,35 @@ export default {
   namespaced: true,
 
   state: {
-    toasts: [],
-    toast: {},
-    toastVisible: false,
-    nonFieldErrors: []
+    all: [],
+    current: {},
+    visible: false
   },
 
   getters: {
-    currentToast: (state) => { return state.toast }
+    currentToast: (state) => { return state.current }
   },
 
   mutations: {
-    SET_TOAST_VISIBILITY (state, value) {
-      state.toastVisible = value
+    SET_VISIBILITY (state, value) {
+      state.visible = value
     },
 
-    PROCESS_TOAST_QUEUE (state) {
-      if (state.toasts.length <= 0) return
-      if (state.toastVisible) return
+    PROCESS_QUEUE (state) {
+      if (state.all.length <= 0) return
+      if (state.visible) return
 
-      let toast = state.toasts.splice(0, 1)[0]
-      Vue.set(state, 'toast', toast)
-      state.toastVisible = true
+      let toast = state.all.splice(0, 1)[0]
+      Vue.set(state, 'current', toast)
+      state.visible = true
     },
 
     PUSH_TOAST (state, toast) {
-      state.toasts.push(toast)
-    },
-
-    SET_NONFIELD_ERRORS (state, errors) {
-      errors.forEach(err => state.nonFieldErrors.push(err))
-    },
-
-    CLEAR_NONFIELD_ERRORS (state) {
-      state.nonFieldErrors.splice(0, state.nonFieldErrors.length)
+      state.all.push(toast)
     }
   },
 
   actions: {
-    toastErrors ({commit}, errors) {
-      commit('CLEAR_NONFIELD_ERRORS')
-      if (errors) {
-        commit('SET_NONFIELD_ERRORS', errors)
-      }
-    },
-
     toast ({commit}, toast) {
       if (!toast.closeColor) {
         if (toast.color === 'error') {
@@ -66,17 +50,15 @@ export default {
 
       return new Promise((resolve, reject) => {
         commit('PUSH_TOAST', toast)
-        commit('PROCESS_TOAST_QUEUE')
+        commit('PROCESS_QUEUE')
         resolve()
       })
     },
 
-    showToast ({commit}, val) {
+    show ({commit}, val) {
       return new Promise((resolve, reject) => {
-        commit('SET_TOAST_VISIBILITY', val)
-        setTimeout(() => {
-          commit('PROCESS_TOAST_QUEUE')
-        }, 700)
+        commit('SET_VISIBILITY', val)
+        setTimeout(() => { commit('PROCESS_QUEUE') }, 700)
         resolve()
       })
     }

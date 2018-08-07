@@ -17,8 +17,8 @@ export default {
     }),
 
     toastVisible: {
-      get () { return this.$store.state.toast.toastVisible },
-      set (val) { this.$store.dispatch('toast/showToast', val) }
+      get () { return this.$store.state.toast.visible },
+      set (val) { this.$store.dispatch('toast/show', val) }
     }
   }
 }

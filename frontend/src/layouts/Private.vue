@@ -10,8 +10,6 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'PrivateLayout',
 
-  components: { },
-
   computed: {
     ...mapGetters({
     })
