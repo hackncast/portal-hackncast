@@ -25,6 +25,9 @@ function endProgressBar (response) {
 
 function failProgressBar (error) {
   store.dispatch('ui/failProgressBar')
+  if (error.response.data && error.response.data.non_field_errors && error.response.data.non_field_errors.length > 0) {
+    store.dispatch('formerrors/show', error.response.data.non_field_errors)
+  }
   return Promise.reject(error)
 }
 

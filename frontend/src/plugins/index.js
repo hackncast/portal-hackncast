@@ -10,13 +10,17 @@ import TopProgress from 'vue-top-progress'
 // Pending
 // import Transitions from 'vue2-transitions'
 
+const instance = axios.create({
+  baseURL: '/api/'
+})
+
 Vue.use(VueHead)
 Vue.use(Vuetify)
 Vue.use(VueMoment)
 Vue.use(Vuetify, {})
 Vue.use(TopProgress)
 Vue.use(VeeValidate)
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, instance)
 
 const requireModule = require.context('.', true, /\.js$/)
 
