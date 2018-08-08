@@ -23,5 +23,13 @@ export const actions = {
         return state.user
       })
       .catch(err => { throw err })
+  },
+
+  login ({commit, state}, data) {
+    return Vue.api.auth.login(data)
+      .then(response => {
+        return response
+      })
+      .catch(err => { throw err })
   }
 }

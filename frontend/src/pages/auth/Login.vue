@@ -12,7 +12,7 @@
           </v-avatar>
         </transition>
       </v-flex>
-        <v-form @submit.prevent="submit" v-model="valid" ref="form" style="min-height: 250px; position: relative">
+        <v-form @submit.prevent="beforeSubmit" v-model="valid" ref="form" style="min-height: 250px; position: relative">
           <transition-group name="customSlide" mode="out-in">
             <section v-show="step === 1" key="email" class="transitioned" style="position: absolute; width: 100%">
               <v-layout row justify-center>
@@ -88,9 +88,9 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'login'
-    ]),
+    ...mapActions({
+      apiSubmit: 'auth/login'
+    }),
 
     back () {
       this.step = 1
@@ -104,42 +104,29 @@ export default {
       }
     },
 
-    submit () {
+    serializeForm () { return { email: this.email, password: this.password } },
+
+    onSuccess (data) {
+      let next = {name: 'home'}
+      if (this.$route.query.next) {
+        next = this.$route.query.next
+      }
+      this.$router.push(next)
+      setTimeout(() => { this.$toast({text: 'Seja bem vindo!'}) }, 500)
+    },
+
+    beforeSubmit () {
       if (this.step === 1) {
         if (this.email && !this.errors.has('email')) {
           this.step = 2
           this.$nextTick(() => this.$refs.password.focus())
         }
       } else {
-        if (this.$validator.validateAll()) {
-          this.working = true
-          const data = {
-            email: this.email,
-            password: this.password
-          }
-          console.log(data)
-
-          // this.login(data)
-          //   .then(user => {
-          //     if (this.$route.query.next) {
-          //       this.$router.push(this.$route.query.next)
-          //     } else {
-          //       this.$router.push({name: 'home'})
-          //     }
-          //   })
-          //   .catch(err => {
-          //     this.processErrors(err)
-          //   })
-          //   .finally(() => { this.working = false })
-        } else {
-          this.nonFieldErrors.push(this.defaultErrorMessage)
-        }
+        this.submit()
       }
     },
 
-    notYet () {
-      this.$toast({text: 'Sorry, not working yet...'})
-    }
+    notYet () { this.$toast({text: 'Sorry, not working yet...'}) }
   },
 
   watch: {

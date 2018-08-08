@@ -18,6 +18,7 @@
     "vue-head": "^2.0.12",
     "vue-layout-broker": "0.0.3",
     "vue-moment": "^4.0.0",
+    "vue-recaptcha": "^1.1.1",
     "vue-router": "^3.0.1",
     "vue-top-progress": "^0.7.0",
     "vuetify": "^1.1.9",
