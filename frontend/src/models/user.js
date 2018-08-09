@@ -4,7 +4,7 @@ export default class User extends BaseModel {
   constructor (data = {}) {
     data = Object.assign({
       pk: null,
-      email: {},
+      email: null,
       firstName: null,
       lastName: null,
       isActive: null,

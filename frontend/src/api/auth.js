@@ -11,6 +11,10 @@ export default (axios) => ({
     return axios.post('/auth/login/', data)
   },
 
+  logout (data) {
+    return axios.post('/auth/logout/')
+  },
+
   resetPassword (data) {
     return axios.post('/auth/password/reset/', data)
   }

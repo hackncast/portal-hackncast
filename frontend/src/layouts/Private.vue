@@ -1,18 +1,11 @@
 <template>
-  <v-app :dark="$store.state.ui.darkTheme" id="app">
+  <div>
     <slot />
-  </v-app>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-  name: 'PrivateLayout',
-
-  computed: {
-    ...mapGetters({
-    })
-  }
+  name: 'PrivateLayout'
 }
 </script>

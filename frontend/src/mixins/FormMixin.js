@@ -12,7 +12,6 @@ export const FormMixin = {
     },
 
     submit (args) {
-      console.log('before', this)
       this.$validator.validateAll()
         .then(success => {
           if (!success) return

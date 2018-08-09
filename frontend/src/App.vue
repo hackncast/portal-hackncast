@@ -1,5 +1,5 @@
 <template>
-  <v-app dark id="app">
+  <v-app :dark="$store.state.ui.darkTheme" id="app">
     <vue-topprogress color="#90CAF9" ref="progress"></vue-topprogress>
     <layout-broker :layouts="layouts" :current="$route.meta.layout"/>
     <toast />

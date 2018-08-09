@@ -31,5 +31,11 @@ export const actions = {
         return response
       })
       .catch(err => { throw err })
+  },
+
+  logout ({commit, state}) {
+    Vue.api.auth.logout()
+      .then(() => commit('SET_USER', {}))
+      .catch(err => { throw err })
   }
 }
