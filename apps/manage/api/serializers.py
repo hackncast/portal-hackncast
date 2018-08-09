@@ -48,13 +48,23 @@ class GroupUsersSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     users = GroupUsersSerializer(source='user_set', many=True, read_only=True)
     permissions = serializers.SerializerMethodField()
-    all_permissions = tuple(Permission.objects
-                            .prefetch_related('content_type')
-                            .only('id', 'name', 'content_type__app_label'))
+    __all_permissions = None
+
+    @classmethod
+    def all_permissions(kls):
+        if kls.__all_permissions:
+            return kls.__all_permissions
+
+        kls.__all_permissions = tuple(
+            Permission.objects
+            .prefetch_related('content_type')
+            .only('id', 'name', 'content_type__app_label')
+        )
+        return kls.__all_permissions
 
     def get_permissions(self, session):
         permissions = {}
-        for permission in self.all_permissions:
+        for permission in self.all_permissions():
             label = permission.content_type.app_label
             ps = permissions.get(label, [])
             ps.append({
