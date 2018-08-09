@@ -50,7 +50,7 @@
 
         <v-layout row justify-space-between>
           <v-btn flat small class="ml-0" :to="{ name: 'auth-registration' }">Register</v-btn>
-          <v-btn flat small class="mr-0">Need help?</v-btn>
+          <v-btn flat small class="mr-0" :to="{ name: 'auth-reset-password' }" >Need help?</v-btn>
         </v-layout>
     </v-flex>
   </v-layout>

@@ -22,11 +22,12 @@ export const FormMixin = {
 
           this.apiSubmit(data)
             .then(data => {
-              return this.onSuccess(data)
+              if (this.onSuccess) return this.onSuccess(data)
+              return data
             })
             .catch(err => {
               this.djProcessErrors(err)
-              this.onError(err)
+              if (this.onError) this.onError(err)
               return err
             })
             .finally(() => { this.loading = false })

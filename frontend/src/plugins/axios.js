@@ -14,7 +14,9 @@ function injectCSRFToken (config) {
 }
 
 function startProgressBar (config) {
-  store.dispatch('ui/startProgressBar')
+  if (config.url !== '/auth/user/') {
+    store.dispatch('ui/startProgressBar')
+  }
   return config
 }
 
