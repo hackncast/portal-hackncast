@@ -33,7 +33,7 @@
                              size="invisible"
                              :sitekey="sitekey"
                              tabindex="-1">
-                <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="working" tabindex="2">Reset Password!</v-btn>
+                <v-btn light block color="blue" class="white--text" :disabled="errors.any() || isNotValidated()" type="submit" :loading="loading" tabindex="2">Reset Password!</v-btn>
               </vue-recaptcha>
             </v-form>
           </v-card-text>
@@ -74,7 +74,6 @@ export default {
     return {
       sitekey: process.env.VUE_APP_CAPTCHA_PUBLIC_KEY,
       captchaReady: false,
-      working: false,
       valid: false,
       email: '',
       sent: false

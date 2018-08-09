@@ -62,7 +62,9 @@ export const FormMixin = {
               })
             })
           } else {
-            this.$store.dispatch('formerrors/show', errors.map(error => name + ': ' + error))
+            if (!this.supressNonFieldErrors) {
+              this.$store.dispatch('formerrors/show', errors.map(error => name + ': ' + error))
+            }
           }
         } else {
           this.djProcessFieldErrors(errors)

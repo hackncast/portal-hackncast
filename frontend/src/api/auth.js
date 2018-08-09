@@ -17,5 +17,9 @@ export default (axios) => ({
 
   resetPassword (data) {
     return axios.post('/auth/password/reset/', data)
+  },
+
+  resetPasswordToken (data) {
+    return axios.post('/auth/password/reset/confirm/', data)
   }
 })
