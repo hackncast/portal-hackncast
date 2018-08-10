@@ -1,5 +1,5 @@
 <template>
-  <private-layout>
+  <div>
     <inside-nav-bar />
     <v-content>
       <v-container fill-height fluid>
@@ -8,15 +8,14 @@
         </transition>
       </v-container>
     </v-content>
-  </private-layout>
+  </div>
 </template>
 
 <script>
-import PrivateLayout from '@/layouts/Private'
 // import SideBar from '@/components/SideBar'
 import InsideNavBar from '@/components/InsideNavBar'
 
 export default {
-  components: { PrivateLayout, InsideNavBar }
+  components: { InsideNavBar }
 }
 </script>

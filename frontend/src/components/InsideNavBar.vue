@@ -72,12 +72,9 @@ export default {
 
   computed: {
     ...mapGetters({
-      currentUser: 'auth/currentUser'
+      currentUser: 'auth/currentUser',
+      color: 'ui/navbarColor'
     }),
-
-    color () {
-      return this.$store.state.ui.navbarColor
-    },
 
     darkTheme: {
       get () { return this.$store.state.ui.darkTheme },
@@ -99,8 +96,10 @@ export default {
       setDarkTheme: 'ui/setDarkTheme'
     }),
 
+    // TODO: Add the drawer back
     showDrawer () { this.$store.state.ui.sidebarVisible = true },
 
+    // TODO: Add the Ui Settings back
     showUiSettings () {
       this.menu = false
       this.$store.state.ui.uiSettingsVisible = true
