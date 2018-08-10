@@ -1,3 +1,4 @@
+import md5 from 'md5/md5'
 import BaseModel from '@/models/base'
 
 export default class User extends BaseModel {
@@ -28,5 +29,9 @@ export default class User extends BaseModel {
   get displayName () {
     if (this.firstName) return this.firstName
     return this.username
+  }
+
+  get avatar () {
+    return `https://www.gravatar.com/avatar/${md5(this.email || '')}?s=100&d=retro`
   }
 }
