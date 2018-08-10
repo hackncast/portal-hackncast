@@ -1,7 +1,11 @@
 <template>
   <v-app :dark="$store.state.ui.darkTheme" id="app">
     <vue-topprogress color="#90CAF9" ref="progress"></vue-topprogress>
-    <layout-broker :layouts="layouts" :current="$route.meta.layout"/>
+
+    <transition :name="transitionName" mode="out-in">
+      <layout-broker :layouts="layouts" :current="$route.meta.layout"/>
+    </transition>
+
     <toast />
     <form-errors />
   </v-app>
@@ -29,6 +33,7 @@ export default {
 
   data () {
     return {
+      transitionName: '',
       layouts
     }
   },
@@ -41,6 +46,22 @@ export default {
   },
 
   watch: {
+    chromeColor (to, from) { this.$emit('updateHead') },
+
+    '$route' (to, from) {
+      let fromAuth = false
+      let toAuth = false
+
+      if (from.meta.middlewares) { fromAuth = from.meta.middlewares.some(name => name === 'PrivateOnly') }
+      if (to.meta.middlewares) { toAuth = to.meta.middlewares.some(name => name === 'PrivateOnly') }
+
+      if (fromAuth !== toAuth) {
+        this.transitionName = 'slide-fade'
+      } else {
+        this.transitionName = ''
+      }
+    },
+
     progressStatus (to, from) {
       if (to === 'fail') {
         setTimeout(() => { this.$refs.progress.fail() }, 500)

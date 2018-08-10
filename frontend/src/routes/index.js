@@ -23,7 +23,10 @@ requireModule.keys().forEach(fileName => {
       path: r.path,
       name: r.component.route.name,
       component: r.component,
-      meta: { layout: r.component.route.layout ? r.component.route.layout : '' },
+      meta: {
+        layout: r.component.route.layout ? r.component.route.layout : '',
+        middlewares: r.component.route.middlewares
+      },
       beforeEnter: (to, from, next) => {
         if (!r.component.route.middlewares) {
           return next()
