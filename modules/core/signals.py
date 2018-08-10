@@ -11,5 +11,5 @@ def password_changed(sender, instance, *args, **kwargs):
             old_password = None
 
         if new_password != old_password:
-            from apps.user.models import PasswordChanges
+            from modules.user.models import PasswordChanges
             PasswordChanges.objects.create(user=instance)

@@ -5,7 +5,7 @@ from . import signals
 
 
 class CoreConfig(AppConfig):
-    name = 'apps.core'
+    name = 'modules.core'
 
     def ready(self):
         from django.contrib.auth.models import User

@@ -5,7 +5,7 @@ from django.urls import path
 from rest_framework import routers
 
 from . import viewsets as views
-from apps.core.api.router import routerFactory
+from modules.core.api.router import routerFactory
 
 router = routerFactory(
     (r'access', views.AccessAttemptViewSet, "access"),

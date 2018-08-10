@@ -81,7 +81,7 @@ def getUrls():  # pragma: no cover
             continue
 
         app = app_resolver.urlconf_name.__name__
-        if app.startswith('apps'):
+        if app.startswith('modules'):
             app_name = app.split('.')[1]
         else:
             app_name = app.split('.')[0]

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from . import viewsets as views
-from apps.core.api.router import routerFactory
+from modules.core.api.router import routerFactory
 
 router = routerFactory(
     (r'user', views.ManageUserViewSet, "manage-user"),

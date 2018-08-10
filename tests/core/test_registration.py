@@ -23,7 +23,7 @@ def test_successfully_registration_with_email(api_client, mailoutbox):
         'password2': 'some_password',
         'recaptcha': 'PASSED',
     }
-    with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+    with mock.patch('modules.core.password_validation.query_hibp') as mocked:
         mocked.return_value = (False, None)
         response = api_client.post(REGISTRATION, data)
     assert response.status_code == 201
@@ -75,7 +75,7 @@ def test_pwned_password_registration(api_client, mailoutbox):
         'password2': 'password',
         'recaptcha': 'PASSED',
     }
-    with mock.patch('apps.core.password_validation.query_hibp') as mocked:
+    with mock.patch('modules.core.password_validation.query_hibp') as mocked:
         mocked.return_value = (True, 2)
         response = api_client.post(REGISTRATION, data)
 

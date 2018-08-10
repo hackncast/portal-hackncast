@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 
-from apps.core.api.viewsets import ActionRouterMixin
-from apps.core.api.pagination import DefaultPagination
+from modules.core.api.viewsets import ActionRouterMixin
+from modules.core.api.pagination import DefaultPagination
 from . import serializers
 
 UserModel = get_user_model()

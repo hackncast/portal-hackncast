@@ -3,7 +3,7 @@ import os
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 3
-APPS_DIR = ROOT_DIR.path('apps')
+MODULES_DIR = ROOT_DIR.path('modules')
 ROOT_NAME = "hackncast"
 
 env = environ.Env()
@@ -64,7 +64,7 @@ AUTH_PASSWORD_VALIDATORS = [
      'MinimumLengthValidator'},
     {'NAME': 'django.contrib.auth.password_validation.'
      'NumericPasswordValidator'},
-    {'NAME': 'apps.core.password_validation.HaveIBeenPwned'},
+    {'NAME': 'modules.core.password_validation.HaveIBeenPwned'},
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -118,9 +118,9 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    'apps.core',
-    'apps.user',
-    'apps.manage',
+    'modules.core',
+    'modules.user',
+    'modules.manage',
 ]
 
 # -------------------- Middlewares & Templates Settings --------------------- #
@@ -132,7 +132,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.core.middlewares.AjaxMessaging',
+    'modules.core.middlewares.AjaxMessaging',
 ]
 
 TEMPLATES = [
@@ -168,7 +168,7 @@ GR_CAPTCHA_SECRET_KEY = env('CAPTCHA_SECRET_KEY')
 # REST Auth
 OLD_PASSWORD_FIELD_ENABLED = True
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'apps.core.api.serializers.UserDetailsSerializer',
+    'USER_DETAILS_SERIALIZER': 'modules.core.api.serializers.UserDetailsSerializer',
 }
 
 # Webpack Loader

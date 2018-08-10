@@ -20,7 +20,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.core.api.viewsets import ListOnlyViewSet
+from modules.core.api.viewsets import ListOnlyViewSet
 
 from . import serializers
 

@@ -7,7 +7,7 @@ from django.urls import reverse
 REGISTRATION = reverse('rest_register')
 CHANGE_PASSWORD = reverse('rest_password_change')
 PASSWORD_CHANGES = reverse('password-changes-list')
-QUERY_HIBP = 'apps.core.password_validation.query_hibp'
+QUERY_HIBP = 'modules.core.password_validation.query_hibp'
 
 
 def __register_user(api_client):
