@@ -23,14 +23,6 @@ urlpatterns = [
     url(r'^api/', include('modules.core.api.urls')),
     url(r'^api/user/', include('modules.user.api.urls')),
     url(r'^api/manage/', include('modules.manage.api.urls')),
-
-    # Fixes
-    # This url is used by django-allauth and empty TemplateView is defined just
-    # to allow reverse() call inside app
-    url(
-        r'^api/auth/registration/account-email-verification-sent/$',
-        TemplateView.as_view(), name='account_email_verification_sent'
-    ),
     url(
         r'^admin/$',
         TemplateView.as_view(template_name="admin.html"), name='admin'

@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.urls import path
-from rest_framework import routers
-
 from . import viewsets as views
 from modules.core.api.router import routerFactory
 
@@ -15,13 +12,4 @@ router = routerFactory(
     (r'email', views.EmailViewSet, "email"),
 )
 
-urlpatterns = [
-    # Redirects
-    path('reset/<uidb64>/<token>/',
-         views.RedirectPasswordReset.as_view(), name='password_reset_confirm'),
-    path('account-confirm-email/<key>/',
-         views.RedirectEmailConfirmation.as_view(),
-         name='account_confirm_email'),
-]
-
-urlpatterns += router.urls
+urlpatterns = router.urls

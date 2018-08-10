@@ -12,7 +12,6 @@ from defender.models import AccessAttempt
 
 from django.contrib import messages
 from django.utils.timezone import now
-from django.views.generic.base import RedirectView
 
 from rest_framework import status, viewsets, mixins
 from rest_framework.decorators import action
@@ -214,21 +213,3 @@ class EmailViewSet(mixins.CreateModelMixin,
         )
         email.send_confirmation(request)
         return Response({}, status=status.HTTP_200_OK)
-
-
-class RedirectPasswordReset(RedirectView):
-    permanent = False
-    query_string = True
-
-    def get_redirect_url(self, uidb64, token, *args, **kwargs):
-        return '/admin/#/user/password/reset/token/{}/{}/'.format(
-            uidb64, token
-        )
-
-
-class RedirectEmailConfirmation(RedirectView):
-    permanent = False
-    query_string = True
-
-    def get_redirect_url(self, key, *args, **kwargs):
-        return '/admin/#/user/email/confirmation/{}/'.format(key)

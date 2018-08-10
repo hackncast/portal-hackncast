@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.urls import path
+from django.views.generic import TemplateView
 
 from . import viewsets as views
 from rest_auth import views as auth_views
@@ -28,4 +29,19 @@ urlpatterns = [
          views.CustomUserDetailsView.as_view(), name='rest_user_details'),
     path('auth/password/change/',
          auth_views.PasswordChangeView.as_view(), name='rest_password_change'),
+
+    # Redirects
+    path('auth/reset/<uidb64>/<token>/',
+         views.RedirectPasswordReset.as_view(), name='password_reset_confirm'),
+    path('auth/account-confirm-email/<key>/',
+         views.RedirectEmailConfirmation.as_view(),
+         name='account_confirm_email'),
+
+    # Fixes
+    # This url is used by django-allauth, an empty TemplateView is defined just
+    # to allow reverse() call inside app
+    path(
+        'auth/registration/account-email-verification-sent/',
+        TemplateView.as_view(), name='account_email_verification_sent'
+    ),
 ]

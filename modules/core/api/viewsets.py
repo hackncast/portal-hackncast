@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from django.views.generic.base import RedirectView
 from django.utils.decorators import method_decorator
 
 from rest_framework import status
@@ -92,3 +93,21 @@ class ActionRouterMixin:
         pks = self.__retrieve_pks(request)
         instance = self.get_object()
         return actionMap[method](instance, pks)
+
+
+class RedirectPasswordReset(RedirectView):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, uidb64, token, *args, **kwargs):
+        return '/admin/#/user/password/reset/token/{}/{}/'.format(
+            uidb64, token
+        )
+
+
+class RedirectEmailConfirmation(RedirectView):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, key, *args, **kwargs):
+        return '/admin/#/user/email/confirmation/{}/'.format(key)
