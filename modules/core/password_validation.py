@@ -1,16 +1,31 @@
+#!/usr/bin/env python3
+# encoding: utf-8
+
 import requests
+from hashlib import sha1
+
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
 
 def query_hibp(password):  # pragma: no cover
+    hash = sha1(password.encode()).hexdigest().upper()
+    (hpt1, hpt2) = (hash[:5], hash[5:])
+
     response = requests.get(
-        'https://api.pwnedpasswords.com/pwnedpassword/{}'.format(password)
+        'https://api.pwnedpasswords.com/range/{}'.format(hpt1)
     )
-    if response.status_code == 200:
-        count = response.json()
-        return (True, count)
-    return (False, None)
+    if response.status_code != 200:
+        return (False, None)
+
+    matches = [i.split(':')
+               for i in response.text.split()
+               if i.startswith(hpt2)]
+
+    if len(matches) == 0:
+        return (False, None)
+
+    return (True, int(matches[0][1]))
 
 
 class HaveIBeenPwned:
