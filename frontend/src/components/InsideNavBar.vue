@@ -12,7 +12,7 @@
       </v-toolbar-title>
     </div>
 
-    <v-breadcrumbs>
+    <v-breadcrumbs class="breadcrumbs--toolbar">
       <v-icon slot="divider">chevron_right</v-icon>
       <v-breadcrumbs-item>Just</v-breadcrumbs-item>
       <v-breadcrumbs-item>Another</v-breadcrumbs-item>
@@ -128,3 +128,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.breadcrumbs--toolbar {
+  font-weight: 500;
+  text-transform: uppercase;
+
+  .v-breadcrumbs__item {
+    color: rgba(255, 255, 255, .7)
+  }
+
+  li:last-child .v-breadcrumbs__item {
+    color: rgba(255, 255, 255, 1) !important
+  }
+}
+</style>
