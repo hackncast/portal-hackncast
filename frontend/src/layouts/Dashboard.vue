@@ -1,6 +1,7 @@
 <template>
   <div>
     <inside-nav-bar />
+    <side-bar />
     <v-content>
       <v-container fill-height fluid>
         <transition name="fade" mode="out-in">
@@ -14,8 +15,15 @@
 <script>
 // import SideBar from '@/components/SideBar'
 import InsideNavBar from '@/components/InsideNavBar'
+import SideBar from '@/components/Sidebar'
 
 export default {
-  components: { InsideNavBar }
+  components: { InsideNavBar, SideBar }
 }
 </script>
+
+<style>
+.v-navigation-drawer__border {
+	display: none;
+}
+</style>
