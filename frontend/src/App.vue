@@ -19,6 +19,14 @@ export default {
 
   components: { LayoutBroker, Toast, FormErrors },
 
+  head: {
+    meta () {
+      return [
+        { name: 'theme-color', content: this.chromeColor }
+      ]
+    }
+  },
+
   data () {
     return {
       layouts
@@ -27,7 +35,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      progressStatus: 'ui/progressBarStatus'
+      progressStatus: 'ui/progressBarStatus',
+      chromeColor: 'ui/chromeColor'
     })
   },
 

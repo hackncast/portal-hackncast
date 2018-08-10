@@ -13,7 +13,8 @@ export const state = () => ({
 export const getters = {
   progressBarStatus: state => state.progressStatus,
   navbarColor: state => state.darkTheme ? NAVBAR_DARK_COLOR : NAVBAR_LIGHT_COLOR,
-  backgroundColor: state => state.darkTheme ? BACKGROUND_DARK_COLOR : BACKGROUND_LIGHT_COLOR
+  backgroundColor: state => state.darkTheme ? BACKGROUND_DARK_COLOR : BACKGROUND_LIGHT_COLOR,
+  chromeColor: state => state.darkTheme ? '#263238' : '#2962FF'
 }
 
 export const mutations = {
