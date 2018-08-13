@@ -1,6 +1,15 @@
 <template>
-  <v-navigation-drawer permanent fixed clipped app class="transparent">
+  <v-navigation-drawer fixed clipped app :mini-variant.sync="mini" :class="[inDesktop ? 'transparent' : '']" v-model="sidebarState">
     <v-list dense>
+      <v-list-tile @click="$router.push({name: 'home'})">
+        <v-list-tile-action>
+          <v-icon>home</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Home</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
       <v-list-group
         v-for="item in items"
         v-model="item.active"
@@ -8,6 +17,7 @@
         :prepend-icon="item.action"
         no-action
         >
+
         <v-list-tile slot="activator">
           <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -36,61 +46,39 @@
 export default {
   data () {
     return {
+      inDesktop: true,
       items: [
         {
-          action: 'local_activity',
-          title: 'Attractions',
+          action: 'settings',
+          title: 'Administration',
           items: [
-            { title: 'List Item' }
-          ]
-        },
-        {
-          action: 'restaurant',
-          title: 'Dining',
-          active: true,
-          items: [
-            { title: 'Breakfast & brunch' },
-            { title: 'New American' },
-            { title: 'Sushi' }
-          ]
-        },
-        {
-          action: 'school',
-          title: 'Education',
-          items: [
-            { title: 'List Item' }
-          ]
-        },
-        {
-          action: 'directions_run',
-          title: 'Family',
-          items: [
-            { title: 'List Item' }
-          ]
-        },
-        {
-          action: 'healing',
-          title: 'Health',
-          items: [
-            { title: 'List Item' }
-          ]
-        },
-        {
-          action: 'content_cut',
-          title: 'Office',
-          items: [
-            { title: 'List Item' }
-          ]
-        },
-        {
-          action: 'local_offer',
-          title: 'Promotions',
-          items: [
-            { title: 'List Item' }
+            { title: 'Vaults' },
+            { title: 'Users' },
+            { title: 'Groups' }
           ]
         }
       ]
     }
-  }
+  },
+
+  computed: {
+    sidebarState: {
+      get () { return this.$store.state.ui.sidebarVisible },
+      set (val) { this.$store.dispatch('ui/showSidebar', val) }
+    }
+  },
+
+  watch: {
+    '$vuetify.breakpoint.lgAndUp' (to) { this.checkSidebarMode(to) }
+  },
+
+  methods: {
+    checkSidebarMode (lgAndUp) {
+      this.inDesktop = lgAndUp
+      this.$store.dispatch('ui/showSidebar', lgAndUp)
+    }
+  },
+
+  created () { this.checkSidebarMode(this.$vuetify.breakpoint.lgAndUp) }
 }
 </script>

@@ -22,15 +22,16 @@ export const mutations = {
     state.darkTheme = value
     localStorage.setItem('UI_DarkTheme', value)
   },
-
   PROGRESS_START (state) { state.progressStatus = 'start' },
   PROGRESS_STOP (state) { state.progressStatus = 'stop' },
-  PROGRESS_FAIL (state) { state.progressStatus = 'fail' }
+  PROGRESS_FAIL (sate) { state.progressStatus = 'fail' },
+  SIDEBAR_VISIBLE (state, value) { state.sidebarVisible = value }
 }
 
 export const actions = {
   startProgressBar ({commit}) { commit('PROGRESS_START') },
   endProgressBar ({commit}) { commit('PROGRESS_STOP') },
   failProgressBar ({commit}) { commit('PROGRESS_FAIL') },
-  setDarkTheme ({commit}, value) { commit('DARK_THEME', value) }
+  setDarkTheme ({commit}, value) { commit('DARK_THEME', value) },
+  showSidebar ({commit}, value) { commit('SIDEBAR_VISIBLE', value) }
 }

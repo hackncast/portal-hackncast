@@ -41,7 +41,7 @@
 
         <v-divider></v-divider>
 
-        <v-list>
+        <v-list class="py-0">
           <v-list-tile>
             <v-list-tile-action>
               <v-switch v-model="darkTheme" color="blue darken-2"></v-switch>
@@ -106,8 +106,7 @@ export default {
       setDarkTheme: 'ui/setDarkTheme'
     }),
 
-    // TODO: Add the drawer back
-    showDrawer () { this.$store.state.ui.sidebarVisible = true },
+    showDrawer () { this.$store.dispatch('ui/showSidebar', true) },
 
     // TODO: Add the Ui Settings back
     showUiSettings () {
