@@ -27,7 +27,7 @@
       </v-btn>
       <v-card>
         <v-list two-line class="py-0">
-          <v-list-tile avatar @click="$router.push({ name: 'user:profile' }); menu = false">
+          <v-list-tile avatar @click="$router.push({ name: 'user-profile-account' }); menu = false">
             <v-list-tile-avatar>
               <!-- TODO: Add currentUser avatar -->
               <img :src="currentUser.avatar" :alt="currentUser.displayName">
@@ -50,6 +50,13 @@
             <v-list-tile-action style="margin-right: -30px">
               <v-btn flat icon color="grey" @click="showUiSettings"><v-icon>settings</v-icon></v-btn>
             </v-list-tile-action>
+          </v-list-tile>
+
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-switch v-model="compactSidebar" color="blue darken-2"></v-switch>
+            </v-list-tile-action>
+            <v-list-tile-title>Compact Sidebar</v-list-tile-title>
           </v-list-tile>
         </v-list>
 
@@ -91,6 +98,11 @@ export default {
       set (val) { this.setDarkTheme(val) }
     },
 
+    compactSidebar: {
+      get () { return this.$store.state.ui.miniSidebar },
+      set (val) { this.setMiniSidebar(val) }
+    },
+
     logo () {
       if (this.$store.state.ui.darkTheme) {
         return require('@/assets/hnc-logo-noframe-inverted.svg')
@@ -103,7 +115,8 @@ export default {
   methods: {
     ...mapActions({
       logout: 'auth/logout',
-      setDarkTheme: 'ui/setDarkTheme'
+      setDarkTheme: 'ui/setDarkTheme',
+      setMiniSidebar: 'ui/setMiniSidebar'
     }),
 
     showDrawer () { this.$store.dispatch('ui/showSidebar', true) },

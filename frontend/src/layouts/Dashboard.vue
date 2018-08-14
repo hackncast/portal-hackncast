@@ -21,9 +21,3 @@ export default {
   components: { InsideNavBar, SideBar }
 }
 </script>
-
-<style>
-.v-navigation-drawer__border {
-	display: none;
-}
-</style>

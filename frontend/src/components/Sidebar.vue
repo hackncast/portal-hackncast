@@ -1,43 +1,66 @@
 <template>
-  <v-navigation-drawer fixed clipped app :mini-variant.sync="mini" :class="[inDesktop ? 'transparent' : '']" v-model="sidebarState">
-    <v-list dense>
-      <v-list-tile @click="$router.push({name: 'home'})">
-        <v-list-tile-action>
-          <v-icon>home</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>Home</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
+  <v-navigation-drawer fixed clipped app :mini-variant-width="55" :mini-variant="mini" :class="[inDesktop ? 'transparent' : '']" v-model="sidebarState">
+    <v-list dense v-if="mini">
+      <template v-for="item in items">
+        <v-tooltip :key="item.title" right>
+          <template v-if="!item.items">
+            <v-list-tile @click="item.action" slot="activator">
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile>
+          </template>
+          <template v-else>
+            <v-menu top offset-y transition="slide-y-transition" offset-x slot="activator">
+              <v-list-tile slot="activator" @click="nothing">
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-tile>
+              <v-list>
+                <v-list-tile v-for="subItem in item.items" :key="subItem.title">
+                  <v-list-tile-action v-if="subItem.icon">
+                    <v-icon>{{ subItem.icon }}</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </template>
+        <span>{{ item.title }}</span>
+        </v-tooltip>
+      </template>
+    </v-list>
 
-      <v-list-group
-        v-for="item in items"
-        v-model="item.active"
-        :key="item.title"
-        :prepend-icon="item.action"
-        no-action
-        >
-
-        <v-list-tile slot="activator">
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-
-        <v-list-tile
-          v-for="subItem in item.items"
-          :key="subItem.title"
-          @click=""
-          >
-          <v-list-tile-content>
-            <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
-          </v-list-tile-content>
-
-          <v-list-tile-action>
-            <v-icon>{{ subItem.action }}</v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
-      </v-list-group>
+    <v-list dense v-else>
+      <template v-for="item in items">
+        <template v-if="!item.items">
+          <v-list-tile @click="item.action" :key="item.title">
+            <v-list-tile-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
+        <template v-else>
+          <v-list-group v-model="item.active" :key="item.title" :prepend-icon="item.icon" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile v-for="subItem in item.items" :key="subItem.title">
+              <v-list-tile-action v-if="subItem.icon">
+                <v-icon>{{ subItem.icon }}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-icon>{{ subItem.action }}</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list-group>
+        </template>
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -49,12 +72,17 @@ export default {
       inDesktop: true,
       items: [
         {
-          action: 'settings',
+          icon: 'home',
+          title: 'Home',
+          action: () => { this.$router.push({name: 'home'}) }
+        },
+        {
+          icon: 'settings',
           title: 'Administration',
           items: [
-            { title: 'Vaults' },
-            { title: 'Users' },
-            { title: 'Groups' }
+            { title: 'Vaults', icon: 'https' },
+            { title: 'Users', icon: 'person' },
+            { title: 'Groups', icon: 'people' }
           ]
         }
       ]
@@ -65,6 +93,11 @@ export default {
     sidebarState: {
       get () { return this.$store.state.ui.sidebarVisible },
       set (val) { this.$store.dispatch('ui/showSidebar', val) }
+    },
+
+    mini: {
+      get () { return this.$store.state.ui.miniSidebar },
+      set (val) { this.$store.dispatch('ui/setMiniSidebar', val) }
     }
   },
 
@@ -76,9 +109,17 @@ export default {
     checkSidebarMode (lgAndUp) {
       this.inDesktop = lgAndUp
       this.$store.dispatch('ui/showSidebar', lgAndUp)
-    }
+    },
+
+    nothing () {}
   },
 
   created () { this.checkSidebarMode(this.$vuetify.breakpoint.lgAndUp) }
 }
 </script>
+
+<style>
+.v-navigation-drawer__border {
+  display: none;
+}
+</style>
