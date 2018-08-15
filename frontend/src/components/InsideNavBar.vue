@@ -1,7 +1,11 @@
 <template>
   <v-toolbar :flat="flat" app dark dense scroll-off-screen tabs clipped-left :scroll-threshold="100" :color="color">
     <div style="width: 290px; display: flex">
-      <v-toolbar-side-icon @click.stop="showDrawer()"></v-toolbar-side-icon>
+      <v-toolbar-side-icon v-if="back" @click="$router.go(-1)">
+        <v-icon>keyboard_arrow_left</v-icon>
+      </v-toolbar-side-icon>
+      <v-toolbar-side-icon v-else @click.stop="showDrawer()"></v-toolbar-side-icon>
+      <!--
       <v-btn flat icon :to="{ name: 'home' }" color="transparent">
         <v-avatar>
           <img :src="logo" alt="Logo" style="margin-top: -3px; z-index: 1">
@@ -10,13 +14,23 @@
       <v-toolbar-title class="ml-0 pl-0 hnc-title" style="font-size: 2em; padding-bottom: 5px">
         Hack'n'Cast
       </v-toolbar-title>
+        -->
     </div>
 
-    <v-breadcrumbs class="breadcrumbs--toolbar">
+    <v-breadcrumbs class="breadcrumbs--toolbar" v-show="$vuetify.breakpoint.smAndUp">
       <v-icon slot="divider">chevron_right</v-icon>
-      <v-breadcrumbs-item>Just</v-breadcrumbs-item>
-      <v-breadcrumbs-item>Another</v-breadcrumbs-item>
-      <v-breadcrumbs-item>Breadcrumb</v-breadcrumbs-item>
+      <v-breadcrumbs-item v-for="item in breadcrumbs" :key="item.title">
+        <template v-if="item.target">
+          <router-link :to="item.target">
+            <v-icon v-if="item.icon" :style="item.title ? 'margin-right: 5px' : ''">{{ item.icon }}</v-icon>
+            <template v-if="item.title">{{ item.title }}</template>
+          </router-link>
+        </template>
+        <template v-else>
+          <v-icon v-if="item.icon" :style="item.title ? 'margin-right: 5px' : ''">{{ item.icon }}</v-icon>
+          <template v-if="item.title">{{ item.title }}</template>
+        </template>
+      </v-breadcrumbs-item>
     </v-breadcrumbs>
 
     <v-spacer></v-spacer>
@@ -70,12 +84,12 @@
       </v-card>
     </v-menu>
 
-  <slot slot="extension" />
+    <slot slot="extension"></slot>
 </v-toolbar>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   data: () => ({
@@ -84,13 +98,18 @@ export default {
   }),
 
   props: {
-    flat: { type: Boolean, default: false }
+    flat: { type: Boolean, default: false },
+    back: { type: Boolean, default: false }
   },
 
   computed: {
     ...mapGetters({
       currentUser: 'auth/currentUser',
       color: 'ui/navbarColor'
+    }),
+
+    ...mapState({
+      breadcrumbs: state => state.ui.breadcrumbs
     }),
 
     darkTheme: {
@@ -144,14 +163,21 @@ export default {
 <style lang="scss">
 .breadcrumbs--toolbar {
   font-weight: 500;
+  flex-flow: row !important;
   text-transform: uppercase;
+  overflow: scroll;
 
-  .v-breadcrumbs__item {
-    color: rgba(255, 255, 255, .7)
+  .v-breadcrumbs__item, .v-breadcrumbs__item i {
+    color: rgba(255, 255, 255, .7);
   }
 
   li:last-child .v-breadcrumbs__item {
-    color: rgba(255, 255, 255, 1) !important
+    color: rgba(255, 255, 255, 1) !important;
   }
+
+  li {
+    flex: 1;
+  }
+
 }
 </style>

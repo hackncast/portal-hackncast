@@ -19,7 +19,10 @@ export default {
   route: {
     name: 'home',
     layout: 'Dashboard',
-    middlewares: ['PrivateOnly']
+    middlewares: ['PrivateOnly'],
+    breadcrumbs: [
+      {title: 'Dashboard'}
+    ]
   }
 }
 </script>

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import store from '@/store'
 import Router from 'vue-router'
 import middlewares from '@/middlewares'
 
@@ -31,6 +32,12 @@ requireModule.keys().forEach(fileName => {
         if (!r.component.route.middlewares) {
           return next()
         }
+
+        let breadcrumbs = []
+        if (r.component.route && r.component.route.breadcrumbs) {
+          breadcrumbs = r.component.route.breadcrumbs
+        }
+        store.dispatch('ui/setBreadcrumbs', breadcrumbs)
 
         r.component.route.middlewares.forEach(middlewareName => {
           if (middlewares.hasOwnProperty(middlewareName)) {

@@ -7,6 +7,7 @@ export const state = () => ({
   progressStatus: 'stop',
   darkTheme: (localStorage.getItem('UI_DarkTheme') === 'true'),
   miniSidebar: (localStorage.getItem('UI_MiniSidebar') === 'true'),
+  breadcrumbs: [],
   sidebarVisible: false,
   uiSettingsVisible: false
 })
@@ -27,6 +28,10 @@ export const mutations = {
     state.miniSidebar = value
     localStorage.setItem('UI_MiniSidebar', value)
   },
+  BREADCRUMBS (state, value) {
+    state.breadcrumbs.splice(0, state.breadcrumbs.length)
+    value.map(item => state.breadcrumbs.push(item))
+  },
   SIDEBAR_VISIBLE (state, value) { state.sidebarVisible = value },
   PROGRESS_START (state) { state.progressStatus = 'start' },
   PROGRESS_STOP (state) { state.progressStatus = 'stop' },
@@ -39,5 +44,6 @@ export const actions = {
   failProgressBar ({commit}) { commit('PROGRESS_FAIL') },
   setDarkTheme ({commit}, value) { commit('DARK_THEME', value) },
   showSidebar ({commit}, value) { commit('SIDEBAR_VISIBLE', value) },
-  setMiniSidebar ({commit}, value) { commit('MINI_SIDEBAR', value) }
+  setMiniSidebar ({commit}, value) { commit('MINI_SIDEBAR', value) },
+  setBreadcrumbs ({commit}, value) { commit('BREADCRUMBS', value) }
 }
