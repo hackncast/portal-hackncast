@@ -8,6 +8,7 @@
 
     <toast />
     <form-errors />
+    <ui-settings-dialog />
   </v-app>
 </template>
 
@@ -16,12 +17,13 @@ import { mapGetters } from 'vuex'
 import layouts from '@/layouts'
 import Toast from '@/plugins/toast/Toast'
 import LayoutBroker from 'vue-layout-broker'
+import UiSettingsDialog from '@/components/UiSettings'
 import FormErrors from '@/plugins/formerrors/FormErrors'
 
 export default {
   name: 'App',
 
-  components: { LayoutBroker, Toast, FormErrors },
+  components: { LayoutBroker, Toast, FormErrors, UiSettingsDialog },
 
   head: {
     meta () {

@@ -33,9 +33,10 @@ export const mutations = {
     value.map(item => state.breadcrumbs.push(item))
   },
   SIDEBAR_VISIBLE (state, value) { state.sidebarVisible = value },
+  UI_SETTINGS (state, value) { state.uiSettingsVisible = value },
   PROGRESS_START (state) { state.progressStatus = 'start' },
   PROGRESS_STOP (state) { state.progressStatus = 'stop' },
-  PROGRESS_FAIL (sate) { state.progressStatus = 'fail' }
+  PROGRESS_FAIL (state) { state.progressStatus = 'fail' }
 }
 
 export const actions = {
@@ -45,5 +46,6 @@ export const actions = {
   setDarkTheme ({commit}, value) { commit('DARK_THEME', value) },
   showSidebar ({commit}, value) { commit('SIDEBAR_VISIBLE', value) },
   setMiniSidebar ({commit}, value) { commit('MINI_SIDEBAR', value) },
-  setBreadcrumbs ({commit}, value) { commit('BREADCRUMBS', value) }
+  setBreadcrumbs ({commit}, value) { commit('BREADCRUMBS', value) },
+  showUiSettings ({commit}, value) { commit('UI_SETTINGS', value) }
 }

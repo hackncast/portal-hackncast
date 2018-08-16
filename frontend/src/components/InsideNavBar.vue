@@ -61,9 +61,6 @@
               <v-switch v-model="darkTheme" color="blue darken-2"></v-switch>
             </v-list-tile-action>
             <v-list-tile-title>Dark Theme</v-list-tile-title>
-            <v-list-tile-action style="margin-right: -30px">
-              <v-btn flat icon color="grey" @click="showUiSettings"><v-icon>settings</v-icon></v-btn>
-            </v-list-tile-action>
           </v-list-tile>
 
           <v-list-tile>
@@ -71,6 +68,11 @@
               <v-switch v-model="compactSidebar" color="blue darken-2"></v-switch>
             </v-list-tile-action>
             <v-list-tile-title>Compact Sidebar</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile>
+            <v-btn flat block class="ma-0" @click="showUiSettings">
+              <v-icon left>palette</v-icon> More UI Settings
+            </v-btn>
           </v-list-tile>
         </v-list>
 
@@ -140,10 +142,9 @@ export default {
 
     showDrawer () { this.$store.dispatch('ui/showSidebar', true) },
 
-    // TODO: Add the Ui Settings back
     showUiSettings () {
       this.menu = false
-      this.$store.state.ui.uiSettingsVisible = true
+      this.$store.dispatch('ui/showUiSettings', true)
     },
 
     doLogout () {
