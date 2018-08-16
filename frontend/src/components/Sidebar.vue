@@ -96,7 +96,7 @@ export default {
     },
 
     mini: {
-      get () { return this.$store.state.ui.miniSidebar },
+      get () { return this.$store.state.ui.miniSidebar && this.$vuetify.breakpoint.lgAndUp },
       set (val) { this.$store.dispatch('ui/setMiniSidebar', val) }
     }
   },
