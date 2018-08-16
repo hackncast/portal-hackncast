@@ -166,7 +166,7 @@ export default {
   font-weight: 500;
   flex-flow: row !important;
   text-transform: uppercase;
-  overflow: scroll;
+  overflow: auto;
 
   .v-breadcrumbs__item, .v-breadcrumbs__item i {
     color: rgba(255, 255, 255, .7);
