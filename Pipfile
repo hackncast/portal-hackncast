@@ -1,27 +1,22 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 Django = ">=2.0"
 django-environ = "*"
 djangorestframework = "*"
 django-allauth = "*"
 django-rest-auth = "*"
 "psycopg2" = "*"
-django-rest-recaptcha = "*"
 django-redis-cache = "*"
 hiredis = "*"
 django-qsessions = "*"
 django-defender = "*"
-
+django-rest-recaptcha = ">=1.0.2"
 
 [dev-packages]
-
 django-extensions = "*"
 django-webpack-loader = "*"
 django-silk = "*"
@@ -35,7 +30,5 @@ pytest-sugar = "*"
 mock = "*"
 mockredispy = "*"
 
-
 [requires]
-
 python_version = "3.4"
