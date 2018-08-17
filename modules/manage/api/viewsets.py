@@ -26,7 +26,7 @@ class ManageUserViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     def get_queryset(self):
         return UserModel.objects.prefetch_related(
             Prefetch('groups', queryset=Group.objects.all())
-        ).order_by('first_name')
+        )
 
     @action(methods=['delete', 'put', 'patch'], detail=True)
     def groups(self, request, pk):
