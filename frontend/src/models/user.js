@@ -1,11 +1,12 @@
 import md5 from 'md5/md5'
 import BaseModel from '@/models/base'
+import Email from '@/models/email'
 
 export default class User extends BaseModel {
   constructor (data = {}) {
     data = Object.assign({
       pk: null,
-      email: null,
+      emails: [],
       firstName: null,
       lastName: null,
       isActive: null,
@@ -13,7 +14,12 @@ export default class User extends BaseModel {
       username: null
     }, data)
 
+    data.emails = data.emails.map(e => Email.fromJson(e))
     super(data)
+  }
+
+  get primaryEmail () {
+    return this.email.find(email => email.primary === true)
   }
 
   get isAuthenticated () {

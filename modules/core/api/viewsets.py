@@ -29,14 +29,7 @@ class CustomUserDetailsView(UserDetailsView):
     serializer_class = serializers.UserDetailsSerializer
 
     def get_object(self):
-        self.user = self.request.user
-        self.primary_email = self.user.emailaddress_set.get(primary=True)
-        return self.user
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['primary_email'] = self.primary_email
-        return context
+        return self.request.user
 
 
 class CustomLoginView(LoginView):

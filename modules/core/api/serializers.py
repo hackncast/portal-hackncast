@@ -8,6 +8,7 @@ from recaptcha.fields import ReCaptchaField
 from rest_auth.serializers import PasswordResetSerializer
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_auth.serializers import UserDetailsSerializer as UserSerializer
+from allauth.account.models import EmailAddress
 
 UserModel = get_user_model()
 
@@ -20,26 +21,27 @@ class CaptchaPasswordResetSerializer(PasswordResetSerializer):
     recaptcha = ReCaptchaField(write_only=True)
 
 
+class UserEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmailAddress
+        fields = (
+            'pk', 'email', 'verified', 'primary',
+        )
+        read_only_fields = (
+            'pk', 'email', 'verified', 'primary',
+        )
+
+
 class UserDetailsSerializer(UserSerializer):
-    email_pk = serializers.SerializerMethodField()
-    verified_email = serializers.SerializerMethodField()
-
-    def get_verified_email(self, user):
-        email = self.context.get('primary_email')
-        return email.verified
-
-    def get_email_pk(self, user):
-        email = self.context.get('primary_email')
-        return email.pk
+    emails = UserEmailSerializer(many=True, source="emailaddress_set")
 
     class Meta:
         model = UserModel
         fields = (
             'pk', 'username', 'first_name', 'last_name', 'date_joined',
-            'email', 'is_active', 'is_superuser', 'verified_email', 'email_pk',
-            'last_login',
+            'emails', 'is_active', 'is_superuser', 'last_login'
         )
         read_only_fields = (
-            'pk', 'date_joined', 'email', 'is_active', 'is_superuser',
-            'verified_email', 'email_pk', 'last_login',
+            'pk', 'date_joined', 'emails', 'is_active', 'is_superuser',
+            'last_login'
         )
