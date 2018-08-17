@@ -1,7 +1,7 @@
 const NAVBAR_LIGHT_COLOR = 'blue accent-2'
 const NAVBAR_DARK_COLOR = 'blue-grey darken-3'
 const BACKGROUND_DARK_COLOR = 'darkBackground'
-const BACKGROUND_LIGHT_COLOR = 'grey lighten-3'
+const BACKGROUND_LIGHT_COLOR = 'lightBackground'
 
 export const state = () => ({
   progressStatus: 'stop',

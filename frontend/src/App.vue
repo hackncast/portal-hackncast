@@ -1,5 +1,5 @@
 <template>
-  <v-app :dark="$store.state.ui.darkTheme" id="app">
+  <v-app :dark="$store.state.ui.darkTheme" id="app" :class="backgroundColor">
     <vue-topprogress color="#90CAF9" ref="progress"></vue-topprogress>
 
     <transition :name="transitionName" mode="out-in">
@@ -43,7 +43,8 @@ export default {
   computed: {
     ...mapGetters({
       progressStatus: 'ui/progressBarStatus',
-      chromeColor: 'ui/chromeColor'
+      chromeColor: 'ui/chromeColor',
+      backgroundColor: 'ui/backgroundColor'
     })
   },
 
