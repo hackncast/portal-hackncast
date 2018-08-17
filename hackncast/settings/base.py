@@ -13,6 +13,7 @@ environ.Env.read_env()
 SITE_ID = 1
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 WSGI_APPLICATION = '{}.wsgi.application'.format(ROOT_NAME)
+USE_X_FORWARDED_HOST = True
 
 # Internationalization
 LANGUAGES = (
