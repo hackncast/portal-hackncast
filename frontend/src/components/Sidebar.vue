@@ -4,17 +4,17 @@
       <template v-for="item in items">
         <v-tooltip :key="item.title" right>
           <template v-if="!item.items">
-            <v-list-tile @click="item.action" slot="activator">
-              <v-icon>{{ item.icon }}</v-icon>
+            <v-list-tile exact color="grey" :to="item.url" slot="activator" :active-class="activeClass">
+              <v-icon color="grey">{{ item.icon }}</v-icon>
             </v-list-tile>
           </template>
           <template v-else>
             <v-menu top offset-y transition="slide-y-transition" offset-x slot="activator">
-              <v-list-tile slot="activator" @click="nothing">
-                <v-icon>{{ item.icon }}</v-icon>
+              <v-list-tile colo="grey" slot="activator" @click="nothing" :active-class="activeClass">
+                <v-icon color="grey">{{ item.icon }}</v-icon>
               </v-list-tile>
               <v-list>
-                <v-list-tile v-for="subItem in item.items" :key="subItem.title">
+                <v-list-tile exact v-for="subItem in item.items" :key="subItem.title" :to="subItem.url" :active-class="activeClass">
                   <v-list-tile-action v-if="subItem.icon">
                     <v-icon>{{ subItem.icon }}</v-icon>
                   </v-list-tile-action>
@@ -31,9 +31,9 @@
     <v-list dense v-else>
       <template v-for="item in items">
         <template v-if="!item.items">
-          <v-list-tile @click="item.action" :key="item.title">
+          <v-list-tile ripple exact color="grey" :to="item.url" :key="item.title" :active-class="activeClass">
             <v-list-tile-action>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon color="grey">{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -41,21 +41,18 @@
           </v-list-tile>
         </template>
         <template v-else>
-          <v-list-group v-model="item.active" :key="item.title" :prepend-icon="item.icon" no-action>
-            <v-list-tile slot="activator">
+          <v-list-group v-model="item.active" :key="item.title" :prepend-icon="item.icon" :active-class="activeClass" no-action>
+            <v-list-tile color="grey" slot="activator" :active-class="activeClass">
               <v-list-tile-content>
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile v-for="subItem in item.items" :key="subItem.title">
-              <v-list-tile-action v-if="subItem.icon">
-                <v-icon>{{ subItem.icon }}</v-icon>
-              </v-list-tile-action>
+            <v-list-tile ripple exact color="grey" v-for="subItem in item.items" :key="subItem.title" :to="subItem.url" :active-class="activeClass">
               <v-list-tile-content>
                 <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
               </v-list-tile-content>
               <v-list-tile-action>
-                <v-icon>{{ subItem.action }}</v-icon>
+                <v-icon color="grey">{{ subItem.icon }}</v-icon>
               </v-list-tile-action>
             </v-list-tile>
           </v-list-group>
@@ -74,14 +71,14 @@ export default {
         {
           icon: 'home',
           title: 'Home',
-          action: () => { this.$router.push({name: 'home'}) }
+          url: {name: 'home'}
         },
         {
           icon: 'settings',
           title: 'Administration',
           items: [
             { title: 'Vaults', icon: 'https' },
-            { title: 'Users', icon: 'person' },
+            { title: 'Users', icon: 'person', url: {name: 'manage-users'} },
             { title: 'Groups', icon: 'people' }
           ]
         }
@@ -98,6 +95,13 @@ export default {
     mini: {
       get () { return this.$store.state.ui.miniSidebar && this.$vuetify.breakpoint.lgAndUp },
       set (val) { this.$store.dispatch('ui/setMiniSidebar', val) }
+    },
+
+    activeClass () {
+      if (this.$store.state.ui.darkTheme) {
+        return 'white--text'
+      }
+      return 'black--text'
     }
   },
 
