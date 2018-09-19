@@ -93,7 +93,7 @@ class RedirectPasswordReset(RedirectView):
     query_string = True
 
     def get_redirect_url(self, uidb64, token, *args, **kwargs):
-        return '/admin/#/user/password/reset/token/{}/{}/'.format(
+        return '/admin/auth/reset/token/{}/{}/'.format(
             uidb64, token
         )
 
