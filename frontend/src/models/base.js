@@ -6,15 +6,31 @@ function camelCase (word) {
   return pieces.join('')
 }
 
+function cleanMethodName (word) {
+  let camelCaseWord = camelCase(word)
+  return 'clean' + camelCaseWord[0].toUpperCase() + camelCaseWord.slice(1)
+}
+
 export default class BaseModel {
   constructor (data = {}) {
     this.pk = null
-    Object.keys(data).forEach(key => { this[key] = data[key] })
+    let baseValues = this.defaultValues()
+
+    Object.keys(baseValues).forEach(key => {
+      this[camelCase(key)] = baseValues[key]
+    })
+
+    this.fromJson(data)
   }
 
-  static fromJson (data) {
-    let newData = {}
-    Object.keys(data).forEach(key => { newData[camelCase(key)] = data[key] })
-    return new this(newData)
+  fromJson (data) {
+    Object.keys(data).forEach(key => {
+      let name = cleanMethodName(key)
+      if (typeof this[name] === 'function') {
+        this[name](data[key])
+      } else {
+        this[camelCase(key)] = data[key]
+      }
+    })
   }
 }

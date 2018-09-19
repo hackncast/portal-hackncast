@@ -1,34 +1,17 @@
-import md5 from 'md5/md5'
-import BaseModel from '@/models/base'
+import User from '@/models/user'
 
-export default class ManagedUser extends BaseModel {
-  constructor (data = {}) {
-    data = Object.assign({
+export default class ManagedUser extends User {
+  defaultValues () {
+    return {
       pk: null,
-      username: null,
+      emails: [],
       firstName: null,
       lastName: null,
-      emails: null,
-      date_joined: null,
-      last_login: null,
+      username: null,
+      dateJoined: null,
+      lastLogin: null,
       groups: [],
-      is_staff: null
-    }, data)
-    super(data)
-  }
-
-  get fullName () {
-    if (this.firstName && this.lastName) return this.firstName + ' ' + this.lastName
-    if (this.firstName) return this.firstName
-    return 'Usuário Sem Nome'
-  }
-
-  get displayName () {
-    if (this.firstName) return this.firstName
-    return this.username
-  }
-
-  get avatar () {
-    return `https://www.gravatar.com/avatar/${md5(this.email || '')}?s=100&d=retro`
+      isStaff: null
+    }
   }
 }

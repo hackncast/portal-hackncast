@@ -3,8 +3,8 @@ import BaseModel from '@/models/base'
 import Email from '@/models/email'
 
 export default class User extends BaseModel {
-  constructor (data = {}) {
-    data = Object.assign({
+  defaultValues () {
+    return {
       pk: null,
       emails: [],
       firstName: null,
@@ -12,10 +12,28 @@ export default class User extends BaseModel {
       isActive: null,
       isSuperuser: null,
       username: null
-    }, data)
+    }
+  }
 
-    data.emails = data.emails.map(e => Email.fromJson(e))
-    super(data)
+  cleanEmails (value) {
+    this.emails.splice(0, this.emails.length)
+    value.forEach(e => { this.emails.push(new Email(e)) })
+  }
+
+  cleanLastLogin (value) {
+    if (value) {
+      this.lastLogin = new Date(value)
+    } else {
+      this.lastLogin = null
+    }
+  }
+
+  cleanDateJoined (value) {
+    if (value) {
+      this.dateJoined = new Date(value)
+    } else {
+      this.dateJoined = null
+    }
   }
 
   get primaryEmail () {
@@ -29,7 +47,7 @@ export default class User extends BaseModel {
   get fullName () {
     if (this.firstName && this.lastName) return this.firstName + ' ' + this.lastName
     if (this.firstName) return this.firstName
-    return 'Usuário Sem Nome'
+    return this.username
   }
 
   get displayName () {

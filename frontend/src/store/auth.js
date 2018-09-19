@@ -2,7 +2,7 @@ import Vue from 'vue'
 import User from '@/models/user'
 
 export const state = () => ({
-  user: User.fromJson({})
+  user: new User({})
 })
 
 export const getters = {
@@ -11,7 +11,7 @@ export const getters = {
 
 export const mutations = {
   SET_USER: function (state, data) {
-    state.user = User.fromJson(data)
+    state.user = new User(data)
   }
 }
 
