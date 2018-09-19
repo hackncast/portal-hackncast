@@ -10,15 +10,28 @@ from rest_framework import serializers
 UserModel = get_user_model()
 
 
-class UserGroupsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Group
-        fields = ('pk', 'name')
-        read_only_fields = ('pk', 'name')
-
-
 class UserSerializer(serializers.ModelSerializer):
-    groups = UserGroupsSerializer(many=True, required=False)
+    __all_groups = None
+
+    @classmethod
+    def all_groups(kls):
+        if kls.__all_groups:
+            return kls.__all_groups
+        kls.__all_groups = tuple(
+            Group.objects.order_by('name').only('id', 'name')
+        )
+        return kls.__all_groups
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        groups = []
+        for _group in self.all_groups():
+            group = {'pk': _group.pk, 'name': _group.name}
+            group['participates'] = _group.pk in ret['groups']
+            groups.append(group)
+
+        ret['groups'] = groups
+        return ret
 
     class Meta:
         model = UserModel
@@ -28,7 +41,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
         read_only_fields = (
             'pk', 'username', 'first_name', 'last_name', 'email',
-            'date_joined', 'last_login', 'groups',
+            'date_joined', 'last_login',
         )
 
 
