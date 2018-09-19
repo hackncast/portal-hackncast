@@ -29,7 +29,7 @@ export const mutations = {
     localStorage.setItem('UI_MiniSidebar', value)
   },
   BREADCRUMBS (state, value) {
-    state.breadcrumbs.splice(0, state.breadcrumbs.length)
+    state.breadcrumbs.empty()
     value.map(item => state.breadcrumbs.push(item))
   },
   SIDEBAR_VISIBLE (state, value) { state.sidebarVisible = value },

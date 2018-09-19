@@ -46,7 +46,7 @@ export default {
     value (val) {
       if (!val) return
       this.loading = false
-      this.selected.splice(0, this.selected.length)
+      this.selected.empty()
       this.user.groups.filter(g => g.participates).forEach(g => {
         this.selected.push(g.pk)
       })

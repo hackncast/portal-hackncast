@@ -7,7 +7,7 @@ export default {
 
   mutations: {
     SET (state, errors) { errors.forEach(err => state.all.push(err)) },
-    CLEAR (state) { state.all.splice(0, state.all.length) }
+    CLEAR (state) { state.all.empty() }
   },
 
   actions: {

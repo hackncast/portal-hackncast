@@ -16,7 +16,7 @@ export default class User extends BaseModel {
   }
 
   cleanEmails (value) {
-    this.emails.splice(0, this.emails.length)
+    this.emails.empty()
     value.forEach(e => { this.emails.push(new Email(e)) })
   }
 

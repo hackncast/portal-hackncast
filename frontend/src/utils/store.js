@@ -13,7 +13,7 @@ export function paginatedStoreFactory () {
 
 export const setStorePageMutation = (context, Model) => (state, data) => {
   // update results
-  state[context].results.splice(0, state[context].results.length)
+  state[context].results.empty()
   data.results.map(raw => {
     state[context].results.push(new Model(raw))
   })
