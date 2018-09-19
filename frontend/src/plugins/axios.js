@@ -3,7 +3,11 @@ import Cookies from 'js-cookie'
 
 function injectCSRFToken (config) {
   if (process.env.VUE_APP_DEBUG === 'true') {
-    console.log('Request to: ' + config.url)
+    let params = []
+    if (config.params) {
+      params = Object.keys(config.params).map(key => String(key) + '=' + String(config.params[key]))
+    }
+    console.log('Request to: ' + config.url, params.join('; '))
   }
 
   const csrftoken = Cookies.get('csrftoken')
