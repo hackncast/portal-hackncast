@@ -1,5 +1,11 @@
 <template>
-  <v-snackbar v-model="toastVisible" bottom :timeout="toast.timeout" :color="toast.color">
+  <v-snackbar
+    bottom
+    v-model="toastVisible"
+    :timeout="toast.timeout"
+    :color="toast.color"
+    :multi-line="toast.text && toast.text.length >= 60"
+    >
     {{ toast.text }}
     <v-btn :color="toast.closeColor" flat @click="toastVisible = false" >
       Fechar

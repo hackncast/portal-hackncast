@@ -35,7 +35,7 @@ export default {
   actions: {
     toast ({commit}, toast) {
       if (!toast.closeColor) {
-        if (toast.color === 'error') {
+        if (toast.color === 'error' || toast.color === 'red') {
           toast.closeColor = 'white'
         }
       }
